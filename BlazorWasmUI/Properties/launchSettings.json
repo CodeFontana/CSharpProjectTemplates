@@ -8,7 +8,7 @@
     }
   },
   "profiles": {
-    "BlazorWasm": {
+    "BlazorWasmUI": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
