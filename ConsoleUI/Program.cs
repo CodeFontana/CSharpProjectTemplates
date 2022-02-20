@@ -7,8 +7,6 @@ namespace ConsoleUI;
 
 class Program
 {
-    public static IConfigurationRoot? Configuration { get; set; }
-
     static async Task Main(string[] args)
     {
         string outputTemplate = "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} {Level:u4} [{SourceContext}] {Message:lj}{NewLine}{Exception}";
@@ -28,7 +26,7 @@ class Program
 
         try
         {
-            string? env = Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT");
+            string env = Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT");
             bool isDevelopment = string.IsNullOrEmpty(env) || env.ToLower() == "development";
 
             await Host.CreateDefaultBuilder(args)
