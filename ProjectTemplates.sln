@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32127.271
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleUI", "ConsoleUI\ConsoleUI.csproj", "{32B974CD-7A54-4EB6-8522-FCC68CF4342B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleUI", "ConsoleUI\ConsoleUI.csproj", "{32B974CD-7A54-4EB6-8522-FCC68CF4342B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorWasm", "BlazorWasm\BlazorWasm.csproj", "{957BC367-E82A-49A1-95B6-9CDA22CC7E23}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{32B974CD-7A54-4EB6-8522-FCC68CF4342B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{32B974CD-7A54-4EB6-8522-FCC68CF4342B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{32B974CD-7A54-4EB6-8522-FCC68CF4342B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{957BC367-E82A-49A1-95B6-9CDA22CC7E23}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{957BC367-E82A-49A1-95B6-9CDA22CC7E23}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{957BC367-E82A-49A1-95B6-9CDA22CC7E23}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{957BC367-E82A-49A1-95B6-9CDA22CC7E23}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
