@@ -9,21 +9,6 @@ class Program
 {
     static async Task Main(string[] args)
     {
-        string outputTemplate = "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} {Level:u4} [{SourceContext}] {Message:lj}{NewLine}{Exception}";
-
-        Log.Logger = new LoggerConfiguration()
-            .Enrich.FromLogContext()
-            .WriteTo.Console(
-                outputTemplate: outputTemplate)
-            .WriteTo.File(
-                path: "ConsoleUI-.log",
-                outputTemplate: outputTemplate,
-                rollOnFileSizeLimit: true,
-                fileSizeLimitBytes: 1073741824,
-                retainedFileCountLimit: 31,
-                rollingInterval: RollingInterval.Day)
-            .CreateBootstrapLogger();
-
         try
         {
             string env = Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT");
