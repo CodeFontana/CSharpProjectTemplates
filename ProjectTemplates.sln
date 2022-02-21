@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfUI", "WpfUI\WpfUI.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorServerUI", "BlazorServerUI\BlazorServerUI.csproj", "{61566A8E-3413-4820-B95F-2BAB9956D809}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkerService", "WorkerService\WorkerService.csproj", "{6BDEB957-74E6-42F9-85D5-2015DD90BCFB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{61566A8E-3413-4820-B95F-2BAB9956D809}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{61566A8E-3413-4820-B95F-2BAB9956D809}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{61566A8E-3413-4820-B95F-2BAB9956D809}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6BDEB957-74E6-42F9-85D5-2015DD90BCFB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6BDEB957-74E6-42F9-85D5-2015DD90BCFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6BDEB957-74E6-42F9-85D5-2015DD90BCFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6BDEB957-74E6-42F9-85D5-2015DD90BCFB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
