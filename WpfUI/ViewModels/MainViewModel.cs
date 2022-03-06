@@ -1,11 +1,15 @@
-﻿namespace WpfUI.ViewModels;
+﻿using WpfUI.Stores;
+
+namespace WpfUI.ViewModels;
 
 public class MainViewModel : ViewModelBase
 {
-    public ViewModelBase CurrentViewModel { get; }
+    private readonly NavigationStore _navigationStore;
 
-    public MainViewModel()
+    public MainViewModel(NavigationStore navigationStore)
     {
-        CurrentViewModel = new HelloWorldViewModel();
+        _navigationStore = navigationStore;
     }
+
+    public ViewModelBase CurrentViewModel => _navigationStore.CurrentViewModel;
 }

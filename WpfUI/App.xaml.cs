@@ -5,6 +5,7 @@ using Serilog;
 using System;
 using System.IO;
 using System.Windows;
+using WpfUI.Stores;
 using WpfUI.ViewModels;
 
 namespace WpfUI
@@ -12,11 +13,14 @@ namespace WpfUI
     public partial class App : Application
     {
         private IHost _appHost;
+        private readonly NavigationStore _navigationStore;
 
         public App()
         {
             try
             {
+                _navigationStore = new NavigationStore();
+
                 string env = Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT");
                 bool isDevelopment = string.IsNullOrEmpty(env) || env.ToLower() == "development";
 
@@ -33,7 +37,7 @@ namespace WpfUI
                     {
                         services.AddTransient<MainWindow>(s => new MainWindow()
                         {
-                            DataContext = new MainViewModel()
+                            DataContext = new MainViewModel(_navigationStore)
                         });
                     })
                     .UseSerilog((context, services, loggerConfiguration) =>
@@ -56,8 +60,10 @@ namespace WpfUI
         protected override async void OnStartup(StartupEventArgs e)
         {
             await _appHost.StartAsync();
+            _navigationStore.CurrentViewModel = new HelloWorldViewModel();
             MainWindow mainWindow = _appHost.Services.GetService<MainWindow>();
             mainWindow.Show();
+            mainWindow.ToggleMenu.IsChecked = true;
             base.OnStartup(e);
         }
 

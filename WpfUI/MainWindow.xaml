@@ -3,10 +3,126 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:WpfUI" xmlns:views="clr-namespace:WpfUI.Views"
+        xmlns:local="clr-namespace:WpfUI" 
+        xmlns:views="clr-namespace:WpfUI.Views"
+        xmlns:vms="clr-namespace:WpfUI.ViewModels"
+        xmlns:controls="clr-namespace:WpfUI.Controls"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid Margin="20">
-        <views:HelloWorldView DataContext="{Binding CurrentViewModel}" />
+        Title="MainWindow" 
+        Height="450" 
+        Width="800">
+    <Grid>
+        <Grid.Resources>
+            <DataTemplate DataType="{x:Type vms:HelloWorldViewModel}">
+                <views:HelloWorldView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:CounterViewModel}">
+                <views:CounterView />
+            </DataTemplate>
+        </Grid.Resources>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Border Grid.Row="0"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                Padding="8"
+                Background="#444">
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="auto" />
+                </Grid.ColumnDefinitions>
+
+                <CheckBox x:Name="ToggleMenu" Grid.Column="0">
+                    <CheckBox.Template>
+                        <ControlTemplate TargetType="CheckBox">
+                            <Grid Background="Transparent">
+                                <Viewbox Width="20" Height="20">
+                                    <Path 
+                                        Data="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"
+                                        Fill="White" 
+                                        Stretch="Fill" />
+                                </Viewbox>
+                            </Grid>
+                        </ControlTemplate>
+                    </CheckBox.Template>
+                </CheckBox>
+
+                <TextBlock Grid.Column="1"
+                           Margin="20 0 0 0"
+                           FontSize="18"
+                           Foreground="White"
+                           Text="WpfUI Application" />
+            </Grid>
+        </Border>
+
+        <controls:AppDrawer Grid.Row="1"
+                            Grid.Column="0"
+                            Background="#f2f2f2"
+                            BorderBrush="#dbdbdb"
+                            BorderThickness="0 0 1 0"
+                            IsOpen="{Binding IsChecked, ElementName=ToggleMenu}"
+                            FallbackOpenWidth="300"
+                            OpenCloseDurationProperty="0:0:0.25">
+            <controls:AppDrawer.Resources>
+                <Style TargetType="controls:AppDrawerItem">
+                    <Setter Property="Padding" Value="20 10" />
+                    <Setter Property="FontSize" Value="16" />
+                    <Setter Property="Background" Value="Transparent" />
+                    <Setter Property="Foreground" Value="#444" />
+                    <Style.Triggers>
+                        <EventTrigger RoutedEvent="MouseEnter">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)" 
+                                                    To="#dbdbdb" 
+                                                    Duration="0:0:0.1" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="MouseLeave">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)" 
+                                                    To="Transparent" 
+                                                    Duration="0:0:0.1" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Foreground" Value="#1669bb" />
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter Property="Foreground" Value="#1669bb" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </controls:AppDrawer.Resources>
+            <controls:AppDrawer.Content>
+                <StackPanel >
+                    <controls:AppDrawerItem>
+                        <TextBlock Text="Welcome Page"/>
+                    </controls:AppDrawerItem>
+                    <controls:AppDrawerItem>
+                        <TextBlock Text="Counter Page"/>
+                    </controls:AppDrawerItem>
+                </StackPanel>
+            </controls:AppDrawer.Content>
+        </controls:AppDrawer>
+
+        <ContentControl Grid.Row="1" 
+                        Grid.Column="1" 
+                        Margin="20 0 0 0"
+                        Content="{Binding CurrentViewModel}" />
+
     </Grid>
 </Window>
