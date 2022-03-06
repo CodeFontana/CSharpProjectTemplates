@@ -5,6 +5,7 @@ using Serilog;
 using System;
 using System.IO;
 using System.Windows;
+using WpfUI.ViewModels;
 
 namespace WpfUI
 {
@@ -32,7 +33,7 @@ namespace WpfUI
                     {
                         services.AddTransient<MainWindow>(s => new MainWindow()
                         {
-                            
+                            DataContext = new MainViewModel()
                         });
                     })
                     .UseSerilog((context, services, loggerConfiguration) =>

@@ -16,6 +16,8 @@
                     Grid.Row="0">
             <TextBlock Text="Current count: "
                        FontSize="32"/>
+            <TextBlock Text="{Binding CurrentCount}"
+                       FontSize="32"/>
         </StackPanel>
 
         <StackPanel Orientation="Horizontal" 
@@ -23,7 +25,8 @@
                     Margin="0 20">
             <Button Content="Click Me"
                     FontSize="18"
-                    Margin="30 0 10 0"/>
+                    Margin="30 0 10 0"
+                    Command="{Binding xxx}"/>
         </StackPanel>
     </Grid>
 </UserControl>
