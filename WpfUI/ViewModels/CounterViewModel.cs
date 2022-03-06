@@ -1,9 +1,17 @@
 ﻿using System.Windows.Input;
+using WpfUI.Commands;
 
 namespace WpfUI.ViewModels;
 
 public class CounterViewModel : ViewModelBase
 {
+    public CounterViewModel()
+    {
+        _currentCount = 0;
+        IncrementCountCommand = new IncrementCountCommand(this);
+        ResetCountCommand = new ResetCountCommand(this);
+    }
+
     private int _currentCount;
     public int CurrentCount
     {
@@ -19,4 +27,6 @@ public class CounterViewModel : ViewModelBase
     }
 
     public ICommand IncrementCountCommand { get; }
+
+    public ICommand ResetCountCommand { get; }
 }

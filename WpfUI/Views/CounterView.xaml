@@ -6,27 +6,41 @@
              xmlns:local="clr-namespace:WpfUI.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
+    <Grid Grid.IsSharedSizeScope="True">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
 
-        <StackPanel Orientation="Horizontal" 
-                    Grid.Row="0">
-            <TextBlock Text="Current count: "
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0"
+                       Text="Current count: "
                        FontSize="32"/>
-            <TextBlock Text="{Binding CurrentCount}"
+            <TextBlock Grid.Column="1"
+                       Text="{Binding CurrentCount}"
                        FontSize="32"/>
-        </StackPanel>
+        </Grid>
 
-        <StackPanel Orientation="Horizontal" 
-                    Grid.Row="1"
-                    Margin="0 20">
-            <Button Content="Click Me"
+        <Grid Grid.Row="1"
+              Margin="0 20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto" SharedSizeGroup="CounterButtons" />
+                <ColumnDefinition Width="auto" SharedSizeGroup="CounterButtons" />
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0"
+                    Content="Click Me"
                     FontSize="18"
                     Margin="30 0 10 0"
-                    Command="{Binding xxx}"/>
-        </StackPanel>
+                    Command="{Binding IncrementCountCommand}"/>
+            <Button Grid.Column="1"
+                    Content="Reset"
+                    FontSize="18"
+                    Margin="10 0 10 0"
+                    Command="{Binding ResetCountCommand}"/>
+        </Grid>
     </Grid>
 </UserControl>
