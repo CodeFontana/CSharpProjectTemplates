@@ -8,7 +8,7 @@
         xmlns:vms="clr-namespace:WpfUI.ViewModels"
         xmlns:controls="clr-namespace:WpfUI.Controls"
         mc:Ignorable="d"
-        Title="MainWindow" 
+        Title="WpfUI Application" 
         Height="450" 
         Width="800">
     <Grid>
@@ -108,11 +108,11 @@
                 </Style>
             </controls:AppDrawer.Resources>
             <controls:AppDrawer.Content>
-                <StackPanel >
-                    <controls:AppDrawerItem>
+                <StackPanel>
+                    <controls:AppDrawerItem Command="{Binding WelcomePageCommand}">
                         <TextBlock Text="Welcome Page"/>
                     </controls:AppDrawerItem>
-                    <controls:AppDrawerItem>
+                    <controls:AppDrawerItem Command="{Binding CounterPageCommand}">
                         <TextBlock Text="Counter Page"/>
                     </controls:AppDrawerItem>
                 </StackPanel>

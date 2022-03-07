@@ -10,8 +10,8 @@ public class ResetCountCommand : CommandBase
 
     public ResetCountCommand(CounterViewModel counterViewModel)
     {
-        _counterViewModel.PropertyChanged += OnViewModelPropertyChanged;
         _counterViewModel = counterViewModel;
+        _counterViewModel.PropertyChanged += OnViewModelPropertyChanged;
     }
 
     public override bool CanExecute(object parameter)
