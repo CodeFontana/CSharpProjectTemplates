@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 using WpfUI.Commands;
+using WpfUI.Services;
 using WpfUI.Stores;
 
 namespace WpfUI.ViewModels;
@@ -13,8 +14,8 @@ public class MainViewModel : ViewModelBase
     {
         _navigationStore = navigationStore;
         _navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
-        WelcomePageCommand = new NavigateCommand(_navigationStore, () => { return new HelloWorldViewModel(); });
-        CounterPageCommand = new NavigateCommand(_navigationStore, () => { return new CounterViewModel(); });
+        WelcomePageCommand = new NavigateCommand(new NavigationService(_navigationStore, () => { return new HelloWorldViewModel(); }));
+        CounterPageCommand = new NavigateCommand(new NavigationService(_navigationStore, () => { return new CounterViewModel(); }));
     }
 
     public ViewModelBase CurrentViewModel => _navigationStore.CurrentViewModel;
