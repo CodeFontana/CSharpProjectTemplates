@@ -13,8 +13,8 @@ public class MainViewModel : ViewModelBase
     {
         _navigationStore = navigationStore;
         _navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
-        WelcomePageCommand = new NavigateCommand(_navigationStore, MakeHelloWorldViewModel);
-        CounterPageCommand = new NavigateCommand(_navigationStore, MakeCounterViewModel);
+        WelcomePageCommand = new NavigateCommand(_navigationStore, () => { return new HelloWorldViewModel(); });
+        CounterPageCommand = new NavigateCommand(_navigationStore, () => { return new CounterViewModel(); });
     }
 
     public ViewModelBase CurrentViewModel => _navigationStore.CurrentViewModel;
@@ -25,15 +25,5 @@ public class MainViewModel : ViewModelBase
     private void OnCurrentViewModelChanged()
     {
         OnPropertyChanged(nameof(CurrentViewModel));
-    }
-
-    private ViewModelBase MakeHelloWorldViewModel()
-    {
-        return new HelloWorldViewModel();
-    }
-
-    private ViewModelBase MakeCounterViewModel()
-    {
-        return new CounterViewModel();
     }
 }
