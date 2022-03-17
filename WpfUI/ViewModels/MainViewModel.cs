@@ -10,12 +10,14 @@ public class MainViewModel : ViewModelBase
 {
     private readonly NavigationStore _navigationStore;
 
-    public MainViewModel(NavigationStore navigationStore)
+    public MainViewModel(NavigationStore navigationStore,
+                         NavigationService<HelloWorldViewModel> helloNav,
+                         NavigationService<CounterViewModel> counterNav)
     {
         _navigationStore = navigationStore;
         _navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
-        WelcomePageCommand = new NavigateCommand(new NavigationService(_navigationStore, () => { return new HelloWorldViewModel(); }));
-        CounterPageCommand = new NavigateCommand(new NavigationService(_navigationStore, () => { return new CounterViewModel(); }));
+        WelcomePageCommand = new NavigateCommand<HelloWorldViewModel>(helloNav);
+        CounterPageCommand = new NavigateCommand<CounterViewModel>(counterNav);
     }
 
     public ViewModelBase CurrentViewModel => _navigationStore.CurrentViewModel;

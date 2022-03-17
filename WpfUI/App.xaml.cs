@@ -5,6 +5,7 @@ using Serilog;
 using System;
 using System.IO;
 using System.Windows;
+using WpfUI.Services;
 using WpfUI.Stores;
 using WpfUI.ViewModels;
 
@@ -33,6 +34,10 @@ namespace WpfUI
                     .ConfigureServices((hostContext, services) =>
                     {
                         services.AddSingleton<NavigationStore>();
+                        services.AddSingleton<NavigationService<HelloWorldViewModel>>();
+                        services.AddSingleton<NavigationService<CounterViewModel>>();
+                        services.AddSingleton<Func<HelloWorldViewModel>>((s) => () => s.GetRequiredService<HelloWorldViewModel>());
+                        services.AddSingleton<Func<CounterViewModel>>((s) => () => s.GetRequiredService<CounterViewModel>());
                         services.AddSingleton<MainViewModel>();
                         services.AddTransient<HelloWorldViewModel>();
                         services.AddTransient<CounterViewModel>();
@@ -61,19 +66,19 @@ namespace WpfUI
         protected override async void OnStartup(StartupEventArgs e)
         {
             await _appHost.StartAsync();
-            NavigationStore navigationStore = _appHost.Services.GetRequiredService<NavigationStore>();
-            navigationStore.CurrentViewModel = new HelloWorldViewModel();
+            NavigationService<HelloWorldViewModel> navService = _appHost.Services.GetRequiredService<NavigationService<HelloWorldViewModel>>();
+            navService.Navigate();
             MainWindow mainWindow = _appHost.Services.GetRequiredService<MainWindow>();
             mainWindow.Show();
             mainWindow.ToggleMenu.IsChecked = true;
             base.OnStartup(e);
         }
 
-        protected override async void OnExit(ExitEventArgs e)
+        protected override void OnExit(ExitEventArgs e)
         {
             try
             {
-                if (_appHost != null) await _appHost.StopAsync();
+                if (_appHost != null) _appHost.Dispose();
                 Log.CloseAndFlush();
             }
             catch (Exception ex)

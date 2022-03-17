@@ -1,13 +1,14 @@
 ﻿using System;
 using WpfUI.Services;
+using WpfUI.ViewModels;
 
 namespace WpfUI.Commands;
 
-public class NavigateCommand : CommandBase
+public class NavigateCommand<T> : CommandBase where T : ViewModelBase
 {
-    private readonly NavigationService _navigationService;
+    private readonly NavigationService<T> _navigationService;
 
-    public NavigateCommand(NavigationService navigationService)
+    public NavigateCommand(NavigationService<T> navigationService)
     {
         _navigationService = navigationService;
     }
