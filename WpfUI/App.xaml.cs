@@ -74,11 +74,16 @@ namespace WpfUI
             base.OnStartup(e);
         }
 
-        protected override void OnExit(ExitEventArgs e)
+        protected override async void OnExit(ExitEventArgs e)
         {
             try
             {
-                if (_appHost != null) _appHost.Dispose();
+                if (_appHost != null)
+                {
+                    await _appHost.StopAsync();
+                    _appHost.Dispose();
+                } 
+
                 Log.CloseAndFlush();
             }
             catch (Exception ex)
