@@ -13,14 +13,11 @@ namespace WpfUI
     public partial class App : Application
     {
         private IHost _appHost;
-        private readonly NavigationStore _navigationStore;
 
         public App()
         {
             try
             {
-                _navigationStore = new NavigationStore();
-
                 string env = Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT");
                 bool isDevelopment = string.IsNullOrEmpty(env) || env.ToLower() == "development";
 
@@ -35,9 +32,13 @@ namespace WpfUI
                     })
                     .ConfigureServices((hostContext, services) =>
                     {
-                        services.AddTransient<MainWindow>(s => new MainWindow()
+                        services.AddSingleton<NavigationStore>();
+                        services.AddTransient<MainViewModel>();
+                        services.AddTransient<HelloWorldViewModel>();
+                        services.AddTransient<CounterViewModel>();
+                        services.AddSingleton(s => new MainWindow()
                         {
-                            DataContext = new MainViewModel(_navigationStore)
+                            DataContext = s.GetRequiredService<MainViewModel>()
                         });
                     })
                     .UseSerilog((context, services, loggerConfiguration) =>
@@ -60,8 +61,9 @@ namespace WpfUI
         protected override async void OnStartup(StartupEventArgs e)
         {
             await _appHost.StartAsync();
-            _navigationStore.CurrentViewModel = new HelloWorldViewModel();
-            MainWindow mainWindow = _appHost.Services.GetService<MainWindow>();
+            NavigationStore navigationStore = _appHost.Services.GetRequiredService<NavigationStore>();
+            navigationStore.CurrentViewModel = new HelloWorldViewModel();
+            MainWindow mainWindow = _appHost.Services.GetRequiredService<MainWindow>();
             mainWindow.Show();
             mainWindow.ToggleMenu.IsChecked = true;
             base.OnStartup(e);
