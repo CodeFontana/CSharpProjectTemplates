@@ -33,7 +33,7 @@ namespace WpfUI
                     .ConfigureServices((hostContext, services) =>
                     {
                         services.AddSingleton<NavigationStore>();
-                        services.AddTransient<MainViewModel>();
+                        services.AddSingleton<MainViewModel>();
                         services.AddTransient<HelloWorldViewModel>();
                         services.AddTransient<CounterViewModel>();
                         services.AddSingleton(s => new MainWindow()
