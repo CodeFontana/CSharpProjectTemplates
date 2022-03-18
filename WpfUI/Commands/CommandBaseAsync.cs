@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace WpfUI.Commands;
-public abstract class AsyncCommandBase : CommandBase
+public abstract class CommandBaseAsync : CommandBase
 {
     private bool _isExecuting;
 
@@ -42,5 +42,3 @@ public abstract class AsyncCommandBase : CommandBase
 
     public abstract Task ExecuteAsync(object parameter);
 }
-
-
