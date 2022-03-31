@@ -4,22 +4,14 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfUI" 
-        xmlns:views="clr-namespace:WpfUI.Views"
-        xmlns:vms="clr-namespace:WpfUI.ViewModels"
-        xmlns:controls="clr-namespace:WpfUI.Controls"
+        xmlns:vm="clr-namespace:WpfUI.ViewModels"
+        xmlns:controls="clr-namespace:WpfUI.Controls" 
+        d:DataContext="{d:DesignInstance Type=vm:MainViewModel}"
         mc:Ignorable="d"
         Title="WpfUI Application" 
         Height="450" 
         Width="800">
     <Grid>
-        <Grid.Resources>
-            <DataTemplate DataType="{x:Type vms:HelloWorldViewModel}">
-                <views:HelloWorldView />
-            </DataTemplate>
-            <DataTemplate DataType="{x:Type vms:CounterViewModel}">
-                <views:CounterView />
-            </DataTemplate>
-        </Grid.Resources>
 
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
@@ -66,13 +58,14 @@
         </Border>
 
         <controls:AppDrawer Grid.Row="1"
-                            Grid.Column="0"
-                            Background="#f2f2f2"
-                            BorderBrush="#dbdbdb"
-                            BorderThickness="0 0 1 0"
-                            IsOpen="{Binding IsChecked, ElementName=ToggleMenu}"
-                            FallbackOpenWidth="300"
-                            OpenCloseDurationProperty="0:0:0.25">
+                     Grid.Column="0"
+                     Background="#f2f2f2"
+                     BorderBrush="#dbdbdb"
+                     BorderThickness="0 0 1 0"
+                     IsOpen="{Binding IsChecked, ElementName=ToggleMenu}"
+                     d:IsOpen="True"
+                     FallbackOpenWidth="300"
+                     OpenCloseDurationProperty="0:0:0.25">
             <controls:AppDrawer.Resources>
                 <Style TargetType="controls:AppDrawerItem">
                     <Setter Property="Padding" Value="20 10" />
@@ -109,20 +102,24 @@
             </controls:AppDrawer.Resources>
             <controls:AppDrawer.Content>
                 <StackPanel>
-                    <controls:AppDrawerItem Command="{Binding WelcomePageCommand}">
+                    <controls:AppDrawerItem Command="{Binding NavigateCommand}"
+                                            CommandParameter="Home"
+                                            IsChecked="True">
                         <TextBlock Text="Welcome Page"/>
                     </controls:AppDrawerItem>
-                    <controls:AppDrawerItem Command="{Binding CounterPageCommand}">
+                    <controls:AppDrawerItem Command="{Binding NavigateCommand}"
+                                            CommandParameter="Counter">
                         <TextBlock Text="Counter Page"/>
                     </controls:AppDrawerItem>
                 </StackPanel>
             </controls:AppDrawer.Content>
         </controls:AppDrawer>
 
+        <!--Main Content -->
         <ContentControl Grid.Row="1" 
                         Grid.Column="1" 
                         Margin="20 0 0 0"
-                        Content="{Binding CurrentViewModel}" />
+                        Content="{Binding CurrentViewModel}"/>
 
     </Grid>
 </Window>

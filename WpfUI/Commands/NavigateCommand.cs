@@ -1,20 +1,32 @@
 ﻿using System;
-using WpfUI.Services;
 using WpfUI.ViewModels;
 
 namespace WpfUI.Commands;
 
-public class NavigateCommand<T> : CommandBase where T : ViewModelBase
+public class NavigateCommand : CommandBase
 {
-    private readonly NavigationService<T> _navigationService;
+    private readonly MainViewModel _mainViewModel;
 
-    public NavigateCommand(NavigationService<T> navigationService)
+    public NavigateCommand(MainViewModel mainViewModel)
     {
-        _navigationService = navigationService;
+        _mainViewModel = mainViewModel;
     }
     
     public override void Execute(object parameter)
     {
-        _navigationService.Navigate();
+        if (parameter is string viewType)
+        {
+            switch (viewType)
+            {
+                case "Home":
+                    _mainViewModel.CurrentViewModel = new HelloWorldViewModel();
+                    break;
+                case "Counter":
+                    _mainViewModel.CurrentViewModel = new CounterViewModel();
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }

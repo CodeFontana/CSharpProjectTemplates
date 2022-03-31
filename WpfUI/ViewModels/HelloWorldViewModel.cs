@@ -12,7 +12,20 @@ public class HelloWorldViewModel : ViewModelBase
         set
         {
             _userInput = value;
+
+            if (string.IsNullOrWhiteSpace(_userInput) == false)
+            {
+                Greeting = $"Hello, {_userInput}!";
+            }
+            else
+            {
+                Greeting = "";
+            }
+
             OnPropertyChanged(nameof(UserInput));
+            OnPropertyChanged(nameof(Greeting));
         }
     }
+
+    public string Greeting { get; set; }
 }

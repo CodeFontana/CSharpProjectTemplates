@@ -1,32 +1,30 @@
-﻿using System;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using WpfUI.Commands;
-using WpfUI.Services;
-using WpfUI.Stores;
 
 namespace WpfUI.ViewModels;
 
 public class MainViewModel : ViewModelBase
 {
-    private readonly NavigationStore _navigationStore;
-
-    public MainViewModel(NavigationStore navigationStore,
-                         NavigationService<HelloWorldViewModel> helloNav,
-                         NavigationService<CounterViewModel> counterNav)
+    public MainViewModel()
     {
-        _navigationStore = navigationStore;
-        _navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
-        WelcomePageCommand = new NavigateCommand<HelloWorldViewModel>(helloNav);
-        CounterPageCommand = new NavigateCommand<CounterViewModel>(counterNav);
+        NavigateCommand = new NavigateCommand(this);
+        NavigateCommand.Execute("Home");
     }
 
-    public ViewModelBase CurrentViewModel => _navigationStore.CurrentViewModel;
-
-    public ICommand WelcomePageCommand { get; }
-    public ICommand CounterPageCommand { get; }
-
-    private void OnCurrentViewModelChanged()
+    private ViewModelBase _currentViewModel;
+    public ViewModelBase CurrentViewModel
     {
-        OnPropertyChanged(nameof(CurrentViewModel));
+        get
+        {
+            return _currentViewModel;
+        }
+
+        set
+        {
+            _currentViewModel = value;
+            OnPropertyChanged(nameof(CurrentViewModel));
+        }
     }
+
+    public ICommand NavigateCommand { get; set; }
 }

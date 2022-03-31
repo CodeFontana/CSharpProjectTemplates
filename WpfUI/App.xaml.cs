@@ -5,8 +5,6 @@ using Serilog;
 using System;
 using System.IO;
 using System.Windows;
-using WpfUI.Services;
-using WpfUI.Stores;
 using WpfUI.ViewModels;
 
 namespace WpfUI
@@ -33,18 +31,8 @@ namespace WpfUI
                     })
                     .ConfigureServices((hostContext, services) =>
                     {
-                        services.AddSingleton<NavigationStore>();
-                        services.AddSingleton<NavigationService<HelloWorldViewModel>>();
-                        services.AddSingleton<NavigationService<CounterViewModel>>();
-                        services.AddSingleton<Func<HelloWorldViewModel>>((s) => () => s.GetRequiredService<HelloWorldViewModel>());
-                        services.AddSingleton<Func<CounterViewModel>>((s) => () => s.GetRequiredService<CounterViewModel>());
-                        services.AddSingleton<MainViewModel>();
-                        services.AddTransient<HelloWorldViewModel>();
-                        services.AddTransient<CounterViewModel>();
-                        services.AddSingleton(s => new MainWindow()
-                        {
-                            DataContext = s.GetRequiredService<MainViewModel>()
-                        });
+                        services.AddScoped<MainViewModel>();
+                        services.AddScoped(sp => new MainWindow(sp.GetRequiredService<MainViewModel>()));
                     })
                     .UseSerilog((context, services, loggerConfiguration) =>
                         loggerConfiguration.ReadFrom.Configuration(context.Configuration))
@@ -66,9 +54,9 @@ namespace WpfUI
         protected override async void OnStartup(StartupEventArgs e)
         {
             await _appHost.StartAsync();
-            NavigationService<HelloWorldViewModel> navService = _appHost.Services.GetRequiredService<NavigationService<HelloWorldViewModel>>();
-            navService.Navigate();
-            MainWindow mainWindow = _appHost.Services.GetRequiredService<MainWindow>();
+            using IServiceScope scope = _appHost.Services.CreateScope();
+            MainWindow mainWindow = scope.ServiceProvider.GetRequiredService<MainWindow>();
+            mainWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             mainWindow.Show();
             mainWindow.ToggleMenu.IsChecked = true;
             base.OnStartup(e);
