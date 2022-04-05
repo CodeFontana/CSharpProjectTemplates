@@ -42,3 +42,7 @@ Each ZIP contains a _MyTemplate.vstemplate_ file, where you can adjust tagging, 
 	<ProjectTypeTag>Brian</ProjectTypeTag>
 ...
 ```
+
+Once imported, templates will be available on the Visual Studio _Getting Started_ page, based on tag filtering:
+
+![image](https://user-images.githubusercontent.com/41308769/161820292-982baac6-7cf7-4e86-8c83-f10102bdb0ce.png)
