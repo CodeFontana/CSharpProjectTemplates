@@ -1,7 +1,8 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using FileLoggerLibrary;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Serilog;
+using Microsoft.Extensions.Logging;
 
 namespace ConsoleUI;
 
@@ -23,21 +24,20 @@ class Program
                     config.AddUserSecrets<Program>(optional: true);
                     config.AddEnvironmentVariables();
                 })
+                .ConfigureLogging((context, builder) =>
+                {
+                    builder.ClearProviders();
+                    builder.AddFileLogger(context.Configuration);
+                })
                 .ConfigureServices((hostContext, services) =>
                 {
                     services.AddHostedService<App>();
                 })
-                .UseSerilog((context, services, loggerConfiguration) => 
-                    loggerConfiguration.ReadFrom.Configuration(context.Configuration))
                 .RunConsoleAsync();
         }
         catch (Exception ex)
         {
-            Log.Fatal(ex, "Unexpected error");
-        }
-        finally
-        {
-            Log.CloseAndFlush();
+            Console.WriteLine($"Unexpected error: {ex.Message}");
         }
     }
 }

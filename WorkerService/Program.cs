@@ -1,7 +1,5 @@
-using Serilog;
+using FileLoggerLibrary;
 using WorkerService;
-
-string outputTemplate = "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} {Level:u4} [{SourceContext}] {Message:lj}{NewLine}{Exception}";
 
 try
 {
@@ -17,18 +15,15 @@ try
             config.AddUserSecrets<Program>(optional: true);
             config.AddEnvironmentVariables();
         })
+        .ConfigureLogging((context, builder) =>
+        {
+            builder.ClearProviders();
+            builder.AddFileLogger(context.Configuration);
+        })
         .ConfigureServices((hostContext, services) =>
         {
             services.AddHostedService<Worker>();
         })
-        .UseSerilog((context, services, loggerConfiguration) =>
-            loggerConfiguration.ReadFrom.Configuration(context.Configuration).WriteTo.File(
-                path: $@"{Path.GetDirectoryName(Environment.ProcessPath)}\WorkerService-.log",
-                outputTemplate: outputTemplate,
-                rollOnFileSizeLimit: true,
-                fileSizeLimitBytes: 1073741824,
-                retainedFileCountLimit: 31,
-                rollingInterval: RollingInterval.Day))
         .UseWindowsService()
         .Build();
 
@@ -36,9 +31,6 @@ try
 }
 catch (Exception ex)
 {
-    Log.Fatal(ex, "Unexpected error");
+    Console.WriteLine($"Unexpected error: {ex.Message}");
 }
-finally
-{
-    Log.CloseAndFlush();
-}
+

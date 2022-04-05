@@ -1,7 +1,8 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using FileLoggerLibrary;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Serilog;
+using Microsoft.Extensions.Logging;
 using System;
 using System.IO;
 using System.Windows;
@@ -29,13 +30,16 @@ namespace WpfUI
                         config.AddUserSecrets<App>(optional: true);
                         config.AddEnvironmentVariables();
                     })
+                    .ConfigureLogging((context, builder) =>
+                    {
+                        builder.ClearProviders();
+                        builder.AddFileLogger(context.Configuration);
+                    })
                     .ConfigureServices((hostContext, services) =>
                     {
                         services.AddScoped<MainViewModel>();
                         services.AddScoped(sp => new MainWindow(sp.GetRequiredService<MainViewModel>()));
                     })
-                    .UseSerilog((context, services, loggerConfiguration) =>
-                        loggerConfiguration.ReadFrom.Configuration(context.Configuration))
                     .Build();
             }
             catch (Exception ex)
@@ -46,7 +50,7 @@ namespace WpfUI
                     throw;
                 }
 
-                Log.Fatal(ex, "Unexpected error");
+                Console.WriteLine($"Unexpected error: {ex.Message}");
                 Application.Current.Shutdown();
             }
         }
@@ -71,12 +75,10 @@ namespace WpfUI
                     await _appHost.StopAsync();
                     _appHost.Dispose();
                 } 
-
-                Log.CloseAndFlush();
             }
             catch (Exception ex)
             {
-                Log.Fatal(ex, "Unexpected error");
+                Console.WriteLine($"Unexpected error: {ex.Message}");
             }
             finally
             {
