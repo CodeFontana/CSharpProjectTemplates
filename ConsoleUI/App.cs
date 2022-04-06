@@ -27,7 +27,7 @@ public class App : IHostedService
             {
                 await Task.Yield(); // https://github.com/dotnet/runtime/issues/36063
                 await Task.Delay(1000); // Additional delay for Microsoft.Hosting.Lifetime messages
-                await Run();
+                await ExecuteAsync();
             }
             catch (Exception ex)
             {
@@ -47,7 +47,7 @@ public class App : IHostedService
         return Task.CompletedTask;
     }
 
-    public async Task Run()
+    public async Task ExecuteAsync()
     {
         _logger.LogCritical("Hello, Critical!");
         _logger.LogDebug("Hello, Debug!");
