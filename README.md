@@ -21,11 +21,11 @@ Copy these ZIP files to:
 C:\Users\<Username>\Documents\Visual Studio 2022\Templates\ProjectTemplates
 ```
 
-[Blazor Server App - MudBlazor.zip](https://github.com/CodeFontana/CSharpProjectTemplates/files/8506516/Blazor.Server.App.-.MudBlazor.zip)
-[Blazor Web Assembly - MudBlazor.zip](https://github.com/CodeFontana/CSharpProjectTemplates/files/8506517/Blazor.Web.Assembly.-.MudBlazor.zip)
-[ConsoleApp.zip](https://github.com/CodeFontana/CSharpProjectTemplates/files/8506518/ConsoleApp.zip)
-[WorkerService.zip](https://github.com/CodeFontana/CSharpProjectTemplates/files/8506519/WorkerService.zip)
-[WpfApp.zip](https://github.com/CodeFontana/CSharpProjectTemplates/files/8506520/WpfApp.zip)
+[Blazor Server App - MudBlazor.zip](https://github.com/CodeFontana/CSharpProjectTemplates/files/8506516/Blazor.Server.App.-.MudBlazor.zip)  
+[Blazor Web Assembly - MudBlazor.zip](https://github.com/CodeFontana/CSharpProjectTemplates/files/8506517/Blazor.Web.Assembly.-.MudBlazor.zip)  
+[ConsoleApp.zip](https://github.com/CodeFontana/CSharpProjectTemplates/files/8506518/ConsoleApp.zip)  
+[WorkerService.zip](https://github.com/CodeFontana/CSharpProjectTemplates/files/8506519/WorkerService.zip)  
+[WpfApp.zip](https://github.com/CodeFontana/CSharpProjectTemplates/files/8506520/WpfApp.zip)  
 
 
 Each ZIP contains a _MyTemplate.vstemplate_ file, where you can adjust tagging, if necessary:
