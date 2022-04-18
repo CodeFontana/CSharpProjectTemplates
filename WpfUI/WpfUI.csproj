@@ -8,7 +8,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<Content Include="appsettings.json">
+		<Content Include="appSettings.json">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
 		<Content Include="appsettings.*.json">
@@ -18,9 +18,15 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="CodeFoxtrot.FileLogger" Version="1.0.0" />
+		<PackageReference Include="CodeFoxtrot.FileLogger" Version="1.0.2" />
 		<PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
 		<PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="6.0.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Content Update="appSettings.Development.json">
+	    <DependentUpon>appSettings.json</DependentUpon>
+	  </Content>
 	</ItemGroup>
 
 </Project>

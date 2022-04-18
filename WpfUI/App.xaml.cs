@@ -18,15 +18,15 @@ namespace WpfUI
         {
             try
             {
-                string env = Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT");
+                string env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
                 bool isDevelopment = string.IsNullOrEmpty(env) || env.ToLower() == "development";
 
                 _appHost = Host.CreateDefaultBuilder()
                     .ConfigureAppConfiguration(config =>
                     {
                         config.SetBasePath(Directory.GetCurrentDirectory());
-                        config.AddJsonFile("appsettings.json", true, true);
-                        config.AddJsonFile($"appsettings.{env}.json", true, true);
+                        config.AddJsonFile("appSettings.json", true, true);
+                        config.AddJsonFile($"appSettings.{env}.json", true, true);
                         config.AddUserSecrets<App>(optional: true);
                         config.AddEnvironmentVariables();
                     })
