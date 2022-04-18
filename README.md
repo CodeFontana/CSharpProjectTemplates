@@ -13,7 +13,7 @@ MudBlazor is just awesome with a comprehensive library of components, features a
 ## WPF, brought to you by MVVM
 I'm a big fan of MVVM, just not with some random magical framework.  MVVM is too much of an art that needs to be appreiciated and understood, so this is one area I won't borrow someone else's technology, at least for now.  Basing this template on the lovely .NET Generic Host, there's enough demo code (Views and ViewModels) to demo how to wire all that up, including basic navigation.  Enjoy!
 
-## Download Templates -- April 5, 2022
+## Download Templates -- April 18, 2022
 These are the latest exports, built from this repository.
 
 Copy these ZIP files to:
@@ -21,11 +21,12 @@ Copy these ZIP files to:
 C:\Users\<Username>\Documents\Visual Studio 2022\Templates\ProjectTemplates
 ```
 
-[Blazor Server App - MudBlazor.zip](https://github.com/CodeFontana/CSharpProjectTemplates/files/8420677/Blazor.Server.App.-.MudBlazor.zip)  
-[Blazor Web Assembly - MudBlazor.zip](https://github.com/CodeFontana/CSharpProjectTemplates/files/8420678/Blazor.Web.Assembly.-.MudBlazor.zip)  
-[ConsoleApp.zip](https://github.com/CodeFontana/CSharpProjectTemplates/files/8420679/ConsoleApp.zip)  
-[WorkerService.zip](https://github.com/CodeFontana/CSharpProjectTemplates/files/8420680/WorkerService.zip)  
-[WpfApp.zip](https://github.com/CodeFontana/CSharpProjectTemplates/files/8420681/WpfApp.zip)  
+[Blazor Server App - MudBlazor.zip](https://github.com/CodeFontana/CSharpProjectTemplates/files/8506516/Blazor.Server.App.-.MudBlazor.zip)
+[Blazor Web Assembly - MudBlazor.zip](https://github.com/CodeFontana/CSharpProjectTemplates/files/8506517/Blazor.Web.Assembly.-.MudBlazor.zip)
+[ConsoleApp.zip](https://github.com/CodeFontana/CSharpProjectTemplates/files/8506518/ConsoleApp.zip)
+[WorkerService.zip](https://github.com/CodeFontana/CSharpProjectTemplates/files/8506519/WorkerService.zip)
+[WpfApp.zip](https://github.com/CodeFontana/CSharpProjectTemplates/files/8506520/WpfApp.zip)
+
 
 Each ZIP contains a _MyTemplate.vstemplate_ file, where you can adjust tagging, if necessary:
 ```
