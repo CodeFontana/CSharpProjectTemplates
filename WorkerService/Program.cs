@@ -3,7 +3,7 @@ using WorkerService;
 
 try
 {
-    string env = Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT");
+    string env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
     bool isDevelopment = string.IsNullOrEmpty(env) || env.ToLower() == "development";
 
     IHost host = Host.CreateDefaultBuilder(args)
