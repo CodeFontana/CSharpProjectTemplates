@@ -1,13 +1,14 @@
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
+using Blazored.LocalStorage;
 using MudBlazor.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.WebHost.UseStaticWebAssets();
 
 // Add services to the container.
-builder.Services.AddMudServices();
 builder.Services.AddRazorPages();
-builder.Services.AddServerSideBlazor();
+builder.Services.AddServerSideBlazor(); 
+builder.Services.AddMudServices();
+builder.Services.AddBlazoredLocalStorage();
 
 var app = builder.Build();
 
