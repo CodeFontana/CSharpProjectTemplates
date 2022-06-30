@@ -10,7 +10,7 @@
 <MudSnackbarProvider />
 
 <MudLayout>
-    <MudAppBar Elevation="0" Style="@(_currentTheme == lightTheme ? "background-color: var(--mud-palette-primary);" : "background-color: inherit;")">
+    <MudAppBar Elevation="5" Color="@(_currentTheme == lightTheme ? Color.Primary : Color.Tertiary)">
 
         @if (_drawerOpen == false)
         {
@@ -31,7 +31,7 @@
 
     </MudAppBar>
 
-    <MudDrawer @bind-Open="_drawerOpen" Elevation="1" Color="@(_currentTheme == lightTheme ? Color.Secondary : Color.Dark)">
+    <MudDrawer @bind-Open="_drawerOpen" Elevation="5" Color="@(_currentTheme == lightTheme ? Color.Secondary : Color.Dark)">
         <MudDrawerHeader Class="d-flex align-center">
             <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="() => _drawerOpen = !_drawerOpen" />
             <MudText Typo="Typo.h6" Style="white-space: nowrap">Blazor Server</MudText>
@@ -53,7 +53,7 @@
     </MudDrawer>
 
     <MudMainContent>
-        <MudContainer MaxWidth="MaxWidth.False" Class="pt-4">
+        <MudContainer MaxWidth="MaxWidth.False" Class="pt-2">
             @Body
         </MudContainer>
     </MudMainContent>
@@ -106,19 +106,19 @@
                 Black = "#000000FF",
                 White = "#FFFFFFFF",
 
-                Primary = "#4D4D86",
-                PrimaryDarken = "#37375F",
-                PrimaryLighten = "#7777B1",
+                Primary = "#712CF9",
+                PrimaryDarken = "#4706C9",
+                PrimaryLighten = "#9867FA",
                 PrimaryContrastText = "#FFFFFFFF",
 
-                Secondary = "#4a4e69",
-                SecondaryDarken = "#35384B",
-                SecondaryLighten = "#747A9D",
+                Secondary = "#6C757D",
+                SecondaryDarken = "#4E545A",
+                SecondaryLighten = "#969DA4",
                 SecondaryContrastText = "#FFFFFFFF",
 
-                Tertiary = "#8d99ae",
-                TertiaryDarken = "#5E6C84",
-                TertiaryLighten = "#AEB7C6",
+                Tertiary = "#4D4D86",
+                TertiaryDarken = "#37375F",
+                TertiaryLighten = "#7777B1",
                 TertiaryContrastText = "#FFFFFFFF",
 
                 Info = "#0dcaf0",
@@ -203,39 +203,39 @@
                 Black = "#27272F",
                 White = "#FFFFFFFF",
 
-                Primary = "#4D4D86",
-                PrimaryDarken = "#37375F",
-                PrimaryLighten = "#7777B1",
+                Primary = "#0D6EFD",
+                PrimaryDarken = "#024CBC",
+                PrimaryLighten = "#5296FD",
                 PrimaryContrastText = "#FFFFFFFF",
 
-                Secondary = "#4a4e69",
-                SecondaryDarken = "#35384B",
-                SecondaryLighten = "#747A9D",
+                Secondary = "#6C757D",
+                SecondaryDarken = "#4E545A",
+                SecondaryLighten = "#969DA4",
                 SecondaryContrastText = "#FFFFFFFF",
 
-                Tertiary = "#8d99ae",
-                TertiaryDarken = "#5E6C84",
-                TertiaryLighten = "#AEB7C6",
+                Tertiary = "#4D4D86",
+                TertiaryDarken = "#37375F",
+                TertiaryLighten = "#7777B1",
                 TertiaryContrastText = "#FFFFFFFF",
 
-                Info = "#4A86FFFF",
-                InfoDarken = "#2970FF",
-                InfoLighten = "#70A0FF",
+                Info = "#0dcaf0",
+                InfoDarken = "#0992AD",
+                InfoLighten = "#52DBF6",
                 InfoContrastText = "#FFFFFFFF",
 
-                Success = "#3DCB6CFF",
-                SuccessDarken = "#2FB15B",
-                SuccessLighten = "#5ED485",
+                Success = "#198754",
+                SuccessDarken = "#125F3B",
+                SuccessLighten = "#2BD887",
                 SuccessContrastText = "#FFFFFFFF",
 
-                Warning = "#FFB545FF",
-                WarningDarken = "#FFA724",
-                WarningLighten = "#FFC670",
+                Warning = "#ffc107",
+                WarningDarken = "#BA8B00",
+                WarningLighten = "#FFD24D",
                 WarningContrastText = "#FFFFFFFF",
 
-                Error = "#FF3F5FFF",
-                ErrorDarken = "#FF1A40",
-                ErrorLighten = "#FF6680",
+                Error = "#dc3545",
+                ErrorDarken = "#A71E2B",
+                ErrorLighten = "#E6717C",
                 ErrorContrastText = "#FFFFFFFF",
 
                 Dark = "#424242FF",
