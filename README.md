@@ -20,8 +20,8 @@ Copy these ZIP files to:
 ```
 C:\Users\<Username>\Documents\Visual Studio 2022\Templates\ProjectTemplates
 ```
-[Blazor Server App - MudBlazor.zip](https://github.com/CodeFontana/CSharpProjectTemplates/files/9016463/Blazor.Server.App.-.MudBlazor.zip)  
-[Blazor Web Assembly - MudBlazor.zip](https://github.com/CodeFontana/CSharpProjectTemplates/files/9016464/Blazor.Web.Assembly.-.MudBlazor.zip)  
+[Blazor Server App - MudBlazor.zip](https://github.com/CodeFontana/CSharpProjectTemplates/files/9016564/Blazor.Server.App.-.MudBlazor.zip)  
+[Blazor Web Assembly - MudBlazor.zip](https://github.com/CodeFontana/CSharpProjectTemplates/files/9016565/Blazor.Web.Assembly.-.MudBlazor.zip)  
 [Console App.zip](https://github.com/CodeFontana/CSharpProjectTemplates/files/9016248/Console.App.zip)  
 [Worker Service.zip](https://github.com/CodeFontana/CSharpProjectTemplates/files/9016249/Worker.Service.zip)  
 [Wpf App.zip](https://github.com/CodeFontana/CSharpProjectTemplates/files/9016250/Wpf.App.zip)  
