@@ -13,15 +13,15 @@ MudBlazor is just awesome with a comprehensive library of components, features a
 ## WPF, brought to you by MVVM
 I'm a big fan of MVVM, just not with some random magical framework.  MVVM is too much of an art that needs to be appreiciated and understood, so this is one area I won't borrow someone else's technology, at least for now.  Basing this template on the lovely .NET Generic Host, there's enough demo code (Views and ViewModels) to demo how to wire all that up, including basic navigation.  Enjoy!
 
-## Download Templates -- June 29, 2022
+## Download Templates -- June 30, 2022
 These are the latest exports, built from this repository.
 
 Copy these ZIP files to:
 ```
 C:\Users\<Username>\Documents\Visual Studio 2022\Templates\ProjectTemplates
 ```
-[Blazor Server App - MudBlazor.zip](https://github.com/CodeFontana/CSharpProjectTemplates/files/9016246/Blazor.Server.App.-.MudBlazor.zip)  
-[Blazor Web Assembly - MudBlazor.zip](https://github.com/CodeFontana/CSharpProjectTemplates/files/9016247/Blazor.Web.Assembly.-.MudBlazor.zip)  
+[Blazor Server App - MudBlazor.zip](https://github.com/CodeFontana/CSharpProjectTemplates/files/9016463/Blazor.Server.App.-.MudBlazor.zip)  
+[Blazor Web Assembly - MudBlazor.zip](https://github.com/CodeFontana/CSharpProjectTemplates/files/9016464/Blazor.Web.Assembly.-.MudBlazor.zip)  
 [Console App.zip](https://github.com/CodeFontana/CSharpProjectTemplates/files/9016248/Console.App.zip)  
 [Worker Service.zip](https://github.com/CodeFontana/CSharpProjectTemplates/files/9016249/Worker.Service.zip)  
 [Wpf App.zip](https://github.com/CodeFontana/CSharpProjectTemplates/files/9016250/Wpf.App.zip)  
