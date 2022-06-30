@@ -11,7 +11,7 @@
 <MudSnackbarProvider />
 
 <MudLayout>
-    <MudAppBar Elevation="5" Color="@(_currentTheme == lightTheme ? Color.Primary : Color.Tertiary)">
+    <MudAppBar Elevation="5" Dense="true" Color="@(_currentTheme == lightTheme ? Color.Primary : Color.Tertiary)">
 
         @if (_drawerOpen == false)
         {
@@ -54,7 +54,7 @@
     </MudDrawer>
 
     <MudMainContent>
-        <MudContainer MaxWidth="MaxWidth.False" Class="pt-2">
+        <MudContainer MaxWidth="MaxWidth.False" Class="pt-4">
             @Body
         </MudContainer>
     </MudMainContent>
