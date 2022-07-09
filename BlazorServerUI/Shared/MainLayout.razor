@@ -10,7 +10,7 @@
 <MudSnackbarProvider />
 
 <MudLayout>
-    <MudAppBar Elevation="5" Dense="true" Color="@(_currentTheme == lightTheme ? Color.Primary : Color.Tertiary)">
+    <MudAppBar Elevation="5" Dense="true" Color="@(_currentTheme == lightTheme ? Color.Primary : Color.Primary)">
 
         @if (_drawerOpen == false)
         {
@@ -32,7 +32,7 @@
     </MudAppBar>
 
     <MudDrawer @bind-Open="_drawerOpen" Elevation="5" Color="@(_currentTheme == lightTheme ? Color.Secondary : Color.Dark)">
-        <MudDrawerHeader Class="d-flex align-center">
+        <MudDrawerHeader Class="d-flex align-center pt-0">
             <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="() => _drawerOpen = !_drawerOpen" />
             <MudText Typo="Typo.h6" Style="white-space: nowrap">Blazor Server</MudText>
         </MudDrawerHeader>
@@ -98,7 +98,7 @@
             {
                 Default = new()
                 {
-                    //FontFamily = new[] { "Lato", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", "sans-serif", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" }
+                    FontFamily = new[] { "Lato", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", "sans-serif", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" }
                 }
             },
             Palette = new()
@@ -106,44 +106,44 @@
                 Black = "#000000FF",
                 White = "#FFFFFFFF",
 
-                Primary = "#6b35e8",
-                PrimaryDarken = "#4514B8",
-                PrimaryLighten = "#956FEF",
-                PrimaryContrastText = "#FFFFFFFF",
+                Primary = "#2c3e50",
+                PrimaryDarken = "#253444",
+                PrimaryLighten = "#3F5973",
+                PrimaryContrastText = "#ffffffff",
 
-                Secondary = "#6C757D",
-                SecondaryDarken = "#4E545A",
-                SecondaryLighten = "#969DA4",
+                Secondary = "#4E545A",
+                SecondaryDarken = "#383C40",
+                SecondaryLighten = "#5A6067",
                 SecondaryContrastText = "#FFFFFFFF",
 
-                Tertiary = "#4D4D86",
-                TertiaryDarken = "#37375F",
-                TertiaryLighten = "#7777B1",
+                Tertiary = "#3D5E77",
+                TertiaryDarken = "#2B4254",
+                TertiaryLighten = "#456985",
                 TertiaryContrastText = "#FFFFFFFF",
 
-                Info = "#CFF4FC",
-                InfoDarken = "#54D7F4",
-                InfoLighten = "#DDF7FD",
-                InfoContrastText = "#055160",
+                Info = "#3498db",
+                InfoDarken = "#0c80df",
+                InfoLighten = "#47a7f5",
+                InfoContrastText = "#ffffffff",
 
-                Success = "#D1E7DD",
-                SuccessDarken = "#7EBBA0",
-                SuccessLighten = "#DEEDE6",
-                SuccessContrastText = "#0F5132",
+                Success = "#00c853ff",
+                SuccessDarken = "#00a344",
+                SuccessLighten = "#00eb62",
+                SuccessContrastText = "#ffffffff",
 
-                Warning = "#FFF3CD",
-                WarningDarken = "#FFD449",
-                WarningLighten = "#FFF7DB",
-                WarningContrastText = "#664D03",
+                Warning = "#f39c12",
+                WarningDarken = "#d68100",
+                WarningLighten = "#ffa724",
+                WarningContrastText = "#ffffffff",
 
-                Error = "#F8D7DA",
-                ErrorDarken = "#E46772",
-                ErrorLighten = "#FAE3E5",
-                ErrorContrastText = "#842029",
+                Error = "#e74c3c",
+                ErrorDarken = "#f21c0d",
+                ErrorLighten = "#f66055",
+                ErrorContrastText = "#ffffffff",
 
-                Dark = "#424242FF",
-                DarkDarken = "#2E2E2E",
-                DarkLighten = "#575757",
+                Dark = "#27272f",
+                DarkDarken = "#222229",
+                DarkLighten = "#434350",
                 DarkContrastText = "#FFFFFFFF",
 
                 TextPrimary = "#424242ff",
@@ -154,7 +154,7 @@
                 ActionDisabled = "#00000042",
                 ActionDisabledBackground = "#0000001E",
 
-                Background = "#FFFFFFFF",
+                Background = "#C8C8C8ff",
                 BackgroundGrey = "#F5F5F5FF",
 
                 Surface = "#FFFFFFFF",
@@ -163,7 +163,7 @@
                 DrawerText = "#424242FF",
                 DrawerIcon = "#F1F1F1FF",
 
-                AppbarBackground = "#594AE2FF",
+                AppbarBackground = "#594ae2ff",
                 AppbarText = "#FFFFFFFF",
 
                 LinesDefault = "#0000001E",
@@ -195,7 +195,7 @@
             {
                 Default = new()
                 {
-                    //FontFamily = new[] { "Lato", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", "sans-serif", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" }
+                    FontFamily = new[] { "Lato", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", "sans-serif", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" }
                 }
             },
             Palette = new()
@@ -203,44 +203,44 @@
                 Black = "#27272F",
                 White = "#FFFFFFFF",
 
-                Primary = "#6b35e8",
-                PrimaryDarken = "#4514B8",
-                PrimaryLighten = "#956FEF",
+                Primary = "#2c3e50",
+                PrimaryDarken = "#253444",
+                PrimaryLighten = "#3F5973",
                 PrimaryContrastText = "#FFFFFFFF",
 
-                Secondary = "#6C757D",
-                SecondaryDarken = "#4E545A",
-                SecondaryLighten = "#969DA4",
+                Secondary = "#4E545A",
+                SecondaryDarken = "#383C40",
+                SecondaryLighten = "#5A6067",
                 SecondaryContrastText = "#FFFFFFFF",
 
-                Tertiary = "#4D4D86",
-                TertiaryDarken = "#37375F",
-                TertiaryLighten = "#7777B1",
+                Tertiary = "#3D5E77",
+                TertiaryDarken = "#2B4254",
+                TertiaryLighten = "#456985",
                 TertiaryContrastText = "#FFFFFFFF",
 
-                Info = "#0dcaf0",
-                InfoDarken = "#0992AD",
-                InfoLighten = "#52DBF6",
+                Info = "#2196f3ff",
+                InfoDarken = "#0c80df",
+                InfoLighten = "#47a7f5",
                 InfoContrastText = "#FFFFFFFF",
 
-                Success = "#198754",
-                SuccessDarken = "#125F3B",
-                SuccessLighten = "#2BD887",
+                Success = "#00c853ff",
+                SuccessDarken = "#00a344",
+                SuccessLighten = "#00eb62",
                 SuccessContrastText = "#FFFFFFFF",
 
-                Warning = "#ffc107",
-                WarningDarken = "#BA8B00",
-                WarningLighten = "#FFD24D",
+                Warning = "#ff9800ff",
+                WarningDarken = "#d68100",
+                WarningLighten = "#ffa724",
                 WarningContrastText = "#FFFFFFFF",
 
-                Error = "#dc3545",
-                ErrorDarken = "#A71E2B",
-                ErrorLighten = "#E6717C",
+                Error = "#f44336ff",
+                ErrorDarken = "#f21c0d",
+                ErrorLighten = "#f66055",
                 ErrorContrastText = "#FFFFFFFF",
 
-                Dark = "#424242FF",
-                DarkDarken = "#2E2E2E",
-                DarkLighten = "#575757",
+                Dark = "#27272f",
+                DarkDarken = "#222229",
+                DarkLighten = "#434350",
                 DarkContrastText = "#FFFFFFFF",
 
                 TextPrimary = "rgba(255,255,255, 0.70)",
@@ -251,7 +251,7 @@
                 ActionDisabled = "rgba(255,255,255, 0.26)",
                 ActionDisabledBackground = "rgba(255,255,255, 0.12)",
 
-                Background = "#1A1A27FF",
+                Background = "#1a1a27ff",
                 BackgroundGrey = "#151521FF",
 
                 Surface = "#1E1E2DFF",
@@ -260,7 +260,7 @@
                 DrawerText = "#92929FFF",
                 DrawerIcon = "#92929FFF",
 
-                AppbarBackground = "#1A1A27CC",
+                AppbarBackground = "#1a1a27cc",
                 AppbarText = "#92929FFF",
 
                 LinesDefault = "#33323EFF",
