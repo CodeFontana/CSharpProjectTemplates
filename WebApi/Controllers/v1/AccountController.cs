@@ -5,15 +5,16 @@ using Microsoft.AspNetCore.Mvc;
 using WebApi.Filters;
 using WebApi.Interfaces;
 
-namespace WebApi.Controllers;
+namespace WebApi.Controllers.v1;
 
-[Route("api/[controller]")]
+[Route("api/v{version:apiVersion}/[controller]")]
 [ApiController]
-public class AccountsController : ControllerBase
+[ApiVersion("1.0")]
+public class AccountController : ControllerBase
 {
     private readonly IAccountService _accountService;
 
-    public AccountsController(IAccountService accountService)
+    public AccountController(IAccountService accountService)
     {
         _accountService = accountService;
     }

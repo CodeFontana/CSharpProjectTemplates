@@ -96,7 +96,7 @@ public class Program
 
         builder.Services.AddSwaggerGen(c =>
         {
-            c.SwaggerDoc("v1", new OpenApiInfo { Title = "FiApi", Version = "v1" });
+            c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebApi", Version = "v1" });
             c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
             {
                 In = ParameterLocation.Header,
@@ -118,6 +118,13 @@ public class Program
                         Array.Empty<string>()
                     }
             });
+        });
+
+        builder.Services.AddApiVersioning(options =>
+        {
+            options.AssumeDefaultVersionWhenUnspecified = true;
+            options.DefaultApiVersion = new(1, 0);
+            options.ReportApiVersions = true;
         });
 
         WebApplication app = builder.Build();
