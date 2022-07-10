@@ -31,6 +31,8 @@ public class TokenService : ITokenService
         {
             new Claim(ClaimTypes.Name, appUser.UserName),
             new Claim(ClaimTypes.NameIdentifier, appUser.Id.ToString()),
+            new Claim(JwtRegisteredClaimNames.Sub, appUser.Id.ToString()),
+            new Claim(JwtRegisteredClaimNames.UniqueName, appUser.UserName),
             new Claim(JwtRegisteredClaimNames.Iss, _jwtIssuer),
             new Claim(JwtRegisteredClaimNames.Aud, _jwtAudience),
             new Claim(JwtRegisteredClaimNames.Nbf, new DateTimeOffset(DateTime.Now).ToUnixTimeSeconds().ToString()),
@@ -42,9 +44,8 @@ public class TokenService : ITokenService
         IList<string> roles = await _userManager.GetRolesAsync(appUser);
         claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
 
-        var token = new JwtSecurityToken(
-            new JwtHeader(new SigningCredentials(_key, SecurityAlgorithms.HmacSha256)),
-            new JwtPayload(claims));
+        SigningCredentials signingCredentials = new SigningCredentials(_key, SecurityAlgorithms.HmacSha256);
+        JwtSecurityToken token = new JwtSecurityToken(new JwtHeader(signingCredentials), new JwtPayload(claims));
 
         JwtSecurityTokenHandler tokenHandler = new();
         return tokenHandler.WriteToken(token);
