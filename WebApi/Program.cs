@@ -2,6 +2,7 @@ using DataLibrary.Data;
 using DataLibrary.Entities;
 using DataLibrary.Identity;
 using FileLoggerLibrary;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -26,7 +27,7 @@ public class Program
             config.ClearProviders();
             config.AddFileLogger(builder.Configuration);
         });
-        
+
         builder.Services.AddDbContext<IdentityContext>(options =>
         {
             options.UseSqlServer(builder.Configuration.GetConnectionString("Default"));
@@ -62,6 +63,13 @@ public class Program
                     ClockSkew = TimeSpan.FromMinutes(10)
                 };
             });
+
+        builder.Services.AddAuthorization(config =>
+        {
+            config.FallbackPolicy = new AuthorizationPolicyBuilder()
+                .RequireAuthenticatedUser()
+                .Build();
+        });
 
         builder.Services.AddScoped<SeedData>();
         builder.Services.AddScoped<ITokenService, TokenService>();
