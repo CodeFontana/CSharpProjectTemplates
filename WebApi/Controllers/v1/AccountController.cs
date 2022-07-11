@@ -24,7 +24,7 @@ public class AccountController : ControllerBase
     [ServiceFilter(typeof(UserActivity))]
     public async Task<ActionResult<ServiceResponseModel<AuthUserModel>>> RegisterAsync(RegisterUserModel registerUser)
     {
-        ServiceResponseModel<AuthUserModel> response = await _accountService.RegisterAsync(HttpContext?.User?.Identity?.Name, registerUser);
+        ServiceResponseModel<AuthUserModel> response = await _accountService.RegisterAsync(HttpContext.User.Identity.Name, registerUser);
 
         if (response.Success)
         {
