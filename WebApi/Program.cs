@@ -94,29 +94,40 @@ public class Program
 
         builder.Services.AddEndpointsApiExplorer();
 
-        builder.Services.AddSwaggerGen(c =>
+        builder.Services.AddSwaggerGen(options =>
         {
-            c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebApi", Version = "v1" });
-            c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+            options.SwaggerDoc("v1", new OpenApiInfo
+            {
+                Title = "WebApi v1",
+                Version = "v1",
+                Description = "This is a template API"
+            });
+            //options.SwaggerDoc("v2", new OpenApiInfo
+            //{
+            //    Title = "WebApi v2",
+            //    Version = "v2",
+            //    Description = "This is a template API"
+            //});
+            options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
             {
                 In = ParameterLocation.Header,
                 Description = "Specify JWT bearer token",
                 Name = "Authorization",
                 Type = SecuritySchemeType.ApiKey
             });
-            c.AddSecurityRequirement(new OpenApiSecurityRequirement
+            options.AddSecurityRequirement(new OpenApiSecurityRequirement
             {
+                {
+                    new OpenApiSecurityScheme
                     {
-                        new OpenApiSecurityScheme
+                        Reference = new OpenApiReference
                         {
-                            Reference = new OpenApiReference
-                            {
-                                Type = ReferenceType.SecurityScheme,
-                                Id = "Bearer"
-                            }
-                        },
-                        Array.Empty<string>()
-                    }
+                            Type = ReferenceType.SecurityScheme,
+                            Id = "Bearer"
+                        }
+                    },
+                    Array.Empty<string>()
+                }
             });
         });
 
@@ -127,6 +138,12 @@ public class Program
             options.ReportApiVersions = true;
         });
 
+        builder.Services.AddVersionedApiExplorer(options =>
+        {
+            options.GroupNameFormat = "'v'VVV";
+            options.SubstituteApiVersionInUrl = true;
+        });
+
         WebApplication app = builder.Build();
         await ApplyDbMigrations(app);
 
@@ -135,7 +152,11 @@ public class Program
         if (app.Environment.IsDevelopment())
         {
             app.UseSwagger();
-            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "WebApi v1"));
+            app.UseSwaggerUI(options =>
+            {
+                // options.SwaggerEndpoint("/swagger/v2/swagger.json", "WebApi v2");
+                options.SwaggerEndpoint("/swagger/v1/swagger.json", "WebApi v1");
+            });
         }
 
         app.UseHttpsRedirection();
