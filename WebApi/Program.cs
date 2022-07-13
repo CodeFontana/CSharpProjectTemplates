@@ -2,7 +2,8 @@ using DataLibrary.Data;
 using DataLibrary.Entities;
 using DataLibrary.Identity;
 using FileLoggerLibrary;
-using Microsoft.AspNetCore.Authorization;
+using HealthChecks.UI.Client;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -64,12 +65,12 @@ public class Program
                 };
             });
 
-        builder.Services.AddAuthorization(config =>
-        {
-            config.FallbackPolicy = new AuthorizationPolicyBuilder()
-                .RequireAuthenticatedUser()
-                .Build();
-        });
+        //builder.Services.AddAuthorization(config =>
+        //{
+        //    config.FallbackPolicy = new AuthorizationPolicyBuilder()
+        //        .RequireAuthenticatedUser()
+        //        .Build();
+        //});
 
         builder.Services.AddScoped<SeedData>();
         builder.Services.AddScoped<ITokenService, TokenService>();
@@ -144,6 +145,16 @@ public class Program
             options.SubstituteApiVersionInUrl = true;
         });
 
+        builder.Services.AddHealthChecks()
+                        .AddDbContextCheck<IdentityContext>("Identity Database Health Check");
+
+        builder.Services.AddHealthChecksUI(options =>
+        {
+            options.AddHealthCheckEndpoint("WebAPI", "/health");
+            options.SetEvaluationTimeInSeconds(60);
+            options.SetMinimumSecondsBetweenFailureNotifications(600);
+        }).AddInMemoryStorage();
+
         WebApplication app = builder.Build();
         await ApplyDbMigrations(app);
 
@@ -164,6 +175,15 @@ public class Program
         app.UseAuthentication();
         app.UseAuthorization();
         app.MapControllers();
+        app.MapHealthChecks("/health", new HealthCheckOptions
+        {
+            ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+        });
+        app.MapHealthChecksUI(setup =>
+        {
+            setup.AddCustomStylesheet("Resources\\health-ui.css");
+        });
+
         app.Run();
     }
 
