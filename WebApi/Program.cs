@@ -76,6 +76,7 @@ public class Program
         builder.Services.AddScoped<ITokenService, TokenService>();
         builder.Services.AddScoped<IAccountRepository, AccountRepository>();
         builder.Services.AddScoped<IAccountService, AccountService>();
+        builder.Services.AddResponseCaching();
         builder.Services.AddMemoryCache();
         builder.Services.AddScoped<UserActivity>();
 
@@ -174,6 +175,7 @@ public class Program
         app.UseCors("OpenCorsPolicy");
         app.UseAuthentication();
         app.UseAuthorization();
+        app.UseResponseCaching();
         app.MapControllers();
         app.MapHealthChecks("/health", new HealthCheckOptions
         {

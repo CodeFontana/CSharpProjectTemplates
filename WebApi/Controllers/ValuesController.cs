@@ -7,6 +7,7 @@ namespace WebApi.Controllers;
 public class ValuesController : ControllerBase
 {
     [HttpGet]
+    [ResponseCache(Duration = 30, Location = ResponseCacheLocation.Any, NoStore = false)]
     public IEnumerable<string> Get()
     {
         return new string[] { "value1", "value2" };
