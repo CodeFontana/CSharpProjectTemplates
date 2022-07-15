@@ -14,6 +14,7 @@ using WebApi.Filters;
 using WebApi.Interfaces;
 using WebApi.Middleware;
 using WebApi.Services;
+using AspNetCoreRateLimit;
 
 namespace WebApi;
 
@@ -156,6 +157,14 @@ public class Program
             options.SetMinimumSecondsBetweenFailureNotifications(600);
         }).AddInMemoryStorage();
 
+        builder.Services.Configure<IpRateLimitOptions>(
+            builder.Configuration.GetSection("IpRateLimiting"));
+        builder.Services.AddSingleton<IIpPolicyStore, MemoryCacheIpPolicyStore>();
+        builder.Services.AddSingleton<IRateLimitCounterStore, MemoryCacheRateLimitCounterStore>();
+        builder.Services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>();
+        builder.Services.AddSingleton<IProcessingStrategy, AsyncKeyLockProcessingStrategy>();
+        builder.Services.AddInMemoryRateLimiting();
+
         WebApplication app = builder.Build();
         await ApplyDbMigrations(app);
 
@@ -177,6 +186,7 @@ public class Program
         app.UseAuthorization();
         app.UseResponseCaching();
         app.MapControllers();
+        app.UseIpRateLimiting();
         app.MapHealthChecks("/health", new HealthCheckOptions
         {
             ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
