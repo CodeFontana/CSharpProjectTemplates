@@ -8,16 +8,22 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <Compile Remove="log\**" />
-	  <Content Remove="log\**" />
-	  <EmbeddedResource Remove="log\**" />
-	  <None Remove="log\**" />
+		<Compile Remove="log\**" />
+		<Content Remove="log\**" />
+		<EmbeddedResource Remove="log\**" />
+		<None Remove="log\**" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="CodeFoxtrot.FileLogger" Version="1.0.5" />
 		<PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
 		<PackageReference Include="Microsoft.Extensions.Hosting.WindowsServices" Version="6.0.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="appsettings.*.json">
+			<DependentUpon>appsettings.json</DependentUpon>
+		</None>
 	</ItemGroup>
 
 </Project>
