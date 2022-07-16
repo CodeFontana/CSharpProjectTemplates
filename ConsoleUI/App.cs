@@ -49,12 +49,12 @@ public class App : IHostedService
 
     public async Task ExecuteAsync()
     {
-        _logger.LogCritical("Hello, Critical!");
-        _logger.LogDebug("Hello, Debug!");
-        _logger.LogError("Hello, Error!");
-        _logger.LogInformation("Hello, World!");
         _logger.LogTrace("Hello, Trace!");
+        _logger.LogDebug("Hello, Debug!");
+        _logger.LogInformation("Hello, World!");
         _logger.LogWarning("Hello, Warning!");
+        _logger.LogError("Hello, Error!");
+        _logger.LogCritical("Hello, Critical!");
 
         await Task.Delay(1);
     }
