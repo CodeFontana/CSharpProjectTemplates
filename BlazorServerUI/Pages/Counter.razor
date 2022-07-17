@@ -1,0 +1,24 @@
+﻿@page "/counter"
+
+<PageTitle>Blazor Server - Counter</PageTitle>
+
+<section>
+    <MudText Typo="Typo.h2">Counter</MudText>
+    <MudText Class="mt-3 ml-1" Typo="Typo.h5">Current count: @_currentCount</MudText>
+    <MudButton Class="mt-5 ml-1" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Large" OnClick="IncrementCount">Click me</MudButton>
+    <MudButton Class="mt-5 ml-2" Variant="Variant.Filled" Color="Color.Warning" Size="Size.Large" OnClick="ResetCount">Reset</MudButton>
+</section>
+
+@code {
+    private int _currentCount = 0;
+
+    private void IncrementCount()
+    {
+        _currentCount += 1;
+    }
+
+    private void ResetCount()
+    {
+        _currentCount = 0;
+    }
+}

@@ -43,6 +43,10 @@
                 <MudText Typo="Typo.body1">Home</MudText>
             </MudNavLink>
 
+            <MudNavLink Href="/counter" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Add">
+                <MudText Typo="Typo.body1">Counter</MudText>
+            </MudNavLink>
+
             @if (HostEnv.IsDevelopment())
             {
                 <MudNavLink Href="/theme" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Palette">
