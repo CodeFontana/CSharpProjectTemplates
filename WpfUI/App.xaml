@@ -24,6 +24,7 @@
             <!--Converters-->
             <convert:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
             <convert:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
+            <convert:InverseBooleanConverter x:Key="InverseBooleanConverter" />
 
             <!--Brushes (Palette from: https://flatuicolors.com/palette/de)-->
             <SolidColorBrush x:Key="BlueHorizon" Color="#FF4B6584"/>
