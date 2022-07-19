@@ -149,7 +149,8 @@ public class Program
         });
 
         builder.Services.AddHealthChecks()
-                        .AddDbContextCheck<IdentityContext>("Identity Database Health Check");
+                        .AddDbContextCheck<IdentityContext>("Identity Database Health Check")
+                        .AddSqlServer(builder.Configuration.GetConnectionString("Default"));
 
         builder.Services.AddHealthChecksUI(options =>
         {
