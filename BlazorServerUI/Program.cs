@@ -8,6 +8,7 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor(); 
 builder.Services.AddMudServices();
 builder.Services.AddBlazoredLocalStorage();
+
 WebApplication app = builder.Build();
 
 if (app.Environment.IsDevelopment() == false)
