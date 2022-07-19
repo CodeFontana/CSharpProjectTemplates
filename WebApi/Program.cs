@@ -15,6 +15,7 @@ using WebApi.Interfaces;
 using WebApi.Middleware;
 using WebApi.Services;
 using AspNetCoreRateLimit;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebApi;
 
@@ -66,12 +67,12 @@ public class Program
                 };
             });
 
-        //builder.Services.AddAuthorization(config =>
-        //{
-        //    config.FallbackPolicy = new AuthorizationPolicyBuilder()
-        //        .RequireAuthenticatedUser()
-        //        .Build();
-        //});
+        builder.Services.AddAuthorization(config =>
+        {
+            config.FallbackPolicy = new AuthorizationPolicyBuilder()
+                .RequireAuthenticatedUser()
+                .Build();
+        });
 
         builder.Services.AddScoped<SeedData>();
         builder.Services.AddScoped<ITokenService, TokenService>();
@@ -190,11 +191,11 @@ public class Program
         app.MapHealthChecks("/health", new HealthCheckOptions
         {
             ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
-        });
+        }).AllowAnonymous();
         app.MapHealthChecksUI(setup =>
         {
             setup.AddCustomStylesheet("Resources\\health-ui.css");
-        });
+        }).AllowAnonymous();
 
         app.Run();
     }
