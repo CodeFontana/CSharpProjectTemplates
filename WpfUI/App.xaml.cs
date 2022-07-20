@@ -8,82 +8,81 @@ using System.IO;
 using System.Windows;
 using WpfUI.ViewModels;
 
-namespace WpfUI
+namespace WpfUI;
+
+public partial class App : Application
 {
-    public partial class App : Application
+    private IHost _appHost;
+
+    public App()
     {
-        private IHost _appHost;
-
-        public App()
+        try
         {
-            try
-            {
-                string env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-                bool isDevelopment = string.IsNullOrEmpty(env) || env.ToLower() == "development";
+            string env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+            bool isDevelopment = string.IsNullOrEmpty(env) || env.ToLower() == "development";
 
-                _appHost = Host.CreateDefaultBuilder()
-                    .ConfigureAppConfiguration(config =>
-                    {
-                        config.SetBasePath(Directory.GetCurrentDirectory());
-                        config.AddJsonFile("appSettings.json", true, true);
-                        config.AddJsonFile($"appSettings.{env}.json", true, true);
-                        config.AddUserSecrets<App>(optional: true);
-                        config.AddEnvironmentVariables();
-                    })
-                    .ConfigureLogging((context, builder) =>
-                    {
-                        builder.ClearProviders();
-                        builder.AddFileLogger(context.Configuration);
-                    })
-                    .ConfigureServices((hostContext, services) =>
-                    {
-                        services.AddScoped<MainViewModel>();
-                        services.AddScoped(sp => new MainWindow(sp.GetRequiredService<MainViewModel>()));
-                    })
-                    .Build();
-            }
-            catch (Exception ex)
-            {
-                string type = ex.GetType().Name;
-                if (type.Equals("StopTheHostException", StringComparison.Ordinal))
+            _appHost = Host.CreateDefaultBuilder()
+                .ConfigureAppConfiguration(config =>
                 {
-                    throw;
-                }
-
-                Console.WriteLine($"Unexpected error: {ex.Message}");
-                Application.Current.Shutdown();
-            }
-        }
-
-        protected override async void OnStartup(StartupEventArgs e)
-        {
-            await _appHost.StartAsync();
-            using IServiceScope scope = _appHost.Services.CreateScope();
-            MainWindow mainWindow = scope.ServiceProvider.GetRequiredService<MainWindow>();
-            mainWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            mainWindow.Show();
-            mainWindow.ToggleMenu.IsChecked = true;
-            base.OnStartup(e);
-        }
-
-        protected override async void OnExit(ExitEventArgs e)
-        {
-            try
-            {
-                if (_appHost != null)
+                    config.SetBasePath(Directory.GetCurrentDirectory());
+                    config.AddJsonFile("appSettings.json", true, true);
+                    config.AddJsonFile($"appSettings.{env}.json", true, true);
+                    config.AddUserSecrets<App>(optional: true);
+                    config.AddEnvironmentVariables();
+                })
+                .ConfigureLogging((context, builder) =>
                 {
-                    await _appHost.StopAsync();
-                    _appHost.Dispose();
-                } 
-            }
-            catch (Exception ex)
+                    builder.ClearProviders();
+                    builder.AddFileLogger(context.Configuration);
+                })
+                .ConfigureServices((hostContext, services) =>
+                {
+                    services.AddTransient<MainViewModel>();
+                    services.AddSingleton(sp => new MainWindow(sp.GetRequiredService<MainViewModel>()));
+                })
+                .Build();
+        }
+        catch (Exception ex)
+        {
+            string type = ex.GetType().Name;
+            if (type.Equals("StopTheHostException", StringComparison.Ordinal))
             {
-                Console.WriteLine($"Unexpected error: {ex.Message}");
+                throw;
             }
-            finally
+
+            Console.WriteLine($"Unexpected error: {ex.Message}");
+            Application.Current.Shutdown();
+        }
+    }
+
+    protected override async void OnStartup(StartupEventArgs e)
+    {
+        await _appHost.StartAsync();
+        using IServiceScope scope = _appHost.Services.CreateScope();
+        MainWindow mainWindow = scope.ServiceProvider.GetRequiredService<MainWindow>();
+        mainWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+        mainWindow.Show();
+        mainWindow.ToggleMenu.IsChecked = true;
+        base.OnStartup(e);
+    }
+
+    protected override async void OnExit(ExitEventArgs e)
+    {
+        try
+        {
+            if (_appHost != null)
             {
-                base.OnExit(e);
-            }
+                await _appHost.StopAsync();
+                _appHost.Dispose();
+            } 
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Unexpected error: {ex.Message}");
+        }
+        finally
+        {
+            base.OnExit(e);
         }
     }
 }
