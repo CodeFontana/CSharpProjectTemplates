@@ -2,6 +2,9 @@
 
 public class RegisterUserModel
 {
+    [Required(ErrorMessage = "Please enter a username")]
+    public string Username { get; set; }
+
     [Required(ErrorMessage = "Please enter your email address")]
     [DataType(DataType.EmailAddress)]
     [EmailAddress]

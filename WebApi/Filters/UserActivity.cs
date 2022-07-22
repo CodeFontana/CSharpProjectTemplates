@@ -12,7 +12,7 @@ public class UserActivity : IAsyncActionFilter
         }
 
         IAccountRepository repo = resultContext!.HttpContext.RequestServices.GetService<IAccountRepository>();
-        AppUser user = await repo.GetAsync(resultContext.HttpContext.User.Identity.Name);
+        AppUser user = await repo.GetAccountAsync(resultContext.HttpContext.User.Identity.Name);
         user.LastActive = DateTime.UtcNow;
         await repo.SaveAllAsync();
     }

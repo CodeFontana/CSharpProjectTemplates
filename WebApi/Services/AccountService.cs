@@ -22,7 +22,7 @@ public class AccountService : IAccountService
 
         try
         {
-            AppUser appUser = await _accountRepository.CreateAsync(registerUser);
+            AppUser appUser = await _accountRepository.CreateAccountAsync(registerUser);
 
             serviceResponse.Success = true;
             serviceResponse.Data = new AuthUserModel
@@ -70,14 +70,14 @@ public class AccountService : IAccountService
         return serviceResponse;
     }
 
-    public async Task<ServiceResponseModel<AccountModel>> GetAccount(string requestor, string username)
+    public async Task<ServiceResponseModel<AccountModel>> GetAccountAsync(string requestor, string username)
     {
         _logger.LogInformation($"Get user account {username}... [{requestor}]");
         ServiceResponseModel<AccountModel> serviceResponse = new();
 
         try
         {
-            AppUser appUser = await _accountRepository.GetAsync(username);
+            AppUser appUser = await _accountRepository.GetAccountAsync(username);
 
             if (appUser != null)
             {
@@ -86,8 +86,8 @@ public class AccountService : IAccountService
                     Id = appUser.Id,
                     Username = appUser.UserName,
                     Email = appUser.Email,
-                    LastActive = appUser.LastActive,
-                    Created = appUser.Created
+                    Created = appUser.Created,
+                    LastActive = appUser.LastActive
                 };
 
                 serviceResponse.Success = true;
@@ -110,14 +110,83 @@ public class AccountService : IAccountService
         return serviceResponse;
     }
 
-    public async Task<ServiceResponseModel<bool>> DeleteAccount(string requestor, string username)
+    public async Task<ServiceResponseModel<List<AccountModel>>> GetAccountsAsync(string requestor)
+    {
+        _logger.LogInformation($"Get user accounts... [{requestor}]");
+        ServiceResponseModel<List<AccountModel>> serviceResponse = new();
+
+        try
+        {
+            List<AppUser> appUsers = await _accountRepository.GetAccountsAsync();
+
+            if (appUsers != null)
+            {
+                List<AccountModel> appAcount = new();
+
+                foreach (AppUser appUser in appUsers)
+                {
+                    appAcount.Add(new AccountModel()
+                    {
+                        Id = appUser.Id,
+                        Username = appUser.UserName,
+                        Email = appUser.Email,
+                        Created = appUser.Created,
+                        LastActive = appUser.LastActive
+                    });
+                }
+
+                serviceResponse.Success = true;
+                serviceResponse.Data = appAcount;
+                serviceResponse.Message = $"Successfully retrieved users [Count={appAcount.Count}]";
+                _logger.LogInformation(serviceResponse.Message);
+            }
+            else
+            {
+                throw new Exception("No users found");
+            }
+        }
+        catch (Exception e)
+        {
+            serviceResponse.Success = false;
+            serviceResponse.Message = e.Message;
+            _logger.LogError(e.Message);
+        }
+
+        return serviceResponse;
+    }
+
+    public async Task<ServiceResponseModel<bool>> UpdateAccountAsync(string requestor, AccountUpdateModel updateAccount)
+    {
+        _logger.LogInformation($"Update user account {updateAccount.Id}/{updateAccount.UserName}... [{requestor}]");
+        ServiceResponseModel<bool> serviceResponse = new();
+
+        try
+        {
+            await _accountRepository.UpdateAccountAsync(updateAccount);
+
+            serviceResponse.Success = true;
+            serviceResponse.Data = true;
+            serviceResponse.Message = $"Successfully updated user [{updateAccount.UserName}]";
+            _logger.LogInformation(serviceResponse.Message);
+        }
+        catch (Exception e)
+        {
+            serviceResponse.Success = false;
+            serviceResponse.Message = e.Message;
+            _logger.LogError(e.Message);
+        }
+
+        return serviceResponse;
+    }
+
+    public async Task<ServiceResponseModel<bool>> DeleteAccountAsync(string requestor, string username)
     {
         _logger.LogInformation($"Delete user account {username}... [{requestor}]");
         ServiceResponseModel<bool> serviceResponse = new();
 
         try
         {
-            IdentityResult result = await _accountRepository.DeleteAsync(requestor, username);
+            IdentityResult result = await _accountRepository.DeleteAccountAsync(requestor, username);
 
             if (result.Succeeded)
             {

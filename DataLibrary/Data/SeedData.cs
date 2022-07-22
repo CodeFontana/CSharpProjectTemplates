@@ -24,6 +24,7 @@ public class SeedData
                 List<AppRole> roles = new()
                 {
                     new AppRole { Name = "Administrator" },
+                    new AppRole { Name = "User" },
                 };
 
                 foreach (var role in roles)
@@ -41,7 +42,7 @@ public class SeedData
                 };
 
                 await _userManager.CreateAsync(admin, "Passw0rd123!!");
-                await _userManager.AddToRolesAsync(admin, new[] { "Administrator" });
+                await _userManager.AddToRolesAsync(admin, new[] { "Administrator", "User" });
             }
         }
         catch (Exception ex)

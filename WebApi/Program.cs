@@ -50,6 +50,11 @@ public class Program
 
         builder.Services.AddAuthorization(config =>
         {
+            config.AddPolicy("Administrator", policy =>
+            {
+                policy.RequireRole("Administrator");
+            });
+
             config.FallbackPolicy = new AuthorizationPolicyBuilder()
                 .RequireAuthenticatedUser()
                 .Build();

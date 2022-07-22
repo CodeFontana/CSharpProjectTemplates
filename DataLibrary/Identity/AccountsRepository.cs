@@ -15,15 +15,37 @@ public class AccountRepository : IAccountRepository
         _signInManager = signInManager;
     }
 
-    public async Task<AppUser> CreateAsync(RegisterUserModel registerUser)
+    public async Task<AppUser> GetAccountAsync(string username)
+    {
+        if (string.IsNullOrWhiteSpace(username))
+        {
+            throw new ArgumentException("Username must not be null or empty");
+        }
+
+        return await _userManager.Users
+            .AsNoTracking()
+            .SingleOrDefaultAsync(u =>
+                u.NormalizedEmail == username.ToUpper()
+                || u.UserName.ToUpper() == username.ToUpper());
+    }
+
+    public async Task<List<AppUser>> GetAccountsAsync()
+    {
+        return await _userManager.Users
+            .AsNoTracking()
+            .ToListAsync();
+    }
+
+    public async Task<AppUser> CreateAccountAsync(RegisterUserModel registerUser)
     {
         if (await UserExistsAsync(registerUser.Email))
         {
-            throw new ArgumentException($"User is already registered [{registerUser.Email}]");
+            throw new ArgumentException($"User is already registered with [{registerUser.Email}]");
         }
 
         AppUser appUser = new()
         {
+            UserName = registerUser.Username,
             Email = registerUser.Email
         };
 
@@ -39,7 +61,7 @@ public class AccountRepository : IAccountRepository
         if (roleResult.Succeeded == false)
         {
             await _userManager.DeleteAsync(appUser);
-            throw new Exception($"Failed to register user [{appUser.UserName}]");
+            throw new Exception($"Failed to register user [{appUser.Email}]");
         }
 
         return appUser;
@@ -48,11 +70,13 @@ public class AccountRepository : IAccountRepository
     public async Task<AppUser> LoginAsync(LoginUserModel loginUser)
     {
         AppUser appUser = await _userManager.Users
-            .SingleOrDefaultAsync(u => u.NormalizedEmail == loginUser.Email.ToUpper());
+            .SingleOrDefaultAsync(u =>
+                u.NormalizedEmail == loginUser.Username.ToUpper()
+                || u.UserName.ToUpper() == loginUser.Username.ToUpper());
 
         if (appUser == null)
         {
-            throw new ArgumentException($"Invalid user [{loginUser.Email}]");
+            throw new ArgumentException($"Invalid user [{loginUser.Username}]");
         }
 
         SignInResult result = await _signInManager.CheckPasswordSignInAsync(
@@ -60,31 +84,51 @@ public class AccountRepository : IAccountRepository
 
         if (result.Succeeded == false)
         {
-            throw new Exception($"Invalid password for user [{loginUser.Email}]");
+            throw new Exception($"Invalid password for user [{loginUser.Username}]");
         }
 
         return appUser;
     }
 
-    public async Task<AppUser> GetAsync(string username)
+    public async Task UpdateAccountAsync(AccountUpdateModel updateAccount)
     {
-        if (string.IsNullOrWhiteSpace(username))
+        if (updateAccount is null)
         {
-            throw new ArgumentException("Username must not be NULL or empty");
+            throw new ArgumentException("Account for update must not be null");
+        }
+        else if (string.IsNullOrWhiteSpace(updateAccount.UserName))
+        {
+            throw new ArgumentException("Username cannot be null or empty");
+        }
+        else if (string.IsNullOrWhiteSpace(updateAccount.Email))
+        {
+            throw new ArgumentException("Email cannot be null or empty");
         }
 
-        return await _userManager.Users.SingleOrDefaultAsync(u => u.UserName == username);
+        AppUser user = await _userManager.Users
+            .SingleOrDefaultAsync(u => u.Id == updateAccount.Id);
+
+        if (user == null)
+        {
+            throw new ArgumentException($"Account not found for update [{updateAccount.Id}/{updateAccount.UserName} - {updateAccount.Email}]");
+        }
+
+        user.Email = updateAccount.Email;
+        user.UserName = updateAccount.UserName;
+        await _db.SaveChangesAsync();
     }
 
-    public async Task<IdentityResult> DeleteAsync(string requestor, string username)
+    public async Task<IdentityResult> DeleteAccountAsync(string requestor, string username)
     {
         if (string.IsNullOrWhiteSpace(username))
         {
-            throw new ArgumentException("Username must not be NULL or empty");
+            throw new ArgumentException("Username must not be null or empty");
         }
 
         AppUser appUser = await _userManager.Users
-            .SingleOrDefaultAsync(u => u.NormalizedEmail == username.ToUpper());
+            .SingleOrDefaultAsync(u => 
+            u.UserName == username.ToUpper()
+            || u.NormalizedEmail == username.ToUpper());
 
         if (appUser == null)
         {
@@ -101,7 +145,7 @@ public class AccountRepository : IAccountRepository
 
     private async Task<bool> UserExistsAsync(string username)
     {
-        return await _userManager.Users.AnyAsync(u => u.UserName == username);
+        return await _userManager.Users.AnyAsync(e => e.NormalizedEmail == username.ToUpper());
     }
 
     public async Task<bool> SaveAllAsync()
