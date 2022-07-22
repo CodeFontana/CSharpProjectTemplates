@@ -1,7 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-
-namespace WpfUI.Commands;
+﻿namespace WpfUI.Commands;
 
 public abstract class CommandBaseAsync : CommandBase
 {

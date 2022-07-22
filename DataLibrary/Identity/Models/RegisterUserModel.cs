@@ -1,7 +1,4 @@
-﻿using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-
-namespace DataLibrary.Identity.Models;
+﻿namespace DataLibrary.Identity.Models;
 
 public class RegisterUserModel
 {

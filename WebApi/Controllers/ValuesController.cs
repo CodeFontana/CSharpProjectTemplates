@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-
-namespace WebApi.Controllers;
+﻿namespace WebApi.Controllers;
 [Route("api/v{version:apiVersion}/[controller]")]
 [ApiController]
 [ApiVersionNeutral]

@@ -1,9 +1,4 @@
-﻿using DataLibrary.Entities;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-
-namespace DataLibrary.Data;
+﻿namespace DataLibrary.Data;
 
 public class SeedData
 {

@@ -1,9 +1,4 @@
-﻿using DataLibrary.Entities;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
-
-namespace DataLibrary.Identity;
+﻿namespace DataLibrary.Identity;
 
 public class IdentityContext : IdentityDbContext<
     AppUser,

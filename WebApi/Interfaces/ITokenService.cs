@@ -1,6 +1,4 @@
-﻿using DataLibrary.Entities;
-
-namespace WebApi.Interfaces;
+﻿namespace WebApi.Interfaces;
 
 public interface ITokenService
 {

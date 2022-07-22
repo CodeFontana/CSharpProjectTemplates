@@ -1,7 +1,4 @@
-﻿using System;
-using WpfUI.ViewModels;
-
-namespace WpfUI.Commands;
+﻿namespace WpfUI.Commands;
 
 public class NavigateCommand : CommandBase
 {

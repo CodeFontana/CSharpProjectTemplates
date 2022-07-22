@@ -1,7 +1,4 @@
-﻿using System;
-using System.Globalization;
-
-namespace WpfUI.Converters;
+﻿namespace WpfUI.Converters;
 
 public class InverseBooleanConverter
 {

@@ -1,6 +1,3 @@
-using FileLoggerLibrary;
-using WorkerService;
-
 try
 {
     string env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");

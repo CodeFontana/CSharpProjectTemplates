@@ -1,7 +1,4 @@
-﻿using DataLibrary.Identity.Models;
-using DataLibrary.Models;
-
-namespace WebApi.Interfaces;
+﻿namespace WebApi.Interfaces;
 
 public interface IAccountService
 {

@@ -1,8 +1,4 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-
-namespace WpfUI.ViewModels;
+﻿namespace WpfUI.ViewModels;
 
 public class ViewModelBase : INotifyPropertyChanged
 {

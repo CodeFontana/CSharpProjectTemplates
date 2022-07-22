@@ -1,9 +1,4 @@
-﻿using System;
-using System.Globalization;
-using System.Windows;
-using System.Windows.Data;
-
-namespace WpfUI.Converters;
+﻿namespace WpfUI.Converters;
 
 public class NullToVisibilityConverter : IValueConverter
 {

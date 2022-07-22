@@ -1,11 +1,4 @@
-﻿using DataLibrary.Entities;
-using DataLibrary.Identity;
-using DataLibrary.Identity.Models;
-using DataLibrary.Models;
-using Microsoft.AspNetCore.Identity;
-using WebApi.Interfaces;
-
-namespace WebApi.Services;
+﻿namespace WebApi.Services;
 
 public class AccountService : IAccountService
 {

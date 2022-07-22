@@ -1,8 +1,4 @@
-﻿using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
-
-namespace WpfUI.Controls;
+﻿namespace WpfUI.Controls;
 
 public class TextboxWithPreview : TextBox
 {

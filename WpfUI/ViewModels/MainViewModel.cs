@@ -1,7 +1,4 @@
-﻿using System.Windows.Input;
-using WpfUI.Commands;
-
-namespace WpfUI.ViewModels;
+﻿namespace WpfUI.ViewModels;
 
 public class MainViewModel : ViewModelBase
 {

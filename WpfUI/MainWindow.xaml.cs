@@ -1,13 +1,10 @@
-﻿using System.Windows;
+﻿namespace WpfUI;
 
-namespace WpfUI
+public partial class MainWindow : Window
 {
-    public partial class MainWindow : Window
+    public MainWindow(object dataContext)
     {
-        public MainWindow(object dataContext)
-        {
-            InitializeComponent();
-            DataContext = dataContext;
-        }
+        InitializeComponent();
+        DataContext = dataContext;
     }
 }

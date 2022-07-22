@@ -1,12 +1,9 @@
-﻿using System.Windows.Controls;
+﻿namespace WpfUI.Views;
 
-namespace WpfUI.Views
+public partial class CounterView : UserControl
 {
-    public partial class CounterView : UserControl
+    public CounterView()
     {
-        public CounterView()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

@@ -1,22 +1,3 @@
-using DataLibrary.Data;
-using DataLibrary.Entities;
-using DataLibrary.Identity;
-using FileLoggerLibrary;
-using HealthChecks.UI.Client;
-using Microsoft.AspNetCore.Diagnostics.HealthChecks;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
-using System.Text;
-using System.Text.Json.Serialization;
-using WebApi.Filters;
-using WebApi.Interfaces;
-using WebApi.Middleware;
-using WebApi.Services;
-using AspNetCoreRateLimit;
-using Microsoft.AspNetCore.Authorization;
-
 namespace WebApi;
 
 public class Program
