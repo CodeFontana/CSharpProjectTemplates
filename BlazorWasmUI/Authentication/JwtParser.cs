@@ -1,7 +1,4 @@
-﻿using System.Security.Claims;
-using System.Text.Json;
-
-namespace BlazorWasmUI.Authentication;
+﻿namespace BlazorWasmUI.Authentication;
 
 public static class JwtParser
 {

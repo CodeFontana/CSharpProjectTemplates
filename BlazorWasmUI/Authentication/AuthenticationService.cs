@@ -1,11 +1,4 @@
-﻿using BlazorWasmUI.Interfaces;
-using DataLibrary.Identity.Models;
-using DataLibrary.Models;
-using Microsoft.AspNetCore.Components.Authorization;
-using System.Net.Http.Json;
-using System.Text.Json;
-
-namespace BlazorWasmUI.Authentication;
+﻿namespace BlazorWasmUI.Authentication;
 
 public class AuthenticationService : IAuthenticationService
 {

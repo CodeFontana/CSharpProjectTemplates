@@ -1,7 +1,3 @@
-using Blazored.LocalStorage;
-using MudBlazor.Services;
-using ConsoleLoggerLibrary;
-
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 builder.WebHost.UseStaticWebAssets();
 

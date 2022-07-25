@@ -1,7 +1,4 @@
-﻿using DataLibrary.Identity.Models;
-using DataLibrary.Models;
-
-namespace BlazorWasmUI.Interfaces;
+﻿namespace BlazorWasmUI.Interfaces;
 
 public interface IAuthenticationService
 {

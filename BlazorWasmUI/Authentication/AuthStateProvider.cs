@@ -1,11 +1,4 @@
-﻿using Blazored.LocalStorage;
-using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using System.Net.Http.Headers;
-using System.Security.Claims;
-
-namespace BlazorWasmUI.Authentication;
+﻿namespace BlazorWasmUI.Authentication;
 
 public class AuthStateProvider : AuthenticationStateProvider
 {
