@@ -44,6 +44,7 @@ public class Program
                     IssuerSigningKey = new SymmetricSecurityKey(
                         Encoding.ASCII.GetBytes(
                             builder.Configuration.GetValue<string>("Authentication:JwtSecurityKey"))),
+                    ValidateLifetime = true,
                     ClockSkew = TimeSpan.FromMinutes(10)
                 };
             });
