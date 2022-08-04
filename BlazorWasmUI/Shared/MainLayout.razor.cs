@@ -2,12 +2,19 @@
 
 public partial class MainLayout
 {
+    [Inject] AuthenticationStateProvider AuthStateProvider { get; set; }
+    [Inject] IAuthenticationService AuthService { get; set; }
     [Inject] IWebAssemblyHostEnvironment HostEnv { get; set; }
     [Inject] NavigationManager NavMan { get; set; }
+    [Inject] ISnackbar Snackbar { get; set; }
     [Inject] ILocalStorageService LocalStorage { get; set; }
 
     private MudTheme _currentTheme = new();
     private bool _drawerOpen = true;
+    private LoginUserModel _loginUser = new();
+    private InputType _passwordInput = InputType.Password;
+    private string _passwordInputIcon = Icons.Material.Filled.VisibilityOff;
+    private bool _showPassword = false;
 
     protected override async Task OnInitializedAsync()
     {
@@ -21,6 +28,54 @@ public partial class MainLayout
         else
         {
             _currentTheme = lightTheme;
+        }
+    }
+
+    private async Task HandleLoginAsync()
+    {
+        if (string.IsNullOrEmpty(_loginUser.Username))
+        {
+            Snackbar.Add("Please enter your username", Severity.Info);
+            return;
+        }
+        else if (string.IsNullOrEmpty(_loginUser.Password))
+        {
+            Snackbar.Add("Please enter your password", Severity.Info);
+            return;
+        }
+
+        ServiceResponseModel<AuthUserModel> authResult = await AuthService.LoginAsync(_loginUser);
+        _loginUser = new();
+
+        if (authResult.Success)
+        {
+            NavMan.NavigateTo("/");
+        }
+        else
+        {
+            Snackbar.Add($"Login failed: {authResult.Message}", Severity.Error);
+        }
+    }
+
+    private async Task HandleLogoutAsync()
+    {
+        NavMan.NavigateTo("/");
+        await AuthService.LogoutAsync();
+    }
+
+    private void ToggleShowPassword()
+    {
+        if (_showPassword)
+        {
+            _showPassword = false;
+            _passwordInputIcon = Icons.Material.Filled.VisibilityOff;
+            _passwordInput = InputType.Password;
+        }
+        else
+        {
+            _showPassword = true;
+            _passwordInputIcon = Icons.Material.Filled.Visibility;
+            _passwordInput = InputType.Text;
         }
     }
 

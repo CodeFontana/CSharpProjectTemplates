@@ -1,0 +1,41 @@
+﻿@page "/verifyauth"
+
+<PageTitle>Blazor Client - Verify Auth</PageTitle>
+
+<section>
+    <MudContainer>
+        <MudGrid Justify="Justify.Center">
+
+            <MudItem xs="12" Class="d-flex justify-center">
+                <MudText Typo="Typo.h3" Align="Align.Center">Verify Authentication</MudText>
+            </MudItem>
+
+            <AuthorizeView Context="AuthContext">
+
+                <Authorized>
+                    <MudItem xs="12" Class="d-flex justify-center">
+                        <MudText Align="Align.Center" Typo="Typo.h4">
+                            Authenticated as @AuthContext.User.Identity.Name
+                        </MudText>
+                    </MudItem>
+
+                    <MudItem xs="12" Class="d-flex justify-center">
+                        <MudList>
+                            <MudListItem Text="@($"Admin Role: {AuthContext.User.IsInRole("Administrator")}")" />
+                        </MudList>
+                    </MudItem>
+                </Authorized>
+
+                <NotAuthorized>
+                    <MudItem xs="12" Class="d-flex justify-center">
+                        <MudText Align="Align.Center" Typo="Typo.h4">
+                            Not Authenticated
+                        </MudText>
+                    </MudItem>
+                </NotAuthorized>
+
+            </AuthorizeView>
+
+        </MudGrid>
+    </MudContainer>
+</section>
