@@ -1,0 +1,26 @@
+﻿@page "/counter"
+
+<PageTitle>Counter</PageTitle>
+
+<div class="container">
+    <Heading Size="HeadingSize.Is1">Counter</Heading>
+
+    <Paragraph >Current count: @currentCount</Paragraph>
+
+    <Button Color="Color.Primary" Size="Size.Large" @onclick="IncrementCount">Click me</Button>
+    <Button Color="Color.Warning" Size="Size.Large" @onclick="ResetCount">Reset</Button>
+</div>
+
+@code {
+    private int currentCount = 0;
+
+    private void IncrementCount()
+    {
+        currentCount++;
+    }
+
+    private void ResetCount()
+    {
+        currentCount = 0;
+    }
+}
