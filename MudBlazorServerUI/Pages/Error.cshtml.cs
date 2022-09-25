@@ -1,4 +1,4 @@
-﻿namespace BlazorServerUI.Pages;
+﻿namespace MudBlazorServerUI.Pages;
 
 [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
 [IgnoreAntiforgeryToken]

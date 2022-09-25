@@ -1,4 +1,4 @@
-﻿namespace BlazorWasmUI.Authentication;
+﻿namespace MudBlazorWasmUI.Authentication;
 
 public static class JwtParser
 {

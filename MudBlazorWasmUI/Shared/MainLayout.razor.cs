@@ -1,4 +1,4 @@
-﻿namespace BlazorWasmUI.Shared;
+﻿namespace MudBlazorWasmUI.Shared;
 
 public partial class MainLayout
 {

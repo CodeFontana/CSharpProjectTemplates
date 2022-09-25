@@ -1,4 +1,4 @@
-﻿namespace BlazorWasmUI.Pages;
+﻿namespace MudBlazorWasmUI.Pages;
 
 public partial class Register
 {

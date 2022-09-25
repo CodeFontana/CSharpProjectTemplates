@@ -1,4 +1,4 @@
-﻿namespace BlazorWasmUI.Interfaces;
+﻿namespace MudBlazorWasmUI.Interfaces;
 
 public interface IAuthenticationService
 {

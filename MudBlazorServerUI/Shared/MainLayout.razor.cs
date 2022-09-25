@@ -1,4 +1,4 @@
-﻿namespace BlazorServerUI.Shared;
+﻿namespace MudBlazorServerUI.Shared;
 
 public partial class MainLayout
 {

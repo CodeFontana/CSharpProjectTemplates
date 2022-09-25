@@ -1,7 +1,7 @@
 ﻿global using Blazored.LocalStorage;
-global using BlazorWasmUI;
-global using BlazorWasmUI.Authentication;
-global using BlazorWasmUI.Interfaces;
+global using MudBlazorWasmUI;
+global using MudBlazorWasmUI.Authentication;
+global using MudBlazorWasmUI.Interfaces;
 global using DataLibrary.Identity.Models;
 global using DataLibrary.Models;
 global using Microsoft.AspNetCore.Components;

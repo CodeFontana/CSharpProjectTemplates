@@ -1,4 +1,4 @@
-﻿namespace BlazorWasmUI.Authentication;
+﻿namespace MudBlazorWasmUI.Authentication;
 
 public class AuthenticationService : IAuthenticationService
 {
