@@ -10,26 +10,30 @@ Figuring out how to log messages is probably not the main focus of your new idea
 ## Blazor with MudBlazor
 MudBlazor is just awesome with a comprehensive library of components, features and utilities.  You'll spend a lot less time writing custom CSS, especially media queries for breakpoints.  Rest assured MudBlazor brings custom theme support and you always have the option of bringing your own CSS/styling to the table if need be.
 
+## Blazor with Bootstrap 5 + Blazorise
+Blazorise is a component library supporting multiple CSS frameworks, including Bootstrap 5.  So for those looking for the familiarity of Bootstrap for their frontend, this starter template is the perfect combination of Blazor and Bootstrap to increase your development speed.
+
 ## WPF, brought to you by MVVM
 I'm a big fan of MVVM, just not with some random magical framework.  MVVM is too much of an art that needs to be appreiciated and understood, so this is one area I won't borrow someone else's technology, at least for now.  Basing this template on the lovely .NET Generic Host, there's enough demo code (Views and ViewModels) to demo how to wire all that up, including basic navigation.  Enjoy!
 
 ## Web API + Data Library w/ EF Identity Database using JWT.
 Save the best for last, API is probably the most important Web Project there is. Spanning two templats, WebAPI + DataLibrary, you'll start with an EF Identity Database for in-app authentication using JWT. Also included is API health checks and rate limiting packages. Save yourself an ENORMOUS amount of setup time, so you can dive right into the core of what your API needs to do.
 
-## Download Templates -- *July 20, 2022*
+## Download Templates -- *September 25, 2022*
 These are the latest exports, built from this repository.
 
 Copy these ZIP files to:
 ```
 C:\Users\<Username>\Documents\Visual Studio 2022\Templates\ProjectTemplates
 ```
-[Blazor Server App - MudBlazor.zip](https://github.com/CodeFontana/CSharpProjectTemplates/files/9126762/Blazor.Server.App.-.MudBlazor.zip)  
-[Blazor Web Assembly - MudBlazor.zip](https://github.com/CodeFontana/CSharpProjectTemplates/files/9126763/Blazor.Web.Assembly.-.MudBlazor.zip)  
-[Console App.zip](https://github.com/CodeFontana/CSharpProjectTemplates/files/9126764/Console.App.zip)  
-[Data Library.zip](https://github.com/CodeFontana/CSharpProjectTemplates/files/9126765/Data.Library.zip)  
-[Web API.zip](https://github.com/CodeFontana/CSharpProjectTemplates/files/9146449/Web.API.zip)  
-[Worker Service.zip](https://github.com/CodeFontana/CSharpProjectTemplates/files/9126767/Worker.Service.zip)  
-[WPF App.zip](https://github.com/CodeFontana/CSharpProjectTemplates/files/9126768/WPF.App.zip)  
+[Blazor Server App - Blazorise.zip](https://github.com/CodeFontana/CSharpProjectTemplates/files/9642459/Blazor.Server.App.-.Blazorise.zip)  
+[Blazor Server App - MudBlazor.zip](https://github.com/CodeFontana/CSharpProjectTemplates/files/9642460/Blazor.Server.App.-.MudBlazor.zip)  
+[Blazor Web Assembly - MudBlazor.zip](https://github.com/CodeFontana/CSharpProjectTemplates/files/9642461/Blazor.Web.Assembly.-.MudBlazor.zip)  
+[Console App.zip](https://github.com/CodeFontana/CSharpProjectTemplates/files/9642462/Console.App.zip)  
+[Data Library.zip](https://github.com/CodeFontana/CSharpProjectTemplates/files/9642463/Data.Library.zip)  
+[Web API.zip](https://github.com/CodeFontana/CSharpProjectTemplates/files/9642464/Web.API.zip)  
+[Worker Service.zip](https://github.com/CodeFontana/CSharpProjectTemplates/files/9642465/Worker.Service.zip)  
+[WPF App.zip](https://github.com/CodeFontana/CSharpProjectTemplates/files/9642467/WPF.App.zip)  
 
 Each ZIP contains a _MyTemplate.vstemplate_ file, where you can adjust tagging, if necessary:
 ```
