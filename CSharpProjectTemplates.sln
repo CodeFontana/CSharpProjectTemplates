@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApi", "WebApi\WebApi.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataLibrary", "DataLibrary\DataLibrary.csproj", "{2406217F-EADC-41A1-BB85-E89AA809704A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazoriseServerUI", "BlazoriseServerUI\BlazoriseServerUI.csproj", "{DFA86DD2-A9B4-41B2-A478-6871B519932E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazoriseServerUI", "BlazoriseServerUI\BlazoriseServerUI.csproj", "{DFA86DD2-A9B4-41B2-A478-6871B519932E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
