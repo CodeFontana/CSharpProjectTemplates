@@ -1,0 +1,16 @@
+﻿@inject NavigationManager Nav
+
+<PageTitle>Not Authorized</PageTitle>
+
+<div class="container">
+    <RadzenText TextStyle="TextStyle.H3" TextAlign="TextAlign.Center">You are not authorized to view this page.</RadzenText>
+    <hr />
+    <RadzenButton class="d-flex mx-auto" ButtonStyle="ButtonStyle.Primary" Click="HandleClick">Go Home</RadzenButton>
+</div>
+
+@code {
+    private void HandleClick()
+    {
+        Nav.NavigateTo("/");
+    }
+}

@@ -1,0 +1,26 @@
+﻿@page "/counter"
+
+<PageTitle>Counter - Blazor Server</PageTitle>
+
+<div class="container-md">
+    <RadzenText TextStyle="TextStyle.H3">Counter</RadzenText>
+
+    <RadzenText TextStyle="TextStyle.Body1">Current count: @currentCount</RadzenText>
+
+    <RadzenButton ButtonStyle="ButtonStyle.Primary" Click="IncrementCount">Click Me</RadzenButton>
+    <RadzenButton ButtonStyle="ButtonStyle.Warning" Click="ResetCount">Reset</RadzenButton>
+</div>
+
+@code {
+    private int currentCount = 0;
+
+    private void IncrementCount()
+    {
+        currentCount++;
+    }
+
+    private void ResetCount()
+    {
+        currentCount = 0;
+    }
+}
