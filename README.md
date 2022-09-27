@@ -28,6 +28,7 @@ C:\Users\<Username>\Documents\Visual Studio 2022\Templates\ProjectTemplates
 ```
 [Blazor Server App - Blazorise.zip](https://github.com/CodeFontana/CSharpProjectTemplates/files/9642459/Blazor.Server.App.-.Blazorise.zip)  
 [Blazor Server App - MudBlazor.zip](https://github.com/CodeFontana/CSharpProjectTemplates/files/9642460/Blazor.Server.App.-.MudBlazor.zip)  
+[Blazor Server App - Radzen.zip](https://github.com/CodeFontana/CSharpProjectTemplates/files/9657290/Blazor.Server.App.-.Radzen.zip)  
 [Blazor Web Assembly - MudBlazor.zip](https://github.com/CodeFontana/CSharpProjectTemplates/files/9642461/Blazor.Web.Assembly.-.MudBlazor.zip)  
 [Console App.zip](https://github.com/CodeFontana/CSharpProjectTemplates/files/9642462/Console.App.zip)  
 [Data Library.zip](https://github.com/CodeFontana/CSharpProjectTemplates/files/9642463/Data.Library.zip)  
