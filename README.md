@@ -13,6 +13,9 @@ MudBlazor is just awesome with a comprehensive library of components, features a
 ## Blazor with Bootstrap 5 + Blazorise
 Blazorise is a component library supporting multiple CSS frameworks, including Bootstrap 5.  So for those looking for the familiarity of Bootstrap for their frontend, this starter template is the perfect combination of Blazor and Bootstrap to increase your development speed.
 
+## Blazor with Bootstrap 5 + Radzen
+Rapid Application Development (the Rad in RadZen) with this Blazor component library, also working in conjunction with Bootstrap 5!  So this component library brings the familiarity of working with Bootstrap and adds an army of components to your fingertips.
+
 ## WPF, brought to you by MVVM
 I'm a big fan of MVVM, just not with some random magical framework.  MVVM is too much of an art that needs to be appreiciated and understood, so this is one area I won't borrow someone else's technology, at least for now.  Basing this template on the lovely .NET Generic Host, there's enough demo code (Views and ViewModels) to demo how to wire all that up, including basic navigation.  Enjoy!
 
