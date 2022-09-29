@@ -1,35 +1,23 @@
-﻿@if (ShowSuccess)
+﻿@inject ISnackbar Snackbar
+
+@if (ShowSuccess)
 {
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-        @Message
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
+    <MudAlert Severity="Severity.Success">@Message</MudAlert>
 }
 else if (ShowError)
 {
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-        @Message
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
+    <MudAlert Severity="Severity.Error">@Message</MudAlert>
 }
 else if (ShowInfo)
 {
-    <div class="alert alert-info alert-dismissible fade show" role="alert">
-        @Message
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
+    <MudAlert Severity="Severity.Info">@Message</MudAlert>
 }
 else if (ShowWarning)
 {
-    <div class="alert alert-warning alert-dismissible fade show" role="alert">
-        @Message
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
+    <MudAlert Severity="Severity.Warning">@Message</MudAlert>
 }
 
 @code {
-    [Inject] IToastService ToastService { get; set; }
-
     private bool _showSuccess = false;
     [Parameter]
     public bool ShowSuccess
@@ -109,19 +97,19 @@ else if (ShowWarning)
     {
         if (_showSuccess)
         {
-            ToastService.ShowSuccess(Message);
+            Snackbar.Add(Message, Severity.Success);
         }
         else if (_showError)
         {
-            ToastService.ShowError(Message);
+            Snackbar.Add(Message, Severity.Error);
         }
         else if (_showInfo)
         {
-            ToastService.ShowInfo(Message);
+            Snackbar.Add(Message, Severity.Info);
         }
         else if (_showWarning)
         {
-            ToastService.ShowWarning(Message);
+            Snackbar.Add(Message, Severity.Warning);
         }
     }
 }

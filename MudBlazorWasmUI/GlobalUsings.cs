@@ -1,5 +1,4 @@
 ﻿global using Blazored.LocalStorage;
-global using Blazored.Toast;
 global using DataLibrary.Identity.Models;
 global using DataLibrary.Models;
 global using Microsoft.AspNetCore.Components;

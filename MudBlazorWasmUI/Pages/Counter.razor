@@ -3,6 +3,11 @@
 <PageTitle>Blazor Client - Counter</PageTitle>
 
 <section>
+    <Notification ShowError="@_showError"
+                  ShowSuccess="@_showSuccess"
+                  ShowInfo="@_showInfo"
+                  Message="@_feedback" />
+
     <MudContainer MaxWidth="MaxWidth.ExtraLarge">
         <MudText Typo="Typo.h2">Counter</MudText>
         <MudText Class="mt-3 ml-1" Typo="Typo.h5">Current count: @_currentCount</MudText>
@@ -12,11 +17,17 @@
 </section>
 
 @code {
+    private bool _showError = false;
+    private bool _showSuccess = false;
+    private bool _showInfo = false;
+    private string _feedback = "";
     private int _currentCount = 0;
 
     private void IncrementCount()
     {
         _currentCount += 1;
+        _showInfo = true;
+        _feedback = $"The current count is: {_currentCount}";
     }
 
     private void ResetCount()

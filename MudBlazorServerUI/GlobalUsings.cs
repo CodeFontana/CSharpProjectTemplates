@@ -1,5 +1,4 @@
 ﻿global using Blazored.LocalStorage;
-global using Blazored.Toast;
 global using ConsoleLoggerLibrary;
 global using Microsoft.AspNetCore.Components;
 global using Microsoft.AspNetCore.Mvc;
