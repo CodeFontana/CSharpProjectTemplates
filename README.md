@@ -22,7 +22,7 @@ I'm a big fan of MVVM, just not with some random magical framework.  MVVM is too
 ## Web API + Data Library w/ EF Identity Database using JWT.
 Save the best for last, API is probably the most important Web Project there is. Spanning two templats, WebAPI + DataLibrary, you'll start with an EF Identity Database for in-app authentication using JWT. Also included is API health checks and rate limiting packages. Save yourself an ENORMOUS amount of setup time, so you can dive right into the core of what your API needs to do.
 
-## Download Templates -- *September 25, 2022*
+## Download Templates -- *September 27, 2022*
 These are the latest exports, built from this repository.
 
 Copy these ZIP files to:
