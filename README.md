@@ -22,17 +22,17 @@ I'm a big fan of MVVM, just not with some random magical framework.  MVVM is too
 ## Web API + Data Library w/ EF Identity Database using JWT.
 Save the best for last, API is probably the most important Web Project there is. Spanning two templats, WebAPI + DataLibrary, you'll start with an EF Identity Database for in-app authentication using JWT. Also included is API health checks and rate limiting packages. Save yourself an ENORMOUS amount of setup time, so you can dive right into the core of what your API needs to do.
 
-## Download Templates -- *September 27, 2022*
+## Download Templates -- *September 29, 2022*
 These are the latest exports, built from this repository.
 
 Copy these ZIP files to:
 ```
 C:\Users\<Username>\Documents\Visual Studio 2022\Templates\ProjectTemplates
 ```
+[Blazor.Server.App.-.MudBlazor.zip](https://github.com/CodeFontana/CSharpProjectTemplates/files/9675275/Blazor.Server.App.-.MudBlazor.zip)  
+[Blazor.Web.Assembly.-.MudBlazor.zip](https://github.com/CodeFontana/CSharpProjectTemplates/files/9675273/Blazor.Web.Assembly.-.MudBlazor.zip)  
 [Blazor Server App - Blazorise.zip](https://github.com/CodeFontana/CSharpProjectTemplates/files/9642459/Blazor.Server.App.-.Blazorise.zip)  
-[Blazor Server App - MudBlazor.zip](https://github.com/CodeFontana/CSharpProjectTemplates/files/9642460/Blazor.Server.App.-.MudBlazor.zip)  
 [Blazor Server App - Radzen.zip](https://github.com/CodeFontana/CSharpProjectTemplates/files/9657290/Blazor.Server.App.-.Radzen.zip)  
-[Blazor Web Assembly - MudBlazor.zip](https://github.com/CodeFontana/CSharpProjectTemplates/files/9642461/Blazor.Web.Assembly.-.MudBlazor.zip)  
 [Console App.zip](https://github.com/CodeFontana/CSharpProjectTemplates/files/9642462/Console.App.zip)  
 [Data Library.zip](https://github.com/CodeFontana/CSharpProjectTemplates/files/9642463/Data.Library.zip)  
 [Web API.zip](https://github.com/CodeFontana/CSharpProjectTemplates/files/9642464/Web.API.zip)  
