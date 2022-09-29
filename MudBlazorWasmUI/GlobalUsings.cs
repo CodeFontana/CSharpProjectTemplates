@@ -1,7 +1,5 @@
 ﻿global using Blazored.LocalStorage;
-global using MudBlazorWasmUI;
-global using MudBlazorWasmUI.Authentication;
-global using MudBlazorWasmUI.Interfaces;
+global using Blazored.Toast;
 global using DataLibrary.Identity.Models;
 global using DataLibrary.Models;
 global using Microsoft.AspNetCore.Components;
@@ -11,6 +9,9 @@ global using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 global using Microsoft.IdentityModel.Tokens;
 global using MudBlazor;
 global using MudBlazor.Services;
+global using MudBlazorWasmUI;
+global using MudBlazorWasmUI.Authentication;
+global using MudBlazorWasmUI.Interfaces;
 global using System.IdentityModel.Tokens.Jwt;
 global using System.Net.Http.Headers;
 global using System.Net.Http.Json;

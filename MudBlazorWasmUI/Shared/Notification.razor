@@ -1,0 +1,127 @@
+﻿@if (ShowSuccess)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @Message
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+else if (ShowError)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        @Message
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+else if (ShowInfo)
+{
+    <div class="alert alert-info alert-dismissible fade show" role="alert">
+        @Message
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+else if (ShowWarning)
+{
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        @Message
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+@code {
+    [Inject] IToastService ToastService { get; set; }
+
+    private bool _showSuccess = false;
+    [Parameter]
+    public bool ShowSuccess
+    {
+        get => _showSuccess;
+        set
+        {
+            if (value)
+            {
+                _showError = false;
+                _showInfo = false;
+                _showWarning = false;
+            }
+
+            _showSuccess = value;
+        }
+    }
+
+    private bool _showError = false;
+    [Parameter]
+    public bool ShowError
+    {
+        get => _showError;
+        set
+        {
+            if (value)
+            {
+                _showSuccess = false;
+                _showInfo = false;
+                _showWarning = false;
+            }
+
+            _showError = value;
+        }
+    }
+
+    private bool _showInfo = false;
+    [Parameter]
+    public bool ShowInfo
+    {
+        get => _showInfo;
+        set
+        {
+            if (value)
+            {
+                _showSuccess = false;
+                _showError = false;
+                _showWarning = false;
+            }
+
+            _showInfo = value;
+        }
+    }
+
+    private bool _showWarning = false;
+    [Parameter]
+    public bool ShowWarning
+    {
+        get => _showWarning;
+        set
+        {
+            if (value)
+            {
+                _showSuccess = false;
+                _showError = false;
+                _showInfo = false;
+            }
+
+            _showWarning = value;
+        }
+    }
+
+    [Parameter]
+    public string Message { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        if (_showSuccess)
+        {
+            ToastService.ShowSuccess(Message);
+        }
+        else if (_showError)
+        {
+            ToastService.ShowError(Message);
+        }
+        else if (_showInfo)
+        {
+            ToastService.ShowInfo(Message);
+        }
+        else if (_showWarning)
+        {
+            ToastService.ShowWarning(Message);
+        }
+    }
+}
