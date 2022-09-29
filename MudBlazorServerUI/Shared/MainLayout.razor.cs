@@ -40,11 +40,110 @@ public partial class MainLayout
 
     private MudTheme lightTheme = new()
     {
+        LayoutProperties = new()
+        {
+            DrawerWidthLeft = "275px"
+        },
         Typography = new()
         {
             Default = new()
             {
-                FontFamily = new[] { "system-ui", "-apple-system", "Segoe UI", "Roboto", "Helvetica Neue", "Noto Sans", "Liberation Sans", "Arial", "sans-serif", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" }
+                FontFamily = new[] { "Roboto", "sans-serif" },
+                FontSize = "1rem",
+                FontWeight = 400,
+                LineHeight = 1.5,
+                LetterSpacing = "0.5px",
+            },
+            H1 = new()
+            {
+                FontSize = "clamp(4.5rem, 6.667vw, 6rem)",
+                FontWeight = 100,
+                LineHeight = 1,
+                LetterSpacing = "-1.5px"
+            },
+            H2 = new()
+            {
+                FontSize = "clamp(3rem, 4.167vw, 3.75rem)",
+                FontWeight = 100,
+                LineHeight = 1,
+                LetterSpacing = "-0.5px"
+            },
+            H3 = new()
+            {
+                FontSize = "clamp(2.25rem, 3.333vw, 3rem)",
+                FontWeight = 400,
+                LineHeight = 1,
+                LetterSpacing = "0px"
+            },
+            H4 = new()
+            {
+                FontSize = "clamp(1.75rem, 2.361vw, 2.125rem)",
+                FontWeight = 400,
+                LineHeight = 1,
+                LetterSpacing = "0.25px"
+            },
+            H5 = new()
+            {
+                FontSize = "clamp(1.25rem, 1.667vw, 1.5rem)",
+                FontWeight = 400,
+                LineHeight = 1,
+                LetterSpacing = "0px"
+            },
+            H6 = new()
+            {
+                FontSize = "clamp(1rem, 1.389vw, 1.25rem)",
+                FontWeight = 500,
+                LineHeight = 1,
+                LetterSpacing = "0.15px"
+            },
+            Subtitle1 = new()
+            {
+                FontSize = "1rem",
+                FontWeight = 400,
+                LineHeight = 1.1,
+                LetterSpacing = "0.15px"
+            },
+            Subtitle2 = new()
+            {
+                FontSize = "0.875rem",
+                FontWeight = 500,
+                LineHeight = 1.5,
+                LetterSpacing = "0.1px"
+            },
+            Body1 = new()
+            {
+                FontSize = "1rem",
+                FontWeight = 400,
+                LineHeight = 1.5,
+                LetterSpacing = "0.5px"
+            },
+            Body2 = new()
+            {
+                FontSize = "0.875rem",
+                FontWeight = 400,
+                LineHeight = 1.5,
+                LetterSpacing = "0.25px"
+            },
+            Button = new()
+            {
+                FontSize = "0.875rem",
+                FontWeight = 500,
+                LineHeight = 1,
+                LetterSpacing = "1.25px"
+            },
+            Caption = new()
+            {
+                FontSize = "0.75rem",
+                FontWeight = 500,
+                LineHeight = 1,
+                LetterSpacing = "0.4px"
+            },
+            Overline = new()
+            {
+                FontSize = "0.625rem",
+                FontWeight = 400,
+                LineHeight = 1,
+                LetterSpacing = "1.5px"
             }
         },
         Palette = new()
@@ -100,7 +199,7 @@ public partial class MainLayout
             ActionDisabled = "#00000042",
             ActionDisabledBackground = "#0000001E",
 
-            Background = "#C8C8C8ff",
+            Background = "#FFFFFFFF",
             BackgroundGrey = "#F5F5F5FF",
 
             Surface = "#FFFFFFFF",
@@ -137,11 +236,110 @@ public partial class MainLayout
 
     private MudTheme darkTheme = new()
     {
+        LayoutProperties = new()
+        {
+            DrawerWidthLeft = "275px"
+        },
         Typography = new()
         {
             Default = new()
             {
-                FontFamily = new[] { "system-ui", "-apple-system", "Segoe UI", "Roboto", "Helvetica Neue", "Noto Sans", "Liberation Sans", "Arial", "sans-serif", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" }
+                FontFamily = new[] { "Roboto", "sans-serif" },
+                FontSize = "1rem",
+                FontWeight = 400,
+                LineHeight = 1.5,
+                LetterSpacing = "0.5px",
+            },
+            H1 = new()
+            {
+                FontSize = "clamp(4.5rem, 6.667vw, 6rem)",
+                FontWeight = 100,
+                LineHeight = 1,
+                LetterSpacing = "-1.5px"
+            },
+            H2 = new()
+            {
+                FontSize = "clamp(3rem, 4.167vw, 3.75rem)",
+                FontWeight = 100,
+                LineHeight = 1,
+                LetterSpacing = "-0.5px"
+            },
+            H3 = new()
+            {
+                FontSize = "clamp(2.25rem, 3.333vw, 3rem)",
+                FontWeight = 400,
+                LineHeight = 1,
+                LetterSpacing = "0px"
+            },
+            H4 = new()
+            {
+                FontSize = "clamp(1.75rem, 2.361vw, 2.125rem)",
+                FontWeight = 400,
+                LineHeight = 1,
+                LetterSpacing = "0.25px"
+            },
+            H5 = new()
+            {
+                FontSize = "clamp(1.25rem, 1.667vw, 1.5rem)",
+                FontWeight = 400,
+                LineHeight = 1,
+                LetterSpacing = "0px"
+            },
+            H6 = new()
+            {
+                FontSize = "clamp(1rem, 1.389vw, 1.25rem)",
+                FontWeight = 500,
+                LineHeight = 1,
+                LetterSpacing = "0.15px"
+            },
+            Subtitle1 = new()
+            {
+                FontSize = "1rem",
+                FontWeight = 400,
+                LineHeight = 1.1,
+                LetterSpacing = "0.15px"
+            },
+            Subtitle2 = new()
+            {
+                FontSize = "0.875rem",
+                FontWeight = 500,
+                LineHeight = 1.5,
+                LetterSpacing = "0.1px"
+            },
+            Body1 = new()
+            {
+                FontSize = "1rem",
+                FontWeight = 400,
+                LineHeight = 1.5,
+                LetterSpacing = "0.5px"
+            },
+            Body2 = new()
+            {
+                FontSize = "0.875rem",
+                FontWeight = 400,
+                LineHeight = 1.5,
+                LetterSpacing = "0.25px"
+            },
+            Button = new()
+            {
+                FontSize = "0.875rem",
+                FontWeight = 500,
+                LineHeight = 1,
+                LetterSpacing = "1.25px"
+            },
+            Caption = new()
+            {
+                FontSize = "0.75rem",
+                FontWeight = 500,
+                LineHeight = 1,
+                LetterSpacing = "0.4px"
+            },
+            Overline = new()
+            {
+                FontSize = "0.625rem",
+                FontWeight = 400,
+                LineHeight = 1,
+                LetterSpacing = "1.5px"
             }
         },
         Palette = new()

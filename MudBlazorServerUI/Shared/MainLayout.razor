@@ -19,11 +19,11 @@
 
         @if (_currentTheme == lightTheme)
         {
-            <MudButton OnClick="@((e) => ToggleThemeAsync())"><MudIcon Icon="@Icons.Material.Filled.DarkMode" Color="Color.Default"></MudIcon></MudButton>
+            <MudButton OnClick="@((e) => ToggleThemeAsync())" Style="color: white;"><MudIcon Icon="@Icons.Material.Filled.DarkMode"></MudIcon></MudButton>
         }
         else
         {
-            <MudButton OnClick="@((e) => ToggleThemeAsync())"><MudIcon Icon="@Icons.Material.Filled.LightMode"></MudIcon></MudButton>
+            <MudButton OnClick="@((e) => ToggleThemeAsync())" Style="color: white;"><MudIcon Icon="@Icons.Material.Filled.LightMode"></MudIcon></MudButton>
         }
 
     </MudAppBar>
@@ -54,7 +54,7 @@
     </MudDrawer>
 
     <MudMainContent>
-        <MudContainer MaxWidth="MaxWidth.False" Class="pt-4">
+        <MudContainer MaxWidth="MaxWidth.False" Class="pt-4 px-0">
             @Body
         </MudContainer>
     </MudMainContent>
