@@ -1,4 +1,6 @@
-@import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
+.mud-snackbar {
+    border-radius: 0px;
+}
 
 #blazor-error-ui {
     background: lightyellow;
