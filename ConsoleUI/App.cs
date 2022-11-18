@@ -1,4 +1,8 @@
-﻿namespace ConsoleUI;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+
+namespace ConsoleUI;
 
 public class App : IHostedService
 {
