@@ -1,4 +1,12 @@
-﻿namespace MudBlazorWasmUI.Pages;
+﻿using DataLibrary.Identity.Models;
+using DataLibrary.Models;
+using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
+using MudBlazor;
+using MudBlazorWasmUI.Interfaces;
+using System.Security.Claims;
+
+namespace MudBlazorWasmUI.Pages;
 
 public partial class Register
 {

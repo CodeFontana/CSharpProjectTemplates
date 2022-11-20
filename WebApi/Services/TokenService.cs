@@ -1,4 +1,12 @@
-﻿namespace WebApi.Services;
+﻿using DataLibrary.Entities;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
+using WebApi.Interfaces;
+
+namespace WebApi.Services;
 
 public class TokenService : ITokenService
 {

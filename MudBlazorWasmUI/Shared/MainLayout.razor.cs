@@ -1,4 +1,13 @@
-﻿namespace MudBlazorWasmUI.Shared;
+﻿using Blazored.LocalStorage;
+using DataLibrary.Identity.Models;
+using DataLibrary.Models;
+using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using MudBlazor;
+using MudBlazorWasmUI.Interfaces;
+
+namespace MudBlazorWasmUI.Shared;
 
 public partial class MainLayout
 {

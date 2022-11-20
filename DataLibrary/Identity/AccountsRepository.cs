@@ -1,4 +1,9 @@
-﻿namespace DataLibrary.Identity;
+﻿using DataLibrary.Entities;
+using DataLibrary.Identity.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+
+namespace DataLibrary.Identity;
 
 public class AccountRepository : IAccountRepository
 {

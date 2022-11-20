@@ -1,4 +1,8 @@
-﻿namespace WebApi.Middleware;
+﻿using System.Net;
+using System.Text.Json;
+using WebApi.Models;
+
+namespace WebApi.Middleware;
 
 public class ExceptionMiddleware
 {

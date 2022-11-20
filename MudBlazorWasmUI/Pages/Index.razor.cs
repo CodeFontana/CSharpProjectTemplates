@@ -1,4 +1,6 @@
-﻿namespace MudBlazorWasmUI.Pages;
+﻿using Microsoft.AspNetCore.Components;
+
+namespace MudBlazorWasmUI.Pages;
 
 public partial class Index
 {

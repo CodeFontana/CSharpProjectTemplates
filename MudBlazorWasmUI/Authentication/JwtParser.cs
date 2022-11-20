@@ -1,4 +1,7 @@
-﻿namespace MudBlazorWasmUI.Authentication;
+﻿using System.Security.Claims;
+using System.Text.Json;
+
+namespace MudBlazorWasmUI.Authentication;
 
 public static class JwtParser
 {

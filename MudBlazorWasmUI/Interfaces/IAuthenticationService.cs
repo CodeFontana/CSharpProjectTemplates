@@ -1,4 +1,7 @@
-﻿namespace MudBlazorWasmUI.Interfaces;
+﻿using DataLibrary.Identity.Models;
+using DataLibrary.Models;
+
+namespace MudBlazorWasmUI.Interfaces;
 
 public interface IAuthenticationService
 {

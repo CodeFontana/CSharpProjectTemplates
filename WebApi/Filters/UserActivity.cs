@@ -1,4 +1,8 @@
-﻿namespace WebApi.Filters;
+﻿using DataLibrary.Entities;
+using DataLibrary.Identity;
+using Microsoft.AspNetCore.Mvc.Filters;
+
+namespace WebApi.Filters;
 
 public class UserActivity : IAsyncActionFilter
 {

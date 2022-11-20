@@ -1,4 +1,6 @@
-﻿namespace DataLibrary.Identity.Models;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace DataLibrary.Identity.Models;
 
 public class LoginUserModel
 {

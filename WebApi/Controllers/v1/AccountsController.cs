@@ -1,4 +1,11 @@
-﻿namespace WebApi.Controllers.v1;
+﻿using DataLibrary.Identity.Models;
+using DataLibrary.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using WebApi.Filters;
+using WebApi.Interfaces;
+
+namespace WebApi.Controllers.v1;
 
 [Route("api/v{version:apiVersion}/[controller]")]
 [ApiController]

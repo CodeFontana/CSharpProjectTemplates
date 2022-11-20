@@ -1,4 +1,6 @@
-﻿namespace DataLibrary.Entities;
+﻿using Microsoft.AspNetCore.Identity;
+
+namespace DataLibrary.Entities;
 
 public class AppRole : IdentityRole<int>
 {
