@@ -1,21 +1,19 @@
+using Serilog.Events;
+using Serilog;
+using WorkerService;
+
+Log.Logger = new LoggerConfiguration()
+            .MinimumLevel.Override("Default", LogEventLevel.Debug)
+            .Enrich.FromLogContext()
+            .WriteTo.Console()
+            .CreateBootstrapLogger();
+
 try
 {
-    string env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-    bool isDevelopment = string.IsNullOrEmpty(env) || env.ToLower() == "development";
-
     IHost host = Host.CreateDefaultBuilder(args)
-        .ConfigureAppConfiguration(config =>
+        .UseSerilog((context, services, loggerConfiguration) =>
         {
-            config.SetBasePath(Directory.GetCurrentDirectory());
-            config.AddJsonFile("appsettings.json", true, true);
-            config.AddJsonFile($"appsettings.{env}.json", true, true);
-            config.AddUserSecrets<Program>(optional: true);
-            config.AddEnvironmentVariables();
-        })
-        .ConfigureLogging((context, builder) =>
-        {
-            builder.ClearProviders();
-            builder.AddFileLogger(context.Configuration);
+            loggerConfiguration.ReadFrom.Configuration(context.Configuration);
         })
         .ConfigureServices((hostContext, services) =>
         {
@@ -28,6 +26,10 @@ try
 }
 catch (Exception ex)
 {
-    Console.WriteLine($"Unexpected error: {ex.Message}");
+    Log.Fatal(ex, "Host terminated unexpectedly");
+}
+finally
+{
+    Log.CloseAndFlush();
 }
 
