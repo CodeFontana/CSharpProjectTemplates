@@ -1,4 +1,6 @@
-﻿namespace WpfUI.Commands;
+﻿using WpfUI.ViewModels;
+
+namespace WpfUI.Commands;
 
 public class IncrementCountCommand : CommandBase
 {

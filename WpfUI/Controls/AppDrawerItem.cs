@@ -1,4 +1,7 @@
-﻿namespace WpfUI.Controls;
+﻿using System.Windows;
+using System.Windows.Controls;
+
+namespace WpfUI.Controls;
 
 public class AppDrawerItem : RadioButton
 {

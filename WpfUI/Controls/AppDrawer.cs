@@ -1,4 +1,8 @@
-﻿namespace WpfUI.Controls;
+﻿using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media.Animation;
+
+namespace WpfUI.Controls;
 
 public class AppDrawer : Control
 {

@@ -1,4 +1,6 @@
-﻿namespace WpfUI.Views;
+﻿using System.Windows.Controls;
+
+namespace WpfUI.Views;
 
 public partial class CounterView : UserControl
 {

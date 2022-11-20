@@ -1,4 +1,7 @@
-﻿namespace WpfUI.Commands;
+﻿using System;
+using System.Windows.Input;
+
+namespace WpfUI.Commands;
 
 public abstract class CommandBase : ICommand
 {

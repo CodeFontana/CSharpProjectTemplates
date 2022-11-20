@@ -1,4 +1,7 @@
-﻿namespace WpfUI.Commands;
+﻿using System.ComponentModel;
+using WpfUI.ViewModels;
+
+namespace WpfUI.Commands;
 
 public class ResetCountCommand : CommandBase
 {

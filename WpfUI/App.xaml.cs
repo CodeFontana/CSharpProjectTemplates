@@ -1,4 +1,12 @@
-﻿namespace WpfUI;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Serilog;
+using Serilog.Events;
+using System;
+using System.Windows;
+using WpfUI.ViewModels;
+
+namespace WpfUI;
 
 public partial class App : Application
 {
@@ -6,24 +14,18 @@ public partial class App : Application
 
     public App()
     {
+        Log.Logger = new LoggerConfiguration()
+            .MinimumLevel.Override("Default", LogEventLevel.Debug)
+            .Enrich.FromLogContext()
+            .WriteTo.Console()
+            .CreateBootstrapLogger();
+
         try
         {
-            string env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-            bool isDevelopment = string.IsNullOrEmpty(env) || env.ToLower() == "development";
-
             _appHost = Host.CreateDefaultBuilder()
-                .ConfigureAppConfiguration(config =>
+                .UseSerilog((context, services, loggerConfiguration) =>
                 {
-                    config.SetBasePath(Directory.GetCurrentDirectory());
-                    config.AddJsonFile("appSettings.json", true, true);
-                    config.AddJsonFile($"appSettings.{env}.json", true, true);
-                    config.AddUserSecrets<App>(optional: true);
-                    config.AddEnvironmentVariables();
-                })
-                .ConfigureLogging((context, builder) =>
-                {
-                    builder.ClearProviders();
-                    builder.AddFileLogger(context.Configuration);
+                    loggerConfiguration.ReadFrom.Configuration(context.Configuration);
                 })
                 .ConfigureServices((hostContext, services) =>
                 {
@@ -40,8 +42,12 @@ public partial class App : Application
                 throw;
             }
 
-            Console.WriteLine($"Unexpected error: {ex.Message}");
+            Log.Fatal(ex, "Host terminated unexpectedly");
             Application.Current.Shutdown();
+        }
+        finally
+        {
+            Log.CloseAndFlush();
         }
     }
 

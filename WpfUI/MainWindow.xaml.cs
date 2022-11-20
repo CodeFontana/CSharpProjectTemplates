@@ -1,4 +1,6 @@
-﻿namespace WpfUI;
+﻿using System.Windows;
+
+namespace WpfUI;
 
 public partial class MainWindow : Window
 {
