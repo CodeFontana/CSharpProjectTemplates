@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 using Serilog.Events;
@@ -18,18 +17,7 @@ class Program
 
         try
         {
-            string env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-            bool isDevelopment = string.IsNullOrEmpty(env) || env.ToLower() == "development";
-
             await Host.CreateDefaultBuilder(args)
-                .ConfigureAppConfiguration(config =>
-                {
-                    config.SetBasePath(Directory.GetCurrentDirectory());
-                    config.AddJsonFile("appSettings.json", true, true);
-                    config.AddJsonFile($"appSettings.{env}.json", true, true);
-                    config.AddUserSecrets<Program>(optional: true);
-                    config.AddEnvironmentVariables();
-                })
                 .UseSerilog((context, services, loggerConfiguration) =>
                 {
                     loggerConfiguration.ReadFrom.Configuration(context.Configuration);

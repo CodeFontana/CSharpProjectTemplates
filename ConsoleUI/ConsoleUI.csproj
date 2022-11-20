@@ -25,10 +25,4 @@
 		</Content>
 	</ItemGroup>
 
-	<ItemGroup>
-	  <Content Update="appsettings.Development.json">
-	    <DependentUpon>appSettings.json</DependentUpon>
-	  </Content>
-	</ItemGroup>
-
 </Project>
