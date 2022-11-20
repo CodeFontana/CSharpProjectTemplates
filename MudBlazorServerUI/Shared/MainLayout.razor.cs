@@ -1,4 +1,8 @@
-﻿namespace MudBlazorServerUI.Shared;
+﻿using Blazored.LocalStorage;
+using Microsoft.AspNetCore.Components;
+using MudBlazor;
+
+namespace MudBlazorServerUI.Shared;
 
 public partial class MainLayout
 {
