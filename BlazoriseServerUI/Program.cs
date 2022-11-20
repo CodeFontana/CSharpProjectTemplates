@@ -36,7 +36,6 @@ try
 
     app.UseHttpsRedirection();
     app.UseStaticFiles();
-    app.UseSerilogRequestLogging();
     app.UseRouting();
     app.MapBlazorHub();
     app.MapFallbackToPage("/_Host");

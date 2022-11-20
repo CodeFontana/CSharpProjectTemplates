@@ -196,7 +196,6 @@ public class Program
             }
 
             app.UseHttpsRedirection();
-            app.UseSerilogRequestLogging();
             app.UseCors("OpenCorsPolicy");
             app.UseAuthentication();
             app.UseAuthorization();
