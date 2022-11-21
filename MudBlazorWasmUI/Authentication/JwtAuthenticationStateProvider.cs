@@ -11,23 +11,26 @@ namespace MudBlazorWasmUI.Authentication;
 public class JwtAuthenticationStateProvider : AuthenticationStateProvider
 {
     private readonly IConfiguration _config;
-    private readonly HttpClient _httpClient;
+    private readonly ILogger<JwtAuthenticationStateProvider> _logger;
+    private readonly HttpClient _http;
     private readonly ILocalStorageService _localStorage;
-    private readonly NavigationManager _navigationManager;
+    private readonly NavigationManager _navMan;
     private readonly AuthenticationState _anonymous;
-    private Task _authStateMonitor;
-    private CancellationTokenSource _authStateMonitoringTokenSource;
+    private Task _authExpiryMonitor;
+    private CancellationTokenSource _authExpiryMonitorTokenSource;
     private bool _isAuthenticated = false;
 
     public JwtAuthenticationStateProvider(IConfiguration config,
+                                          ILogger<JwtAuthenticationStateProvider> logger,
                                           HttpClient httpClient,
                                           ILocalStorageService localStorage,
                                           NavigationManager navigationManager)
     {
         _config = config;
-        _httpClient = httpClient;
+        _logger = logger;
+        _http = httpClient;
         _localStorage = localStorage;
-        _navigationManager = navigationManager;
+        _navMan = navigationManager;
         _anonymous = new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity()));
     }
 
@@ -39,6 +42,7 @@ public class JwtAuthenticationStateProvider : AuthenticationStateProvider
 
             if (string.IsNullOrWhiteSpace(localToken))
             {
+                await NotifyUserLogoutAsync();
                 return _anonymous;
             }
 
@@ -49,14 +53,17 @@ public class JwtAuthenticationStateProvider : AuthenticationStateProvider
             // If there is no valid 'exp' claim then 'ValidTo' returns DateTime.MinValue.
             if (tokenExpiryDate == DateTime.MinValue)
             {
-                Console.WriteLine("Invalid JWT [Missing 'exp' claim].");
+                _logger.LogWarning("Invalid JWT [Missing 'exp' claim]");
+                await NotifyUserLogoutAsync();
                 return _anonymous;
             }
 
             // If the token is in the past then you can't use it.
             if (tokenExpiryDate < DateTime.UtcNow)
             {
-                Console.WriteLine($"Invalid JWT [Token expired on {tokenExpiryDate.ToLocalTime()}].");
+                _logger.LogWarning($"Invalid JWT [Token expired on {tokenExpiryDate.ToLocalTime()}]");
+                _navMan.NavigateTo("/");
+                await NotifyUserLogoutAsync();
                 return _anonymous;
             }
 
@@ -64,6 +71,7 @@ public class JwtAuthenticationStateProvider : AuthenticationStateProvider
 
             if (isAuthenticated == false)
             {
+                await NotifyUserLogoutAsync();
                 return _anonymous;
             }
 
@@ -75,30 +83,41 @@ public class JwtAuthenticationStateProvider : AuthenticationStateProvider
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex.Message);
+            _logger.LogError(ex, "Error determining the authentication state");
+            await NotifyUserLogoutAsync();
             return _anonymous;
         }
     }
 
-    public async Task AuthenticationStateMonitor(CancellationToken cancellationToken)
+    public async Task AuthenticationExpiryMonitor(CancellationToken cancellationToken)
     {
         while (cancellationToken.IsCancellationRequested == false)
         {
-            if (_isAuthenticated == false)
+            string localToken = await _localStorage.GetItemAsync<string>(_config["authTokenStorageKey"]);
+
+            if (string.IsNullOrWhiteSpace(localToken))
             {
-                await NotifyUserLogoutAsync();
-                _navigationManager.NavigateTo("/sessionexpired", false);
                 break;
             }
 
-            await Task.Delay(5000);
+            JwtSecurityTokenHandler tokenHandler = new();
+            SecurityToken token = tokenHandler.ReadToken(localToken);
+            DateTime tokenExpiryDate = token.ValidTo;
+
+            if (tokenExpiryDate < DateTime.UtcNow)
+            {
+                _logger.LogWarning($"Invalid JWT [Token expired on {tokenExpiryDate.ToLocalTime()}]");
+                _navMan.NavigateTo("/sessionexpired", false);
+                await NotifyUserLogoutAsync();
+                break;
+            }
+
+            await Task.Delay(10000);
         }
     }
 
     public async Task<bool> NotifyUserAuthenticationAsync(string token)
     {
-        Task<AuthenticationState> authState;
-
         try
         {
             ClaimsPrincipal authenticatedUser = new(
@@ -106,27 +125,27 @@ public class JwtAuthenticationStateProvider : AuthenticationStateProvider
                     JwtParser.ParseClaimsFromJwt(token),
                     "jwtAuthType"));
 
-            authState = Task.FromResult(new AuthenticationState(authenticatedUser));
-            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", token);
-            
+            Task<AuthenticationState> authState = Task.FromResult(new AuthenticationState(authenticatedUser));
+            _http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", token);
+
             string authTokenStorageKey = _config["authTokenStorageKey"];
             await _localStorage.SetItemAsync(authTokenStorageKey, token);
-            
+
             NotifyAuthenticationStateChanged(authState);
             _isAuthenticated = true;
 
-            if (_authStateMonitor == null || _authStateMonitor.IsCompleted)
+            if (_authExpiryMonitor == null || _authExpiryMonitor.IsCompleted)
             {
-                _authStateMonitoringTokenSource = new();
-                _authStateMonitor = await Task.Factory.StartNew(() =>
-                    AuthenticationStateMonitor(
-                        _authStateMonitoringTokenSource.Token),
+                _authExpiryMonitorTokenSource = new();
+                _authExpiryMonitor = await Task.Factory.StartNew(() =>
+                    AuthenticationExpiryMonitor(
+                        _authExpiryMonitorTokenSource.Token),
                         TaskCreationOptions.LongRunning);
             }
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex.Message);
+            _logger.LogError(ex, "Failed to update authentication state");
             await NotifyUserLogoutAsync();
             _isAuthenticated = false;
         }
@@ -136,11 +155,11 @@ public class JwtAuthenticationStateProvider : AuthenticationStateProvider
 
     public async Task NotifyUserLogoutAsync()
     {
-        _authStateMonitoringTokenSource.Cancel();
+        _authExpiryMonitorTokenSource?.Cancel();
         string authTokenStorageKey = _config["authTokenStorageKey"];
         await _localStorage.RemoveItemAsync(authTokenStorageKey);
         Task<AuthenticationState> authState = Task.FromResult(_anonymous);
-        _httpClient.DefaultRequestHeaders.Authorization = null;
+        _http.DefaultRequestHeaders.Authorization = null;
         NotifyAuthenticationStateChanged(authState);
         _isAuthenticated = false;
     }
