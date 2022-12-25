@@ -5,7 +5,6 @@ using Serilog.Events;
 using Serilog;
 using AspNetCoreRateLimit;
 using DataLibrary.Data;
-using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Identity;
@@ -161,16 +160,7 @@ public class Program
             });
 
             builder.Services.AddHealthChecks()
-                            .AddDbContextCheck<IdentityContext>("Identity Database Health Check")
-                            .AddSqlServer(builder.Configuration.GetConnectionString("Default"));
-
-            // Pending .NET 7 support
-            //builder.Services.AddHealthChecksUI(options =>
-            //{
-            //    options.AddHealthCheckEndpoint("WebAPI", "/health");
-            //    options.SetEvaluationTimeInSeconds(60);
-            //    options.SetMinimumSecondsBetweenFailureNotifications(600);
-            //}).AddInMemoryStorage();
+                            .AddDbContextCheck<IdentityContext>("Identity Database Health Check");
 
             builder.Services.Configure<IpRateLimitOptions>(
                 builder.Configuration.GetSection("IpRateLimiting"));
@@ -202,16 +192,7 @@ public class Program
             app.UseResponseCaching();
             app.MapControllers();
             app.UseIpRateLimiting();
-            app.MapHealthChecks("/health", new HealthCheckOptions
-            {
-                ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
-            }).AllowAnonymous();
-            // Pending .NET 7 support
-            //app.MapHealthChecksUI(setup =>
-            //{
-            //    setup.AddCustomStylesheet("Resources\\health-ui.css");
-            //}).AllowAnonymous();
-
+            app.MapHealthChecks("/health").AllowAnonymous();
             app.Run();
         }
         catch (Exception ex)
