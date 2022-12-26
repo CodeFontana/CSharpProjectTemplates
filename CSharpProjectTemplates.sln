@@ -17,10 +17,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApi", "WebApi\WebApi.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataLibrary", "DataLibrary\DataLibrary.csproj", "{2406217F-EADC-41A1-BB85-E89AA809704A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazoriseServerUI", "BlazoriseServerUI\BlazoriseServerUI.csproj", "{DFA86DD2-A9B4-41B2-A478-6871B519932E}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RadzenBlazorServerUI", "RadzenBlazorServerUI\RadzenBlazorServerUI.csproj", "{349A86C4-FC10-4BCF-B526-6EA2F19D5C11}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,14 +51,6 @@ Global
 		{2406217F-EADC-41A1-BB85-E89AA809704A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2406217F-EADC-41A1-BB85-E89AA809704A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2406217F-EADC-41A1-BB85-E89AA809704A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DFA86DD2-A9B4-41B2-A478-6871B519932E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DFA86DD2-A9B4-41B2-A478-6871B519932E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DFA86DD2-A9B4-41B2-A478-6871B519932E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DFA86DD2-A9B4-41B2-A478-6871B519932E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{349A86C4-FC10-4BCF-B526-6EA2F19D5C11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{349A86C4-FC10-4BCF-B526-6EA2F19D5C11}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{349A86C4-FC10-4BCF-B526-6EA2F19D5C11}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{349A86C4-FC10-4BCF-B526-6EA2F19D5C11}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
