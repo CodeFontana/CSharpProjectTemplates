@@ -10,12 +10,6 @@ Figuring out how to log messages is probably not the main focus of your new idea
 ## Blazor with MudBlazor
 MudBlazor is just awesome with a comprehensive library of components, features and utilities.  You'll spend a lot less time writing custom CSS, especially media queries for breakpoints.  Rest assured MudBlazor brings custom theme support and you always have the option of bringing your own CSS/styling to the table if need be.
 
-## Blazor with Bootstrap 5 + Blazorise
-Blazorise is a component library supporting multiple CSS frameworks, including Bootstrap 5.  So for those looking for the familiarity of Bootstrap for their frontend, this starter template is the perfect combination of Blazor and Bootstrap to increase your development speed.
-
-## Blazor with Bootstrap 5 + Radzen
-Rapid Application Development (the Rad in RadZen) with this Blazor component library, also working in conjunction with Bootstrap 5!  So this component library brings the familiarity of working with Bootstrap and adds an army of components to your fingertips.
-
 ## WPF, brought to you by MVVM
 I'm a big fan of MVVM, just not with some random magical framework.  MVVM is too much of an art that needs to be appreiciated and understood, so this is one area I won't borrow someone else's technology, at least for now.  Basing this template on the lovely .NET Generic Host, there's enough demo code (Views and ViewModels) to demo how to wire all that up, including basic navigation.  Enjoy!
 
@@ -29,9 +23,7 @@ Copy these ZIP files to:
 ```
 C:\Users\<Username>\Documents\Visual Studio 2022\Templates\ProjectTemplates
 ```
-[Blazor Server App - Blazorise.zip](https://github.com/CodeFontana/CSharpProjectTemplates/files/10053194/Blazor.Server.App.-.Blazorise.zip)  
 [Blazor Server App - MudBlazor.zip](https://github.com/CodeFontana/CSharpProjectTemplates/files/10053195/Blazor.Server.App.-.MudBlazor.zip)  
-[Blazor Server App - RadzenBlazor.zip](https://github.com/CodeFontana/CSharpProjectTemplates/files/10053196/Blazor.Server.App.-.RadzenBlazor.zip)  
 [Blazor Web Assembly - MudBlazor.zip](https://github.com/CodeFontana/CSharpProjectTemplates/files/10053197/Blazor.Web.Assembly.-.MudBlazor.zip)  
 [Console App.zip](https://github.com/CodeFontana/CSharpProjectTemplates/files/10053198/Console.App.zip)  
 [Data Library.zip](https://github.com/CodeFontana/CSharpProjectTemplates/files/10053199/Data.Library.zip)  
