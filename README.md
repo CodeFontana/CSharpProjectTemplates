@@ -16,20 +16,20 @@ I'm a big fan of MVVM, just not with some random magical framework.  MVVM is too
 ## Web API + Data Library w/ EF Identity Database using JWT.
 Save the best for last, API is probably the most important Web Project there is. Spanning two templats, WebAPI + DataLibrary, you'll start with an EF Identity Database for in-app authentication using JWT. Also included is API health checks and rate limiting packages. Save yourself an ENORMOUS amount of setup time, so you can dive right into the core of what your API needs to do.
 
-## Download Templates -- *November 20, 2022*
+## Download Templates -- *December 25, 2022*
 These are the latest exports, built from this repository.
 
 Copy these ZIP files to:
 ```
 C:\Users\<Username>\Documents\Visual Studio 2022\Templates\ProjectTemplates
 ```
-[Blazor Server App - MudBlazor.zip](https://github.com/CodeFontana/CSharpProjectTemplates/files/10053195/Blazor.Server.App.-.MudBlazor.zip)  
-[Blazor Web Assembly - MudBlazor.zip](https://github.com/CodeFontana/CSharpProjectTemplates/files/10053197/Blazor.Web.Assembly.-.MudBlazor.zip)  
-[Console App.zip](https://github.com/CodeFontana/CSharpProjectTemplates/files/10053198/Console.App.zip)  
-[Data Library.zip](https://github.com/CodeFontana/CSharpProjectTemplates/files/10053199/Data.Library.zip)  
-[Web API.zip](https://github.com/CodeFontana/CSharpProjectTemplates/files/10053200/Web.API.zip)  
-[Worker Service.zip](https://github.com/CodeFontana/CSharpProjectTemplates/files/10053201/Worker.Service.zip)  
-[WPF App.zip](https://github.com/CodeFontana/CSharpProjectTemplates/files/10053202/WPF.App.zip)  
+[ConsoleApp.zip](https://github.com/CodeFontana/CSharpProjectTemplates/files/10301336/ConsoleApp.zip)  
+[DataLibrary.zip](https://github.com/CodeFontana/CSharpProjectTemplates/files/10301337/DataLibrary.zip)  
+[MudBlazorServer.zip](https://github.com/CodeFontana/CSharpProjectTemplates/files/10301338/MudBlazorServer.zip)  
+[MudBlazorWasm.zip](https://github.com/CodeFontana/CSharpProjectTemplates/files/10301339/MudBlazorWasm.zip)  
+[WebApi.zip](https://github.com/CodeFontana/CSharpProjectTemplates/files/10301340/WebApi.zip)  
+[WorkerService.zip](https://github.com/CodeFontana/CSharpProjectTemplates/files/10301341/WorkerService.zip)  
+[WpfApp.zip](https://github.com/CodeFontana/CSharpProjectTemplates/files/10301342/WpfApp.zip)  
 
 Each ZIP contains a _MyTemplate.vstemplate_ file, where you can adjust tagging, if necessary:
 ```
