@@ -18,13 +18,13 @@ public partial class MainLayout
         string theme = await LocalStorage.GetItemAsync<string>("Theme");
 
         if (string.IsNullOrWhiteSpace(theme)
-            || string.Equals(theme, "Dark", System.StringComparison.CurrentCultureIgnoreCase))
+            || string.Equals(theme, "Light", System.StringComparison.CurrentCultureIgnoreCase))
         {
-            _currentTheme = darkTheme;
+            _currentTheme = lightTheme;
         }
         else
         {
-            _currentTheme = lightTheme;
+            _currentTheme = darkTheme;
         }
     }
 
