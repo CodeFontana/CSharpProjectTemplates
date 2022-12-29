@@ -1,9 +1,11 @@
-﻿<CascadingAuthenticationState>
+﻿@inject NavigationManager NavMan
+
+<CascadingAuthenticationState>
     <Router AppAssembly="@typeof(App).Assembly">
         <Found Context="routeData">
             <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">
                 <NotAuthorized>
-                    <NotAuthorized />
+                    <NotAuthorized ReturnUrl="@(NavMan.Uri)" />
                 </NotAuthorized>
             </AuthorizeRouteView>
         </Found>
