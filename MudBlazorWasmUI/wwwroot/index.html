@@ -6,9 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>BlazorWasmUI</title>
     <base href="/" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;800&display=swap" rel="stylesheet">
     <link href="_content/MudBlazor/MudBlazor.min.css" rel="stylesheet" />
     <link href="css/app.css" rel="stylesheet" />
     <link href="css/spinner.css" rel="stylesheet" />
@@ -16,22 +13,18 @@
 </head>
 
 <body>
-    <main id="app">
-        <div class="spinner-container">
-            <div class="spin-wave">
-                <div class="spin-rect spin-rect1"></div>
-                <div class="spin-rect spin-rect2"></div>
-                <div class="spin-rect spin-rect3"></div>
-                <div class="spin-rect spin-rect4"></div>
-                <div class="spin-rect spin-rect5"></div>
-            </div>
-            <div>
-                <h3 style="text-align: center;">
-                    <strong>Loading...</strong>
-                </h3>
-            </div>
+    <div id="app">
+        <svg class="loading-progress">
+            <circle r="40%" cx="50%" cy="50%" />
+            <circle r="40%" cx="50%" cy="50%" />
+        </svg>
+        <div class="loading-progress-text" style="font-family: system-ui;"></div>
+        <div>
+            <h3 style="text-align: center; font-family: system-ui;">
+                <strong>Loading...</strong>
+            </h3>
         </div>
-    </main>
+    </div>
 
     <div id="blazor-error-ui">
         An unhandled error has occurred.
