@@ -182,6 +182,7 @@ public class Program
                 {
                     // options.SwaggerEndpoint("/swagger/v2/swagger.json", "WebApi v2");
                     options.SwaggerEndpoint("/swagger/v1/swagger.json", "WebApi v1");
+                    options.EnableTryItOutByDefault();
                 });
             }
 
