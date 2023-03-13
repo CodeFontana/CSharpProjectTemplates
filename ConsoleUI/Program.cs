@@ -1,40 +1,41 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using ConsoleUI;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Serilog;
+using Serilog.Core;
 using Serilog.Events;
 
-namespace ConsoleUI;
-
-class Program
-{
-    static async Task Main(string[] args)
-    {
-        Log.Logger = new LoggerConfiguration()
+Log.Logger = new LoggerConfiguration()
             .MinimumLevel.Override("Default", LogEventLevel.Debug)
             .Enrich.FromLogContext()
             .WriteTo.Console()
             .CreateBootstrapLogger();
 
-        try
-        {
-            await Host.CreateDefaultBuilder(args)
-                .UseSerilog((context, services, loggerConfiguration) =>
-                {
-                    loggerConfiguration.ReadFrom.Configuration(context.Configuration);
-                })
-                .ConfigureServices((hostContext, services) =>
-                {
-                    services.AddHostedService<App>();
-                })
-                .RunConsoleAsync();
-        }
-        catch (Exception ex)
-        {
-            Log.Fatal(ex, "Host terminated unexpectedly");
-        }
-        finally
-        {
-            Log.CloseAndFlush();
-        }
-    }
+try
+{
+    HostApplicationBuilder builder = Host.CreateApplicationBuilder();
+    
+    builder.Services.AddLogging(config =>
+    {
+        config.ClearProviders();
+
+        Logger logger = new LoggerConfiguration()
+            .ReadFrom.Configuration(builder.Configuration)
+            .CreateLogger();
+
+        config.AddSerilog(logger);
+    });
+
+    builder.Services.AddHostedService<App>();
+    IHost app = builder.Build();
+    app.Run();
+}
+catch (Exception ex)
+{
+    Log.Fatal(ex, "Host terminated unexpectedly");
+}
+finally
+{
+    Log.CloseAndFlush();
 }
