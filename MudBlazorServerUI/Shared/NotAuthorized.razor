@@ -27,6 +27,8 @@
         {
             Nav.NavigateTo($"login?ReturnUrl={ReturnUrl}");
         }
+
+        await base.OnParametersSetAsync();
     }
 
     private void HandleClick()
