@@ -18,7 +18,8 @@ public class TokenService : ITokenService
 
     public TokenService(IConfiguration config, UserManager<AppUser> userManager)
     {
-        _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["Authentication:JwtSecurityKey"]));
+        byte[] keyBytes = Encoding.UTF8.GetBytes(config["Authentication:JwtSecurityKey"]);
+        _key = new SymmetricSecurityKey(keyBytes);
         _jwtIssuer = config["Authentication:JwtIssuer"];
         _jwtAudience = config["Authentication:JwtAudience"];
         _jwtLifetimeMinutes = int.Parse(config["Authentication:JwtExpiryInMinutes"]);
