@@ -1,9 +1,9 @@
-﻿using DataLibrary.Entities;
-using DataLibrary.Identity.Models;
+﻿using WebApi.IdentityLibrary.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using WebApi.SharedLibrary.Identity.Models;
 
-namespace DataLibrary.Identity;
+namespace WebApi.IdentityLibrary.Identity;
 
 public class AccountRepository : IAccountRepository
 {

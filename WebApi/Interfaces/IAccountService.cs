@@ -1,5 +1,5 @@
-﻿using DataLibrary.Identity.Models;
-using DataLibrary.Models;
+﻿using WebApi.SharedLibrary.Identity.Models;
+using WebApi.SharedLibrary.Models;
 
 namespace WebApi.Interfaces;
 

@@ -1,11 +1,11 @@
 ﻿using Blazored.LocalStorage;
-using DataLibrary.Identity.Models;
-using DataLibrary.Models;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using MudBlazor;
 using MudBlazorWasmUI.Interfaces;
+using WebApi.SharedLibrary.Identity.Models;
+using WebApi.SharedLibrary.Models;
 
 namespace MudBlazorWasmUI.Shared;
 

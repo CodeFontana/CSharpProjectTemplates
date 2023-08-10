@@ -1,12 +1,8 @@
-using DataLibrary.Entities;
-using DataLibrary.Identity;
 using Microsoft.EntityFrameworkCore;
 using Serilog.Events;
 using Serilog;
 using AspNetCoreRateLimit;
-using DataLibrary.Data;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -16,6 +12,9 @@ using WebApi.Filters;
 using WebApi.Interfaces;
 using WebApi.Middleware;
 using WebApi.Services;
+using WebApi.IdentityLibrary.Identity;
+using WebApi.IdentityLibrary.Entities;
+using WebApi.IdentityLibrary.Data;
 
 namespace WebApi;
 

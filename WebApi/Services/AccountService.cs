@@ -1,9 +1,9 @@
-﻿using DataLibrary.Entities;
-using DataLibrary.Identity;
-using DataLibrary.Identity.Models;
-using DataLibrary.Models;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
+using WebApi.IdentityLibrary.Entities;
+using WebApi.IdentityLibrary.Identity;
 using WebApi.Interfaces;
+using WebApi.SharedLibrary.Identity.Models;
+using WebApi.SharedLibrary.Models;
 
 namespace WebApi.Services;
 

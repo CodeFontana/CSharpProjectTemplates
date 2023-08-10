@@ -1,10 +1,10 @@
-﻿using DataLibrary.Identity.Models;
-using DataLibrary.Models;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using MudBlazor;
 using MudBlazorWasmUI.Interfaces;
 using System.Security.Claims;
+using WebApi.SharedLibrary.Identity.Models;
+using WebApi.SharedLibrary.Models;
 
 namespace MudBlazorWasmUI.Pages;
 

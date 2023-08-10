@@ -1,6 +1,6 @@
-﻿using DataLibrary.Entities;
-using DataLibrary.Identity;
-using Microsoft.AspNetCore.Mvc.Filters;
+﻿using Microsoft.AspNetCore.Mvc.Filters;
+using WebApi.IdentityLibrary.Entities;
+using WebApi.IdentityLibrary.Identity;
 
 namespace WebApi.Filters;
 

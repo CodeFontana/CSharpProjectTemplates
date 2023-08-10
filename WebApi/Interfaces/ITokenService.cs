@@ -1,4 +1,4 @@
-﻿using DataLibrary.Entities;
+﻿using WebApi.IdentityLibrary.Entities;
 
 namespace WebApi.Interfaces;
 

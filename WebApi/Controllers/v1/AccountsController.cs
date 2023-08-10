@@ -1,9 +1,9 @@
-﻿using DataLibrary.Identity.Models;
-using DataLibrary.Models;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Filters;
 using WebApi.Interfaces;
+using WebApi.SharedLibrary.Identity.Models;
+using WebApi.SharedLibrary.Models;
 
 namespace WebApi.Controllers.v1;
 

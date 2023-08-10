@@ -1,9 +1,9 @@
-﻿using DataLibrary.Identity.Models;
-using DataLibrary.Models;
-using Microsoft.AspNetCore.Components.Authorization;
+﻿using Microsoft.AspNetCore.Components.Authorization;
 using MudBlazorWasmUI.Interfaces;
 using System.Net.Http.Json;
 using System.Text.Json;
+using WebApi.SharedLibrary.Identity.Models;
+using WebApi.SharedLibrary.Models;
 
 namespace MudBlazorWasmUI.Authentication;
 

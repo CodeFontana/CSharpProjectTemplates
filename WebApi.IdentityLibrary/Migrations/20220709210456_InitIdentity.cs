@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace DataLibrary.Migrations
+namespace WebApi.IdentityLibrary.Migrations
 {
     public partial class InitIdentity : Migration
     {
