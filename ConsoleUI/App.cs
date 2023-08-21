@@ -26,7 +26,7 @@ public class App : IHostedService
             try
             {
                 await Task.Yield(); // https://github.com/dotnet/runtime/issues/36063
-                await Task.Delay(1000); // Additional delay for Microsoft.Hosting.Lifetime messages
+                await Task.Delay(1000, cancellationToken); // Additional delay for Microsoft.Hosting.Lifetime messages
                 await ExecuteAsync();
             }
             catch (Exception ex)
