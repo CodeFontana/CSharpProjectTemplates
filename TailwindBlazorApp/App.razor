@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <base href="/" />
+        <link rel="stylesheet" href="css/app.css" />
+        <link rel="icon" type="image/png" href="favicon.png" />
+        <link rel="stylesheet" href="TailwindBlazorApp.styles.css" />
+        <HeadOutlet />
+    </head>
+
+    <body class="overflow-x-hidden h-full bg-gray-100 dark:bg-gray-800 dark:text-white">
+        <Router AppAssembly="@typeof(App).Assembly">
+            <Found Context="routeData">
+                <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
+            </Found>
+            <NotFound>
+                <PageTitle>Not found</PageTitle>
+                <LayoutView Layout="@typeof(MainLayout)">
+                    <p role="alert">Sorry, there's nothing at this address.</p>
+                </LayoutView>
+            </NotFound>
+        </Router>
+
+        <div id="blazor-error-ui" class="hidden">
+            <div class="flex justify-between bg-yellow-100 bottom-0 left-0 fixed w-full z-50 py-2.5 px-5 border-t-2 border-gray-200 text-lg dark:bg-yellow-300 dark:text-gray-800 dark:border-gray-800">
+                <p>
+                    An unhandled error has occurred.
+                    <a href="" class="reload text-blue-500">Reload</a>
+                </p>
+                <a class="dismiss cursor-pointer">🗙</a>
+            </div>
+        </div>
+
+        <script src="_framework/blazor.web.js" suppress-error="BL9992"></script>
+    </body>
+</html>
+
+
