@@ -130,19 +130,19 @@ public class Program
                     Type = SecuritySchemeType.ApiKey
                 });
                 options.AddSecurityRequirement(new OpenApiSecurityRequirement
-            {
                 {
-                    new OpenApiSecurityScheme
                     {
-                        Reference = new OpenApiReference
+                        new OpenApiSecurityScheme
                         {
-                            Type = ReferenceType.SecurityScheme,
-                            Id = "Bearer"
-                        }
-                    },
-                    Array.Empty<string>()
-                }
-            });
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            }
+                        },
+                        Array.Empty<string>()
+                    }
+                });
             });
 
             builder.Services.AddApiVersioning(options =>
@@ -150,13 +150,13 @@ public class Program
                 options.AssumeDefaultVersionWhenUnspecified = true;
                 options.DefaultApiVersion = new(1, 0);
                 options.ReportApiVersions = true;
-            });
-
-            builder.Services.AddVersionedApiExplorer(options =>
-            {
-                options.GroupNameFormat = "'v'VVV";
-                options.SubstituteApiVersionInUrl = true;
-            });
+            })
+                .AddMvc()
+                .AddApiExplorer(options =>
+                {
+                    options.GroupNameFormat = "'v'VVV";
+                    options.SubstituteApiVersionInUrl = true;
+                });
 
             builder.Services.AddHealthChecks()
                             .AddDbContextCheck<IdentityContext>("Identity Database Health Check");
