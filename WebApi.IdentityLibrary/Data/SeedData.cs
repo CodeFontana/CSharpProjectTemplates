@@ -26,11 +26,11 @@ public class SeedData
         {
             if (await _roleManager.Roles.AnyAsync(x => x.Name.Equals("Administrator")) == false)
             {
-                List<AppRole> roles = new()
-                {
+                List<AppRole> roles =
+                [
                     new AppRole { Name = "Administrator" },
                     new AppRole { Name = "User" },
-                };
+                ];
 
                 foreach (var role in roles)
                 {
@@ -52,7 +52,7 @@ public class SeedData
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "An error occured during database seeding");
+            _logger.LogError(ex, "An error occurred during database seeding");
         }
     }
 }
