@@ -1,14 +1,19 @@
-﻿<nav class="navbar navbar-expand-lg" data-bs-theme="dark" style="background-color: #7019db;">
+﻿<nav class="navbar navbar-expand-md d-flex" data-bs-theme="dark" style="background-color: #7019db;">
     <div class="container-fluid">
         <a class="navbar-brand" href="#">
             <img src="img/Blazor.png" width="30" height="30" class="d-inline-block align-text-top" />
             Blazor
         </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+
+        <div class="d-flex align-items-center">
+            <i class="theme-switch d-md-none mx-2 text-light fs-4 bi bi-sun-fill"></i>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+
         <div id="navbarSupportedContent" class="collapse navbar-collapse">
-            <ul class="navbar-nav nav-underline me-auto mb-2 mb-lg-0">
+            <ul class="navbar-nav nav-underline me-auto mb-0">
                 <li class="nav-item">
                     <NavLink class="nav-link" Match="NavLinkMatch.All" href="">Home</NavLink>
                 </li>
@@ -23,6 +28,7 @@
                 </li>
             </ul>
         </div>
-        <i id="themeSwitch" class="mx-4 text-light fs-4 bi bi-sun-fill"></i>
+
+        <i class="theme-switch d-none d-md-inline mx-2 text-light fs-4 bi bi-sun-fill"></i>
     </div>
 </nav>

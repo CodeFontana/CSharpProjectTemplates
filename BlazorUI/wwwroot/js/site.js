@@ -1,38 +1,28 @@
-const storedTheme = localStorage.getItem('theme');
+const storedTheme = localStorage.getItem('theme') || 'light';
 
-const getPreferredTheme = () => {
-    if (storedTheme) {
-        return storedTheme;
-    }
-    return 'light';
-}
-
-const setTheme = function(theme) {
+const setTheme = function (theme) {
     document.documentElement.setAttribute('data-bs-theme', theme);
     localStorage.setItem('theme', theme);
-    showActiveTheme(theme);
-}
 
-const showActiveTheme = (theme) => {
-    const themeSwitcher = document.getElementById('themeSwitch');
-    if (theme === 'light') {
-        themeSwitcher.classList.remove('bi-sun-fill');
-        themeSwitcher.classList.add('bi-moon-stars');
-        themeSwitcher.setAttribute('data-bs-theme-value', 'light');
-    } else {
-        themeSwitcher.classList.remove('bi-moon-stars');
-        themeSwitcher.classList.add('bi-sun-fill');
-        themeSwitcher.setAttribute('data-bs-theme-value', 'dark');
-    }
+    const themeSwitches = document.querySelectorAll('.theme-switch');
+    themeSwitches.forEach(switchElement => {
+        if (theme === 'light') {
+            switchElement.classList.replace('bi-sun-fill', 'bi-moon-stars');
+        } else {
+            switchElement.classList.replace('bi-moon-stars', 'bi-sun-fill');
+        }
+    });
 }
 
 window.addEventListener('DOMContentLoaded', () => {
-    const currentTheme = getPreferredTheme();
-    setTheme(currentTheme);
+    setTheme(storedTheme);
 
-    const themeSwitcher = document.getElementById('themeSwitch');
-    themeSwitcher.addEventListener('click', () => {
-        let newTheme = themeSwitcher.getAttribute('data-bs-theme-value') === 'light' ? 'dark' : 'light';
-        setTheme(newTheme);
+    const themeSwitches = document.querySelectorAll('.theme-switch');
+    themeSwitches.forEach(switchElement => {
+        switchElement.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-bs-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            setTheme(newTheme);
+        });
     });
 });
