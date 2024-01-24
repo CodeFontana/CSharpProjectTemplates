@@ -1,5 +1,3 @@
-const storedTheme = localStorage.getItem('theme') || 'light';
-
 const setTheme = function (theme) {
     document.documentElement.setAttribute('data-bs-theme', theme);
     localStorage.setItem('theme', theme);
@@ -14,15 +12,22 @@ const setTheme = function (theme) {
     });
 }
 
-window.addEventListener('DOMContentLoaded', () => {
-    setTheme(storedTheme);
-
+export function onLoad() {
     const themeSwitches = document.querySelectorAll('.theme-switch');
     themeSwitches.forEach(switchElement => {
         switchElement.addEventListener('click', () => {
-            const currentTheme = document.documentElement.getAttribute('data-bs-theme');
+            const currentTheme = localStorage.getItem('theme') || 'light';
             const newTheme = currentTheme === 'light' ? 'dark' : 'light';
             setTheme(newTheme);
         });
     });
-});
+}
+
+export function onUpdate() {
+    const theme = localStorage.getItem('theme') || 'light';
+    setTheme(theme);
+}
+
+export function onDispose() {
+    
+}
