@@ -1,7 +1,15 @@
-﻿﻿.spinner-container {
+﻿.spinner-container-main-layout {
     position: fixed;
     top: 30%;
     left: 50%;
     transform: translateX(-50%);
+    z-index: 999;
+}
+
+.spinner-container-sidebar-layout {
+    position: fixed;
+    top: 30%;
+    left: 50%;
+    transform: translateX(calc(-50% + 8rem));
     z-index: 999;
 }
