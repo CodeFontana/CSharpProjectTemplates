@@ -11,6 +11,7 @@
     border-radius: 0.375rem;
     color: white;
     transition: transform 0.25s cubic-bezier(.62,1.95,.61,.63), background 1.00s cubic-bezier(.15,.76,.33,1);
+    padding: 0.5rem 1rem;
 }
 
 ::deep .nav-item {
@@ -23,4 +24,5 @@
 
 .navbar {
     background-color: #1F2937;
+    min-width: 250px;
 }
