@@ -3,6 +3,9 @@
     width: 16rem;
     background-color: #1F2937;
     height: 100vh;
+    overflow-y: auto;
+    transform: translateX(-100%);
+    transition: transform 0.3s cubic-bezier(.4,0,.2,1);
 }
 
 .navbar-brand {
@@ -29,3 +32,9 @@
     ::deep .nav-link:hover {
         background-color: #ffffff26;
     }
+
+@media (min-width: 768px) {
+    nav {
+        transform: translateX(0);
+    }
+}
