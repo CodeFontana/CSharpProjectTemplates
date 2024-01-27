@@ -19,12 +19,15 @@
                     </div>
                 </div>
             </button>
+            <i class="theme-switch mx-2 text-light fs-4 bi bi-sun-fill"></i>
         </nav>
         <main class="container-fluid mt-3 mt-md-0 mb-3 pt-5 pt-md-0">
             @Body
         </main>
     </div>
 </CascadingValue>
+
+<PageScript Src="./Components/Layout/SidebarLayout.razor.js" />
 
 @code {
     private const string LayoutName = "SidebarLayout";
