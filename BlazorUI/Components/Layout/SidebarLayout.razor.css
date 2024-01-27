@@ -36,6 +36,10 @@
     margin: 0.25rem;
 }
 
+.offcanvas {
+    width: 16rem;
+}
+
 @media (min-width: 768px) {
     main {
         margin-left: 16rem;
