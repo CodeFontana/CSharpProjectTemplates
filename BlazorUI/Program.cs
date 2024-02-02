@@ -1,10 +1,13 @@
 using BlazorUI.Components;
+using BlazorUI.Interfaces;
+using BlazorUI.Services;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
-
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<ICookieService, CookieService>();
 WebApplication app = builder.Build();
 
 if (app.Environment.IsDevelopment() == false)
