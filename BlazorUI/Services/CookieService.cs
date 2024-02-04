@@ -16,8 +16,10 @@ internal sealed class CookieService : ICookieService
     {
         CookieOptions options = new()
         {
-            Expires = DateTime.Now.AddDays(daysToExpire),
-            HttpOnly = true
+            HttpOnly = true,
+            Secure = true,
+            SameSite = SameSiteMode.Strict,
+            Expires = DateTime.Now.AddDays(daysToExpire)
         };
 
         string jsonValue = JsonSerializer.Serialize(value);
