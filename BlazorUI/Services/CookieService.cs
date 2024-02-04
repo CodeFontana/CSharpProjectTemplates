@@ -12,6 +12,20 @@ internal sealed class CookieService : ICookieService
         _httpContextAccessor = httpContextAccessor;
     }
 
+    public void SetCookie<T>(string key, T value, DateTimeOffset? expiry)
+    {
+        CookieOptions options = new()
+        {
+            HttpOnly = true,
+            Secure = true,
+            SameSite = SameSiteMode.Strict,
+            Expires = expiry
+        };
+
+        string jsonValue = JsonSerializer.Serialize(value);
+        _httpContextAccessor?.HttpContext?.Response.Cookies.Append(key, jsonValue, options);
+    }
+
     public void SetCookie<T>(string key, T value, int daysToExpire = 30)
     {
         CookieOptions options = new()
