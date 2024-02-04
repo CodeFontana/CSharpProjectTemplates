@@ -52,7 +52,10 @@ internal sealed class CookieService : ICookieService
 
     public void DeleteCookie(string key)
     {
-        _httpContextAccessor?.HttpContext?.Response.Cookies.Delete(key);
+        if (_httpContextAccessor?.HttpContext?.Request.Cookies.TryGetValue(key, out _) == true)
+        {
+            _httpContextAccessor?.HttpContext?.Response.Cookies.Delete(key);
+        }
     }
 }
 
