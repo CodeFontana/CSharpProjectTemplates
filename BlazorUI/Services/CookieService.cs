@@ -49,5 +49,10 @@ internal sealed class CookieService : ICookieService
 
         return default;
     }
+
+    public void DeleteCookie(string key)
+    {
+        _httpContextAccessor?.HttpContext?.Response.Cookies.Delete(key);
+    }
 }
 
