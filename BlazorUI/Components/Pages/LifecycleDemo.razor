@@ -1,0 +1,77 @@
+﻿@page "/LifecycleDemo"
+@page "/LifecycleDemo/{Parameter}"
+@rendermode InteractiveServer
+
+<h3>Lifecycle Demo</h3>
+@DateTime.Now
+<br />
+
+@foreach (var e in Events)
+{
+	<div>@e</div>
+}
+
+<a href="@($"/LifecycleDemo/{Guid.NewGuid()}")">Refresh</a>
+
+@code {
+	List<string> Events = new();
+
+	[Parameter]
+	public string? Parameter { get; set; }
+
+	public override Task SetParametersAsync(ParameterView parameters)
+	{
+		Events.Add("SetParametersAsync Start");
+		Events.Add("SetParametersAsync End");
+		return base.SetParametersAsync(parameters); // Only method that requires call the base class
+	}
+
+	protected override void OnInitialized()
+	{
+		Events.Add("OnInitialized Start");
+		Task.Delay(1000);
+		Events.Add("OnInitialized End");
+	}
+
+	protected override async Task OnInitializedAsync()
+	{
+		Events.Add("OnInitializedAsync Start");
+		await Task.Delay(1000);	
+		Events.Add("OnInitializedAsync End");
+	}
+
+	protected override void OnParametersSet()
+	{
+		Events.Add("OnParametersSet Start");
+		Task.Delay(1000);
+		Events.Add("OnParametersSet End");
+	}
+
+	protected override async Task OnParametersSetAsync()
+	{
+		Events.Add("OnParametersSetAsync Start");
+		await Task.Delay(1000);
+		Events.Add("OnParametersSetAsync End");
+	}
+
+	protected override void OnAfterRender(bool firstRender)
+	{
+		Events.Add($"OnAfterRender firstRender:{firstRender} Start");
+		Task.Delay(1000);
+		Events.Add($"OnAfterRender firstRender:{firstRender} End");
+	}
+
+	protected override async Task OnAfterRenderAsync(bool firstRender)
+	{
+		Events.Add($"OnAfterRenderAsync firstRender:{firstRender} Start");
+		await Task.Delay(1000);
+		Events.Add($"OnAfterRenderAsync firstRender:{firstRender} End");
+	}
+
+	protected override bool ShouldRender()
+	{
+		Events.Add("ShouldRender Start");
+		Events.Add("ShouldRender End");
+		return true;
+	}
+}
