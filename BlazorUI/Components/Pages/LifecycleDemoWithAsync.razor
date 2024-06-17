@@ -1,0 +1,79 @@
+﻿@page "/LifecycleDemoAsync"
+@page "/LifecycleDemoAsync/{Parameter}"
+
+<PageTitle>Static Async Lifecycle Demo - BlazorUI</PageTitle>
+
+<h3>Lifecycle Demo Async - Static</h3>
+<p>@DateTime.Now</p>
+
+@foreach (var e in Events)
+{
+	<div>@e</div>
+}
+
+<a href="@($"/LifecycleDemoAsync/{Guid.NewGuid()}")">Refresh</a>
+
+@code {
+	List<string> Events = new();
+
+	[Parameter]
+	public string? Parameter { get; set; }
+
+	public override async Task SetParametersAsync(ParameterView parameters)
+	{
+		Events.Add("SetParametersAsync Start");
+		Events.Add("SetParametersAsync End");
+		await base.SetParametersAsync(parameters);  // Only method that requires call the base class
+	}
+
+	protected override void OnInitialized()
+	{
+		Events.Add("OnInitialized Start");
+		Events.Add("OnInitialized End");
+	}
+
+	protected override async Task OnInitializedAsync()
+	{
+		Events.Add("OnInitializedAsync Start");
+		await Task.Delay(1000);
+		Events.Add("OnInitializedAsync End");
+	}
+
+	protected override void OnParametersSet()
+	{
+		Events.Add("OnParametersSet Start");
+		Events.Add("OnParametersSet End");
+	}
+
+	protected override async Task OnParametersSetAsync()
+	{
+		Events.Add("OnParametersSetAsync Start");
+		await Task.Delay(1000);
+		Events.Add("OnParametersSetAsync End");
+	}
+
+	protected override void OnAfterRender(bool firstRender)
+	{
+		// This method is not called in SSR
+		Events.Add($"OnAfterRender firstRender:{firstRender} Start");
+		Task.Delay(1000);
+		Events.Add($"OnAfterRender firstRender:{firstRender} End");
+	}
+
+	protected override async Task OnAfterRenderAsync(bool firstRender)
+	{
+		// This method is not called in SSR
+		Events.Add($"OnAfterRenderAsync firstRender:{firstRender} Start");
+		await Task.Delay(1000);
+		Events.Add($"OnAfterRenderAsync firstRender:{firstRender} End");
+	}
+
+	protected override bool ShouldRender()
+	{
+		// This method is not called in SSR
+		Events.Add("ShouldRender Start");
+		Task.Delay(1000);
+		Events.Add("ShouldRender End");
+		return true;
+	}
+}

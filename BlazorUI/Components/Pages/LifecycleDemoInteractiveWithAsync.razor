@@ -1,0 +1,83 @@
+﻿@page "/LifecycleDemoAsync/interactive"
+@page "/LifecycleDemoAsync/interactive/{Parameter}"
+@rendermode InteractiveServer
+
+<PageTitle>Interactive Async Lifecycle Demo - BlazorUI</PageTitle>
+
+<h3>Lifecycle Demo Async - Interactive</h3>
+<p>@DateTime.Now</p>
+
+@foreach (var e in _events)
+{
+	<div>@e</div>
+}
+
+<a href="@($"/LifecycleDemoAsync/interactive/{Guid.NewGuid()}")">Refresh</a>
+<button class="btn btn-link align-top p-0 border-0" @onclick="StateHasChanged">Trigger Re-render</button>
+
+
+@code {
+	List<string> _events = new();
+
+	[Parameter]
+	public string? Parameter { get; set; }
+
+	public override Task SetParametersAsync(ParameterView parameters)
+	{
+		_events.Add("SetParametersAsync Start");
+		_events.Add("SetParametersAsync End");
+		return base.SetParametersAsync(parameters); // Only method that requires call the base class
+	}
+
+	protected override void OnInitialized()
+	{
+		_events.Add("OnInitialized Start");
+		_events.Add("OnInitialized End");
+	}
+
+	protected override async Task OnInitializedAsync()
+	{
+		_events.Add("OnInitializedAsync Start");
+		await Task.Delay(1000);
+		_events.Add("OnInitializedAsync End");
+	}
+
+	protected override void OnParametersSet()
+	{
+		_events.Add("OnParametersSet Start");
+		_events.Add("OnParametersSet End");
+	}
+
+	protected override async Task OnParametersSetAsync()
+	{
+		_events.Add("OnParametersSetAsync Start");
+		await Task.Delay(1000);
+		_events.Add("OnParametersSetAsync End");
+	}
+
+	protected override void OnAfterRender(bool firstRender)
+	{
+		_events.Add($"OnAfterRender firstRender:{firstRender} Start");
+		_events.Add($"OnAfterRender firstRender:{firstRender} End");
+	}
+
+	protected override async Task OnAfterRenderAsync(bool firstRender)
+	{
+		_events.Add($"OnAfterRenderAsync firstRender:{firstRender} Start");
+		await Task.Delay(1000);
+		_events.Add($"OnAfterRenderAsync firstRender:{firstRender} End");
+
+		// Trigger a re-render so the user sees this lifecycle event was hit
+		// if (firstRender)
+		// {
+		// 	StateHasChanged();
+		// }
+	}
+
+	protected override bool ShouldRender()
+	{
+		_events.Add("ShouldRender Start");
+		_events.Add("ShouldRender End");
+		return true;
+	}
+}
