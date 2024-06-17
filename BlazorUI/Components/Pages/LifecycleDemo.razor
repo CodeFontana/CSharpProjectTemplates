@@ -1,10 +1,10 @@
 ﻿@page "/LifecycleDemo"
 @page "/LifecycleDemo/{Parameter}"
-@rendermode InteractiveServer
 
-<h3>Lifecycle Demo</h3>
-@DateTime.Now
-<br />
+<PageTitle>Static Lifecycle Demo - BlazorUI</PageTitle>
+
+<h3>Lifecycle Demo - Static</h3>
+<p>@DateTime.Now</p>
 
 @foreach (var e in Events)
 {
@@ -29,47 +29,44 @@
 	protected override void OnInitialized()
 	{
 		Events.Add("OnInitialized Start");
-		Task.Delay(1000);
 		Events.Add("OnInitialized End");
 	}
 
 	protected override async Task OnInitializedAsync()
 	{
 		Events.Add("OnInitializedAsync Start");
-		await Task.Delay(1000);	
 		Events.Add("OnInitializedAsync End");
 	}
 
 	protected override void OnParametersSet()
 	{
 		Events.Add("OnParametersSet Start");
-		Task.Delay(1000);
 		Events.Add("OnParametersSet End");
 	}
 
 	protected override async Task OnParametersSetAsync()
 	{
 		Events.Add("OnParametersSetAsync Start");
-		await Task.Delay(1000);
 		Events.Add("OnParametersSetAsync End");
 	}
 
 	protected override void OnAfterRender(bool firstRender)
 	{
+		// This method is not called in SSR
 		Events.Add($"OnAfterRender firstRender:{firstRender} Start");
-		Task.Delay(1000);
 		Events.Add($"OnAfterRender firstRender:{firstRender} End");
 	}
 
 	protected override async Task OnAfterRenderAsync(bool firstRender)
 	{
+		// This method is not called in SSR
 		Events.Add($"OnAfterRenderAsync firstRender:{firstRender} Start");
-		await Task.Delay(1000);
 		Events.Add($"OnAfterRenderAsync firstRender:{firstRender} End");
 	}
 
 	protected override bool ShouldRender()
 	{
+		// This method is not called in SSR
 		Events.Add("ShouldRender Start");
 		Events.Add("ShouldRender End");
 		return true;
