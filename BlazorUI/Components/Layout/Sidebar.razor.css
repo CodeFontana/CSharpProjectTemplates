@@ -1,7 +1,7 @@
 ﻿/* Sidebar navigation menu, hidden by default */
 nav {
     position: fixed;
-    width: 16rem;
+    width: 18rem;
     background-color: #1F2937;
     height: 100vh;
     overflow-y: auto;
