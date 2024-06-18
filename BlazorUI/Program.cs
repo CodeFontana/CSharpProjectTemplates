@@ -8,6 +8,8 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<ICookieService, CookieService>();
+builder.Services.AddSingleton<ISingletonService, SingletonService>();
+builder.Services.AddScoped<IScopedService, ScopedService>();
 WebApplication app = builder.Build();
 
 if (app.Environment.IsDevelopment() == false)

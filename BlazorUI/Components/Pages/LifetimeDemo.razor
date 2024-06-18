@@ -1,0 +1,15 @@
+﻿@page "/LifetimeDemo"
+
+<h3>Lifetime Demo</h3>
+
+<h4>Static</h4>
+<LifetimeComponent />
+<LifetimeComponent />
+
+<h4>Interactive</h4>
+<LifetimeComponent @rendermode="InteractiveServer" />
+<LifetimeComponent @rendermode="InteractiveServer" />
+
+@code {
+
+}
