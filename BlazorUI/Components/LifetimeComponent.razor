@@ -1,19 +1,20 @@
-﻿@inject ISingletonService Singleton
-@inject IScopedService Scoped
-
-<table class="table">
+﻿<table class="table">
     <tbody>
         <tr>
             <td>Singleton</td>
-            <td>@Singleton.Id</td>
+            <td>@SingletonDemo.Guid</td>
         </tr>
         <tr>
             <td>Scoped</td>
-            <td>@Scoped.Id</td>
+            <td>@ScopedDemo.Guid</td>
         </tr>
     </tbody>
 </table>
 
 @code {
+    [Inject(Key = "Singleton")]
+    IDemoService SingletonDemo { get; set; } = default!;
 
+    [Inject(Key = "Scoped")]
+    IDemoService ScopedDemo { get; set; } = default!;
 }
