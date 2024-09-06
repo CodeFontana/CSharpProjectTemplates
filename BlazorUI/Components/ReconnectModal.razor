@@ -1,0 +1,20 @@
+﻿<div id="reconnect-modal" class="modal-backdrop">
+    <div class="modal fade d-block show" tabindex="-1">
+        <div id="reconnect-dialog" class="modal-dialog animate-slide-down">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Rejoining the server...</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="lds-ripple m-auto"><div></div><div></div></div>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button type="button" class="btn btn-primary flex-grow-1" onclick="location.reload()">Reload</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="_framework/blazor.web.js" autostart="false"></script>
+<script src="./Components/ReconnectModal.razor.js"></script>
