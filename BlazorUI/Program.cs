@@ -19,9 +19,10 @@ builder.Services.AddKeyedScoped<IDemoService, DemoService>("Scoped");
 builder.Services.AddKeyedSingleton<IDemoService, DemoService>("Singleton");
 WebApplication app = builder.Build();
 
+app.UseExceptionHandler("/Error", createScopeForErrors: true);
+
 if (app.Environment.IsDevelopment() == false)
 {
-    app.UseExceptionHandler("/Error", createScopeForErrors: true);
     app.UseHsts();
     app.UseResponseCompression();
 }

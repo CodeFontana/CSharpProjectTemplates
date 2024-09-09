@@ -1,5 +1,5 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
+# 17
 VisualStudioVersion = 17.1.32127.271
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleUI", "ConsoleUI\ConsoleUI.csproj", "{32B974CD-7A54-4EB6-8522-FCC68CF4342B}"
@@ -70,4 +70,3 @@ Global
 		SolutionGuid = {69946625-8384-4E1B-B505-BD74999D3480}
 	EndGlobalSection
 EndGlobal
-bal
