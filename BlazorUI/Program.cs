@@ -1,4 +1,4 @@
-using BlazorUI.Components;
+using BlazorUI.Features;
 using BlazorUI.Interfaces;
 using BlazorUI.Services;
 
