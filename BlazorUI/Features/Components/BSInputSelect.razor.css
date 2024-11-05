@@ -1,0 +1,6 @@
+﻿/* Pull validation message closer to the input for which it belongs */
+::deep .validation-spacing {
+    margin-top: -0.5rem;
+    margin-bottom: 0.5rem; /* Ensures some space between this message and the next input */
+    margin-left: 0.5rem;
+}

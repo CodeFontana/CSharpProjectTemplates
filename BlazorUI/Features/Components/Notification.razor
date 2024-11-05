@@ -1,0 +1,141 @@
+﻿@if (ShowSuccess)
+{
+    <div class="alert alert-success alert-dismissible fade show @Class" role="alert" style="@Style">
+        @_message
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+else if (ShowInfo)
+{
+    <div class="alert alert-info alert-dismissible fade show @Class" role="alert" style="@Style">
+        @_message
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+else if (ShowWarning)
+{
+    <div class="alert alert-warning alert-dismissible fade show @Class" role="alert" style="@Style">
+        @_message
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+else if (ShowError)
+{
+    <div class="alert alert-danger alert-dismissible fade show @Class" role="alert" style="@Style">
+        @_message
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+@code {
+    [Parameter] public string Class { get; set; } = "";
+    [Parameter] public string Style { get; set; } = "";
+
+    private bool _showSuccess = false;
+    public bool ShowSuccess
+    {
+        get => _showSuccess;
+        set
+        {
+            if (value)
+            {
+                _showError = false;
+                _showInfo = false;
+                _showWarning = false;
+            }
+
+            _showSuccess = value;
+        }
+    }
+
+    private bool _showInfo = false;
+    public bool ShowInfo
+    {
+        get => _showInfo;
+        set
+        {
+            if (value)
+            {
+                _showSuccess = false;
+                _showError = false;
+                _showWarning = false;
+            }
+
+            _showInfo = value;
+        }
+    }
+
+    private bool _showWarning = false;
+    public bool ShowWarning
+    {
+        get => _showWarning;
+        set
+        {
+            if (value)
+            {
+                _showSuccess = false;
+                _showError = false;
+                _showInfo = false;
+            }
+
+            _showWarning = value;
+        }
+    }
+
+    private bool _showError = false;
+    public bool ShowError
+    {
+        get => _showError;
+        set
+        {
+            if (value)
+            {
+                _showSuccess = false;
+                _showInfo = false;
+                _showWarning = false;
+            }
+
+            _showError = value;
+        }
+    }
+
+    private string? _message { get; set; }
+
+    public void AlertSuccess(string message)
+    {
+        _message = message;
+        ShowSuccess = true;
+        StateHasChanged();
+    }
+
+    public void AlertInfo(string message)
+    {
+        _message = message;
+        ShowInfo = true;
+        StateHasChanged();
+    }
+
+    public void AlertWarning(string message)
+    {
+        _message = message;
+        ShowWarning = true;
+        StateHasChanged();
+    }
+
+    public void AlertError(string message)
+    {
+        _message = message;
+        ShowError = true;
+        StateHasChanged();
+    }
+
+    public void ResetAlert()
+    {
+        _message = "";
+        ShowSuccess = false;
+        ShowInfo = false;
+        ShowWarning = false;
+        ShowError = false;
+        StateHasChanged();
+    }
+}

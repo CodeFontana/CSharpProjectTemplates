@@ -1,0 +1,63 @@
+﻿@using System.Linq.Expressions
+
+<div class="@Class">
+    <InputTextArea id="@Id"
+                   class="form-control"
+                   rows="@Rows"
+                   Value="@Value"
+                   ValueChanged="ValueChanged"
+                   ValueExpression="ValueExpression"
+                   @oninput="OnInput"
+                   @onfocus="OnFocus"
+                   @onblur="OnBlur"
+                   @onclick="OnClick"
+                   @onchange="OnChange"
+                   @onmouseover="OnMouseOver"
+                   @onmouseout="OnMouseOut"
+                   Disabled="@Disabled" />
+    <ValidationMessage For="@ValueExpression" class="text-danger validation-spacing" />
+</div>
+
+@code {
+    [Parameter]
+    public string? Class { get; set; }
+
+    [Parameter]
+    public ushort Rows { get; set; } = 10;
+
+    [Parameter, EditorRequired]
+    public required string Id { get; set; }
+
+    [Parameter]
+    public string? Value { get; set; }
+
+    [Parameter]
+    public EventCallback<string> ValueChanged { get; set; }
+
+    [Parameter]
+    public Expression<Func<string>>? ValueExpression { get; set; }
+
+    [Parameter]
+    public EventCallback<ChangeEventArgs> OnInput { get; set; }
+
+    [Parameter]
+    public EventCallback<FocusEventArgs> OnFocus { get; set; }
+
+    [Parameter]
+    public EventCallback<FocusEventArgs> OnBlur { get; set; }
+
+    [Parameter]
+    public EventCallback<MouseEventArgs> OnClick { get; set; }
+
+    [Parameter]
+    public EventCallback<ChangeEventArgs> OnChange { get; set; }
+
+    [Parameter]
+    public EventCallback<MouseEventArgs> OnMouseOver { get; set; }
+
+    [Parameter]
+    public EventCallback<MouseEventArgs> OnMouseOut { get; set; }
+
+    [Parameter]
+    public bool Disabled { get; set; } = false;
+}

@@ -1,0 +1,66 @@
+﻿@using System.Linq.Expressions
+
+<div class="@($"input-group {Class}")">
+    <span class="input-group-text" style="@($"width: {LabelWidth}px;")">@Label</span>
+    <InputText id="@Id"
+               class="form-control"
+               Value="@Value"
+               ValueChanged="ValueChanged"
+               ValueExpression="ValueExpression"
+               @oninput="OnInput"
+               @onfocus="OnFocus"
+               @onblur="OnBlur"
+               @onclick="OnClick"
+               @onchange="OnChange"
+               @onmouseover="OnMouseOver"
+               @onmouseout="OnMouseOut"
+               Disabled="@Disabled" />
+</div>
+<ValidationMessage For="@ValueExpression" class="text-danger validation-spacing" />
+
+@code {
+    [Parameter]
+    public string? Class { get; set; }
+    
+    [Parameter, EditorRequired]
+    public required string Label { get; set; }
+
+    [Parameter]
+    public ushort LabelWidth { get; set; } = 150;
+
+    [Parameter, EditorRequired]
+    public required string Id { get; set; }
+
+    [Parameter]
+    public string? Value { get; set; }
+
+    [Parameter] 
+    public EventCallback<string> ValueChanged { get; set; }
+
+    [Parameter]
+    public Expression<Func<string>>? ValueExpression { get; set; }
+
+    [Parameter]
+    public EventCallback<ChangeEventArgs> OnInput { get; set; }
+
+    [Parameter]
+    public EventCallback<FocusEventArgs> OnFocus { get; set; }
+
+    [Parameter]
+    public EventCallback<FocusEventArgs> OnBlur { get; set; }
+
+    [Parameter]
+    public EventCallback<MouseEventArgs> OnClick { get; set; }
+
+    [Parameter]
+    public EventCallback<ChangeEventArgs> OnChange { get; set; }
+
+    [Parameter]
+    public EventCallback<MouseEventArgs> OnMouseOver { get; set; }
+
+    [Parameter]
+    public EventCallback<MouseEventArgs> OnMouseOut { get; set; }
+
+    [Parameter]
+    public bool Disabled { get; set; } = false;
+}

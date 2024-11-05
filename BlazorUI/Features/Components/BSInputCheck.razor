@@ -1,0 +1,64 @@
+﻿
+@using System.Linq.Expressions
+
+<label class="@($"form-control {Class}")">
+    <InputCheckbox id="@Id"
+                   class="form-check-input me-2"
+                   Value="@Value"
+                   ValueChanged="ValueChanged"
+                   ValueExpression="ValueExpression"
+                   @oninput="OnInput"
+                   @onfocus="OnFocus"
+                   @onblur="OnBlur"
+                   @onclick="OnClick"
+                   @onchange="OnChange"
+                   @onmouseover="OnMouseOver"
+                   @onmouseout="OnMouseOut"
+                   Disabled="@Disabled"
+                   style="@(Class?.ToLower().Contains("form-switch") ?? false ? "margin-left: -2em;" : "")" />
+    @Label
+</label>
+
+@code {
+    [Parameter]
+    public string? Class { get; set; }
+
+    [Parameter, EditorRequired]
+    public required string Label { get; set; }
+
+    [Parameter, EditorRequired]
+    public required string Id { get; set; }
+
+    [Parameter]
+    public bool Value { get; set; }
+
+    [Parameter]
+    public EventCallback<bool> ValueChanged { get; set; }
+
+    [Parameter]
+    public Expression<Func<bool>>? ValueExpression { get; set; }
+
+    [Parameter]
+    public EventCallback<ChangeEventArgs> OnInput { get; set; }
+
+    [Parameter]
+    public EventCallback<FocusEventArgs> OnFocus { get; set; }
+
+    [Parameter]
+    public EventCallback<FocusEventArgs> OnBlur { get; set; }
+
+    [Parameter]
+    public EventCallback<MouseEventArgs> OnClick { get; set; }
+
+    [Parameter]
+    public EventCallback<ChangeEventArgs> OnChange { get; set; }
+
+    [Parameter]
+    public EventCallback<MouseEventArgs> OnMouseOver { get; set; }
+
+    [Parameter]
+    public EventCallback<MouseEventArgs> OnMouseOut { get; set; }
+
+    [Parameter]
+    public bool Disabled { get; set; } = false;
+}
