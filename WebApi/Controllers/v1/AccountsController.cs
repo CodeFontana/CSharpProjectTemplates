@@ -19,10 +19,9 @@ public class AccountsController : ControllerBase
         _accountService = accountService;
     }
 
-    // GET: api/v1/Accounts
     [HttpGet]
     [Authorize(Policy = "Administrator")]
-    public async Task<ActionResult<ServiceResponseModel<List<AccountModel>>>> Get()
+    public async Task<ActionResult<ServiceResponseModel<List<AccountModel>>>> GetAccounts()
     {
         ServiceResponseModel<List<AccountModel>> response = await _accountService.GetAccountsAsync(HttpContext.User.Identity.Name);
 
@@ -36,10 +35,9 @@ public class AccountsController : ControllerBase
         }
     }
 
-    // GET api/v1/Accounts/username
     [HttpGet("{username}")]
     [Authorize(Policy = "Administrator")]
-    public async Task<ActionResult<ServiceResponseModel<AccountModel>>> Get(string username)
+    public async Task<ActionResult<ServiceResponseModel<AccountModel>>> GetAccount(string username)
     {
         ServiceResponseModel<AccountModel> response = await _accountService.GetAccountAsync(HttpContext.User.Identity.Name, username);
 
@@ -53,10 +51,9 @@ public class AccountsController : ControllerBase
         }
     }
 
-    // POST api/v1/Accounts
     [HttpPost]
     [AllowAnonymous]
-    public async Task<ActionResult<ServiceResponseModel<AuthUserModel>>> Post([FromBody] RegisterUserModel registerUser)
+    public async Task<ActionResult<ServiceResponseModel<AuthUserModel>>> RegisterAccount([FromBody] RegisterUserModel registerUser)
     {
         ServiceResponseModel<AuthUserModel> response = await _accountService.RegisterAsync(HttpContext.User.Identity.Name, registerUser);
 
@@ -70,7 +67,6 @@ public class AccountsController : ControllerBase
         }
     }
 
-    // POST api/v1/Accounts/login
     [HttpPost("login")]
     [AllowAnonymous]
     public async Task<ActionResult<ServiceResponseModel<AuthUserModel>>> Login([FromBody] LoginUserModel loginUser)
@@ -87,10 +83,9 @@ public class AccountsController : ControllerBase
         }
     }
 
-    // PUT api/v1/Accounts
     [HttpPut]
     [Authorize(Policy = "Administrator")]
-    public async Task<ActionResult<ServiceResponseModel<bool>>> Put([FromBody] AccountUpdateModel updateAccount)
+    public async Task<ActionResult<ServiceResponseModel<bool>>> UpdateAccount([FromBody] AccountUpdateModel updateAccount)
     {
         ServiceResponseModel<bool> response = await _accountService.UpdateAccountAsync(HttpContext.User.Identity.Name, updateAccount);
 
@@ -104,10 +99,9 @@ public class AccountsController : ControllerBase
         }
     }
 
-    // DELETE api/v1/Accounts/username
     [HttpDelete("{username}")]
     [Authorize(Policy = "Administrator")]
-    public async Task<ActionResult<ServiceResponseModel<bool>>> Delete(string username)
+    public async Task<ActionResult<ServiceResponseModel<bool>>> DeleteAccount(string username)
     {
         ServiceResponseModel<bool> response = await _accountService.DeleteAccountAsync(HttpContext.User.Identity.Name, username);
 
