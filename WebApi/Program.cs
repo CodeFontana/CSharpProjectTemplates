@@ -15,7 +15,6 @@ using WebApi.IdentityLibrary.Data;
 using WebApi.IdentityLibrary.Entities;
 using WebApi.IdentityLibrary.Identity;
 using WebApi.Interfaces;
-using WebApi.Middleware;
 using WebApi.Services;
 
 namespace WebApi;
@@ -187,8 +186,6 @@ public class Program
 
             WebApplication app = builder.Build();
             await ApplyDbMigrations(app);
-
-            app.UseMiddleware<ExceptionMiddleware>();
 
             if (app.Environment.IsDevelopment())
             {
