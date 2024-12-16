@@ -18,36 +18,31 @@
                 </MudCardHeader>
 
                 <MudCardContent>
-                    <div class="d-flex align-center">
-                        <MudTextField Label="Username"
-                                      Class="mt-3"
-                                      @bind-Value="_registerUser.Username"
-                                      For="@(() => _registerUser.Username)" />
-                    </div>
-                    <div class="d-flex align-center">
-                        <MudTextField Label="Email"
-                                      Class="mt-3"
-                                      @bind-Value="_registerUser.Email"
-                                      For="@(() => _registerUser.Email)" />
-                    </div>
-                    <div class="d-flex align-center">
-                        <MudTextField Label="Password"
-                                      Class="mt-3"
-                                      @bind-Value="_registerUser.Password"
-                                      For="@(() => _registerUser.Password)"
-                                      InputType="@_passwordInput"
-                                      Adornment="Adornment.End"
-                                      AdornmentIcon="@_passwordInputIcon"
-                                      OnAdornmentClick="ToggleShowPassword"
-                                      AdornmentAriaLabel="Show Password" />
-                    </div>
-                    <div class="d-flex align-center">
-                        <MudTextField Label="Confirm Password"
-                                      Class="mt-3"
-                                      @bind-Value="_registerUser.ConfirmPassword"
-                                      For="@(() => _registerUser.ConfirmPassword)"
-                                      InputType="@_passwordInput" />
-                    </div>
+                    <MudTextField Label="Username"
+                                  Variant="Variant.Text"
+                                  @bind-Value="_registerUser.Username"
+                                  For="@(() => _registerUser.Username)" />
+                    <MudTextField Label="Email"
+                                  Class="mt-3"
+                                  Variant="Variant.Text"
+                                  @bind-Value="_registerUser.Email"
+                                  For="@(() => _registerUser.Email)" />
+                    <MudTextField Label="Password"
+                                  Class="mt-3"
+                                  Variant="Variant.Text"
+                                  @bind-Value="_registerUser.Password"
+                                  For="@(() => _registerUser.Password)"
+                                  InputType="@_passwordInput"
+                                  Adornment="Adornment.End"
+                                  AdornmentIcon="@_passwordInputIcon"
+                                  OnAdornmentClick="ToggleShowPassword"
+                                  AdornmentAriaLabel="Show Password" />
+                    <MudTextField Label="Confirm Password"
+                                  Class="mt-3"
+                                  Variant="Variant.Text"
+                                  @bind-Value="_registerUser.ConfirmPassword"
+                                  For="@(() => _registerUser.ConfirmPassword)"
+                                  InputType="@_passwordInput" />
                 </MudCardContent>
 
                 <MudCardActions Class="d-flex justify-center">

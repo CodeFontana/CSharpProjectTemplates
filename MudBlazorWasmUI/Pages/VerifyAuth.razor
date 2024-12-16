@@ -20,8 +20,8 @@
                     </MudItem>
 
                     <MudItem xs="12" Class="d-flex justify-center">
-                        <MudList>
-                            <MudListItem Text="@($"Admin Role: {AuthContext.User.IsInRole("Administrator")}")" />
+                        <MudList T="string">
+                            <MudListItem T="string" Text="@($"Admin Role: {AuthContext.User.IsInRole("Administrator")}")" />
                         </MudList>
                     </MudItem>
                 </Authorized>
