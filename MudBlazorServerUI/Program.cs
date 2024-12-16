@@ -1,8 +1,9 @@
 using Blazored.LocalStorage;
 using MudBlazor;
 using MudBlazor.Services;
-using Serilog.Events;
+using MudBlazorServerUI.Features;
 using Serilog;
+using Serilog.Events;
 
 Log.Logger = new LoggerConfiguration()
             .MinimumLevel.Override("Default", LogEventLevel.Debug)
@@ -13,13 +14,19 @@ Log.Logger = new LoggerConfiguration()
 try
 {
     WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
-    builder.WebHost.UseStaticWebAssets();
+    builder.Services.AddRazorComponents()
+        .AddInteractiveServerComponents()
+        .AddHubOptions(options =>
+        {
+            options.ClientTimeoutInterval = TimeSpan.FromSeconds(60);
+            options.HandshakeTimeout = TimeSpan.FromSeconds(30);
+        });
+    builder.Services.AddResponseCompression();
+    builder.Services.AddHttpContextAccessor();
     builder.Host.UseSerilog((context, services, loggerConfiguration) =>
     {
         loggerConfiguration.ReadFrom.Configuration(context.Configuration);
     });
-    builder.Services.AddRazorPages();
-    builder.Services.AddServerSideBlazor();
     builder.Services.AddMudServices(config =>
     {
         config.SnackbarConfiguration.PositionClass = Defaults.Classes.Position.BottomRight;
@@ -32,22 +39,21 @@ try
         config.SnackbarConfiguration.SnackbarVariant = Variant.Filled;
     });
     builder.Services.AddBlazoredLocalStorage();
-
     WebApplication app = builder.Build();
+    
+    app.UseExceptionHandler("/Error", createScopeForErrors: true);
 
     if (app.Environment.IsDevelopment() == false)
     {
-        app.UseExceptionHandler("/Error");
         app.UseHsts();
+        app.UseResponseCompression();
     }
 
     app.UseHttpsRedirection();
     app.UseStaticFiles();
-    app.UseRouting();
-    app.UseAuthentication();
-    app.UseAuthorization();
-    app.MapBlazorHub();
-    app.MapFallbackToPage("/_Host");
+    app.UseAntiforgery();
+    app.MapRazorComponents<App>()
+        .AddInteractiveServerRenderMode();
     app.Run();
 }
 catch (Exception ex)
