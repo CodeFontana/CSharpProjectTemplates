@@ -1,6 +1,4 @@
-﻿using BlazorUI.Interfaces;
-
-namespace BlazorUI.Services;
+﻿namespace BlazorUI.Services;
 
 internal sealed class DemoService : IDemoService
 {

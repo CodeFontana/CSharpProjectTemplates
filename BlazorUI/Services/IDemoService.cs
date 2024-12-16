@@ -1,4 +1,4 @@
-﻿namespace BlazorUI.Interfaces;
+﻿namespace BlazorUI.Services;
 
 internal interface IDemoService
 {

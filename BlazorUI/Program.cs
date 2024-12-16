@@ -1,5 +1,4 @@
 using BlazorUI.Features;
-using BlazorUI.Interfaces;
 using BlazorUI.Services;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
