@@ -1,10 +1,10 @@
-﻿using Blazored.LocalStorage;
+﻿using System.IdentityModel.Tokens.Jwt;
+using System.Net.Http.Headers;
+using System.Security.Claims;
+using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using System.Net.Http.Headers;
-using System.Security.Claims;
 
 namespace MudBlazorWasmUI.Authentication;
 
@@ -16,8 +16,9 @@ public class JwtAuthenticationStateProvider : AuthenticationStateProvider
     private readonly ILocalStorageService _localStorage;
     private readonly NavigationManager _navMan;
     private readonly AuthenticationState _anonymous;
-    private Task _authExpiryMonitor;
-    private CancellationTokenSource _authExpiryMonitorTokenSource;
+    
+    private Task? _authExpiryMonitor;
+    private CancellationTokenSource? _authExpiryMonitorTokenSource;
     private bool _isAuthenticated = false;
 
     public JwtAuthenticationStateProvider(IConfiguration config,
@@ -38,7 +39,9 @@ public class JwtAuthenticationStateProvider : AuthenticationStateProvider
     {
         try
         {
-            string localToken = await _localStorage.GetItemAsync<string>(_config["authTokenStorageKey"]);
+            string? localToken = await _localStorage.GetItemAsync<string>(
+                _config["authTokenStorageKey"] 
+                    ?? throw new InvalidOperationException("Missing authTokenStorageKey from configuration"));
 
             if (string.IsNullOrWhiteSpace(localToken))
             {
@@ -93,7 +96,9 @@ public class JwtAuthenticationStateProvider : AuthenticationStateProvider
     {
         while (cancellationToken.IsCancellationRequested == false)
         {
-            string localToken = await _localStorage.GetItemAsync<string>(_config["authTokenStorageKey"]);
+            string? localToken = await _localStorage.GetItemAsync<string>(
+                _config["authTokenStorageKey"] 
+                    ?? throw new InvalidOperationException("Missing authTokenStorageKey from configuration"));
 
             if (string.IsNullOrWhiteSpace(localToken))
             {
@@ -106,7 +111,7 @@ public class JwtAuthenticationStateProvider : AuthenticationStateProvider
 
             if (tokenExpiryDate < DateTime.UtcNow)
             {
-                _logger.LogWarning($"Invalid JWT [Token expired on {tokenExpiryDate.ToLocalTime()}]");
+                _logger.LogWarning("Invalid JWT [Token expired on {dateTime}]", tokenExpiryDate.ToLocalTime());
                 _navMan.NavigateTo("/sessionexpired", false);
                 await NotifyUserLogoutAsync();
                 break;
@@ -128,7 +133,8 @@ public class JwtAuthenticationStateProvider : AuthenticationStateProvider
             Task<AuthenticationState> authState = Task.FromResult(new AuthenticationState(authenticatedUser));
             _http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", token);
 
-            string authTokenStorageKey = _config["authTokenStorageKey"];
+            string authTokenStorageKey = _config["authTokenStorageKey"] 
+                ?? throw new InvalidOperationException("Missing authTokenStorageKey from configuration");
             await _localStorage.SetItemAsync(authTokenStorageKey, token);
 
             NotifyAuthenticationStateChanged(authState);
@@ -156,8 +162,13 @@ public class JwtAuthenticationStateProvider : AuthenticationStateProvider
     public async Task NotifyUserLogoutAsync()
     {
         _authExpiryMonitorTokenSource?.Cancel();
-        string authTokenStorageKey = _config["authTokenStorageKey"];
-        await _localStorage.RemoveItemAsync(authTokenStorageKey);
+        string? authTokenStorageKey = _config["authTokenStorageKey"];
+
+        if (string.IsNullOrWhiteSpace(authTokenStorageKey) == false)
+        {
+            await _localStorage.RemoveItemAsync(authTokenStorageKey);
+        }
+        
         Task<AuthenticationState> authState = Task.FromResult(_anonymous);
         _http.DefaultRequestHeaders.Authorization = null;
         NotifyAuthenticationStateChanged(authState);

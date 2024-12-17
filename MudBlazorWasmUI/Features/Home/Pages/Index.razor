@@ -1,4 +1,5 @@
 ﻿@page "/"
+@inject NavigationManager NavManager
 
 <PageTitle>Blazor Client -- Home</PageTitle>
 
@@ -43,3 +44,15 @@
         </MudGrid>
     </MudContainer>
 </section>
+
+@code {
+    private void OnLogin()
+    {
+        NavManager.NavigateTo("/login");
+    }
+
+    private void OnRegister()
+    {
+        NavManager.NavigateTo("/register");
+    }
+}

@@ -1,7 +1,7 @@
 ﻿using WebApi.SharedLibrary.Identity.Models;
 using WebApi.SharedLibrary.Models;
 
-namespace MudBlazorWasmUI.Interfaces;
+namespace MudBlazorWasmUI.Authentication;
 
 public interface IAuthenticationService
 {

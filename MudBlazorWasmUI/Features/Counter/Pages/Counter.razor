@@ -15,24 +15,24 @@
 
 @code {
     private int _currentCount = 0;
-    private Notification _notification;
+    private Notification? _notification;
 
     private void IncrementCount()
     {
-        _notification.ResetAlert();
+        _notification?.ResetAlert();
         _currentCount += 1;
 
-        if (_currentCount % 6 == 0) { _notification.AlertError($"The current count is {_currentCount}"); }
-        else if (_currentCount % 5 == 0) { _notification.FireError($"The current count is: {_currentCount}"); }
-        else if (_currentCount % 4 == 0) { _notification.FireWarning($"The current count is: {_currentCount}"); }
-        else if (_currentCount % 3 == 0) { _notification.FireInfo($"The current count is: {_currentCount}"); }
-        else if (_currentCount % 2 == 0) { _notification.FireSuccess($"The current count is: {_currentCount}"); }
-        else if (_currentCount % 1 == 0) { _notification.FireNormal($"The current count is: {_currentCount}"); }
+        if (_currentCount % 6 == 0) { _notification?.AlertError($"The current count is {_currentCount}"); }
+        else if (_currentCount % 5 == 0) { _notification?.FireError($"The current count is: {_currentCount}"); }
+        else if (_currentCount % 4 == 0) { _notification?.FireWarning($"The current count is: {_currentCount}"); }
+        else if (_currentCount % 3 == 0) { _notification?.FireInfo($"The current count is: {_currentCount}"); }
+        else if (_currentCount % 2 == 0) { _notification?.FireSuccess($"The current count is: {_currentCount}"); }
+        else if (_currentCount % 1 == 0) { _notification?.FireNormal($"The current count is: {_currentCount}"); }
     }
 
     private void ResetCount()
     {
         _currentCount = 0;
-        _notification.ResetAlert();
+        _notification?.ResetAlert();
     }
 }

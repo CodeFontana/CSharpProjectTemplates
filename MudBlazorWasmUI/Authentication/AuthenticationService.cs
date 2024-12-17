@@ -1,7 +1,6 @@
-﻿using Microsoft.AspNetCore.Components.Authorization;
-using MudBlazorWasmUI.Interfaces;
-using System.Net.Http.Json;
+﻿using System.Net.Http.Json;
 using System.Text.Json;
+using Microsoft.AspNetCore.Components.Authorization;
 using WebApi.SharedLibrary.Identity.Models;
 using WebApi.SharedLibrary.Models;
 
@@ -32,9 +31,11 @@ public class AuthenticationService : IAuthenticationService
         {
             string apiEndpoint = _config["apiLocation"] + _config["loginEndpoint"];
             using HttpResponseMessage response = await _httpClient.PostAsJsonAsync(apiEndpoint, loginUser);
-            result = await response.Content.ReadFromJsonAsync<ServiceResponseModel<AuthUserModel>>(_options);
+            result = await response.Content.ReadFromJsonAsync<ServiceResponseModel<AuthUserModel>>(_options) ?? new();
 
-            if (result.Success)
+            if (result.Success 
+                && result.Data is not null
+                && result.Data.Token is not null)
             {
                 await ((JwtAuthenticationStateProvider)_authStateProvider).NotifyUserAuthenticationAsync(result.Data.Token);
             }
@@ -56,9 +57,11 @@ public class AuthenticationService : IAuthenticationService
         {
             string apiEndpoint = _config["apiLocation"] + _config["registerEndpoint"];
             using HttpResponseMessage response = await _httpClient.PostAsJsonAsync(apiEndpoint, registerUser);
-            result = await response.Content.ReadFromJsonAsync<ServiceResponseModel<AuthUserModel>>(_options);
+            result = await response.Content.ReadFromJsonAsync<ServiceResponseModel<AuthUserModel>>(_options) ?? new();
 
-            if (result.Success)
+            if (result.Success
+                && result.Data is not null
+                && result.Data.Token is not null)
             {
                 await ((JwtAuthenticationStateProvider)_authStateProvider).NotifyUserAuthenticationAsync(result.Data.Token);
             }
