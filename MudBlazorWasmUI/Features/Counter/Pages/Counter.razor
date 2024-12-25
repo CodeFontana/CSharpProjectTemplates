@@ -1,0 +1,38 @@
+﻿@page "/counter"
+
+<PageTitle>Blazor Client - Counter</PageTitle>
+
+<section>
+    <MudContainer MaxWidth="MaxWidth.ExtraLarge">
+        <MudText Typo="Typo.h2">Counter</MudText>
+        <MudText Class="mt-3 ml-1" Typo="Typo.h5">Current count: @_currentCount</MudText>
+        <MudButton Class="mt-5 ml-1" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Large" OnClick="IncrementCount">Click me</MudButton>
+        <MudButton Class="mt-5 ml-2" Variant="Variant.Filled" Color="Color.Warning" Size="Size.Large" OnClick="ResetCount">Reset</MudButton>
+    </MudContainer>
+
+    <Notification Class="mt-3" @ref="_notification" />
+</section>
+
+@code {
+    private int _currentCount = 0;
+    private Notification? _notification;
+
+    private void IncrementCount()
+    {
+        _notification?.ResetAlert();
+        _currentCount += 1;
+
+        if (_currentCount % 6 == 0) { _notification?.AlertError($"The current count is {_currentCount}"); }
+        else if (_currentCount % 5 == 0) { _notification?.FireError($"The current count is: {_currentCount}"); }
+        else if (_currentCount % 4 == 0) { _notification?.FireWarning($"The current count is: {_currentCount}"); }
+        else if (_currentCount % 3 == 0) { _notification?.FireInfo($"The current count is: {_currentCount}"); }
+        else if (_currentCount % 2 == 0) { _notification?.FireSuccess($"The current count is: {_currentCount}"); }
+        else if (_currentCount % 1 == 0) { _notification?.FireNormal($"The current count is: {_currentCount}"); }
+    }
+
+    private void ResetCount()
+    {
+        _currentCount = 0;
+        _notification?.ResetAlert();
+    }
+}

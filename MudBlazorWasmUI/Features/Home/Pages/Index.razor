@@ -1,0 +1,58 @@
+﻿@page "/"
+@inject NavigationManager NavManager
+
+<PageTitle>Blazor Client -- Home</PageTitle>
+
+<section>
+    <MudContainer MaxWidth="MaxWidth.False">
+        <MudGrid Justify="Justify.Center">
+
+            <MudItem xs="12" Class="d-flex flex-column align-center">
+                <MudText Typo="Typo.h2" Style="white-space: nowrap;">Hello, world!</MudText>
+                <MudText Typo="Typo.h5" Style="white-space: nowrap;">Welcome to your new app.</MudText>
+            </MudItem>
+
+            <AuthorizeView Context="AuthContext">
+
+                <NotAuthorized>
+                    <MudItem xs="5">
+                        <MudDivider DividerType="DividerType.Middle" Style="height: 2px;" />
+                    </MudItem>
+
+                    <MudItem xs="12" Class="d-flex justify-center">
+                        <MudButton Class="mx-2"
+                                   Variant="Variant.Filled"
+                                   Color="Color.Primary"
+                                   @onclick="OnLogin"
+                                   StartIcon="@Icons.Material.Filled.Login"
+                                   Size="Size.Large">
+                            Login
+                        </MudButton>
+                        <MudButton Class="mx-2"
+                                   Variant="Variant.Filled"
+                                   Color="Color.Tertiary"
+                                   @onclick="OnRegister"
+                                   StartIcon="@Icons.Material.Filled.EditNote"
+                                   Size="Size.Large">
+                            Register
+                        </MudButton>
+                    </MudItem>
+                </NotAuthorized>
+
+            </AuthorizeView>
+
+        </MudGrid>
+    </MudContainer>
+</section>
+
+@code {
+    private void OnLogin()
+    {
+        NavManager.NavigateTo("/login");
+    }
+
+    private void OnRegister()
+    {
+        NavManager.NavigateTo("/register");
+    }
+}

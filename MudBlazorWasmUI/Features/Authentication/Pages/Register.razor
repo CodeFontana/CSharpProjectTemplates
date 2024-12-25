@@ -1,0 +1,131 @@
+﻿@page "/register"
+@inject AuthenticationStateProvider AuthStateProvider
+@inject NavigationManager NavManager
+@inject IAuthenticationService AuthService
+@inject ISnackbar Snackbar
+
+<PageTitle>Blazor Client - Register</PageTitle>
+
+<section>
+    <MudContainer MaxWidth="MaxWidth.Small">
+
+        <EditForm Model="@_registerUser" OnValidSubmit="OnRegisterAsync">
+            <DataAnnotationsValidator />
+
+            <MudCard Elevation="5">
+
+                <MudCardHeader>
+                    <CardHeaderContent>
+                        <MudText Typo="Typo.h2" Align="Align.Center">Sign up</MudText>
+                        <MudDivider DividerType="DividerType.Middle" />
+                    </CardHeaderContent>
+                </MudCardHeader>
+
+                <MudCardContent>
+                    <MudTextField Label="Username"
+                                  Variant="Variant.Text"
+                                  @bind-Value="_registerUser.Username"
+                                  For="@(() => _registerUser.Username)" />
+                    <MudTextField Label="Email"
+                                  Class="mt-3"
+                                  Variant="Variant.Text"
+                                  @bind-Value="_registerUser.Email"
+                                  For="@(() => _registerUser.Email)" />
+                    <MudTextField Label="Password"
+                                  Class="mt-3"
+                                  Variant="Variant.Text"
+                                  @bind-Value="_registerUser.Password"
+                                  For="@(() => _registerUser.Password)"
+                                  InputType="@_passwordInput"
+                                  Adornment="Adornment.End"
+                                  AdornmentIcon="@_passwordInputIcon"
+                                  OnAdornmentClick="ToggleShowPassword"
+                                  AdornmentAriaLabel="Show Password" />
+                    <MudTextField Label="Confirm Password"
+                                  Class="mt-3"
+                                  Variant="Variant.Text"
+                                  @bind-Value="_registerUser.ConfirmPassword"
+                                  For="@(() => _registerUser.ConfirmPassword)"
+                                  InputType="@_passwordInput" />
+                </MudCardContent>
+
+                <MudCardActions Class="d-flex justify-center">
+                    <MudButton Class="mx-2" ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary">Create Account</MudButton>
+                    <MudButton Class="mx-2" ButtonType="ButtonType.Button" Variant="Variant.Filled" Color="Color.Error" @onclick="() => OnCancel()">Cancel</MudButton>
+                </MudCardActions>
+
+            </MudCard>
+
+        </EditForm>
+
+        @if (_showError)
+        {
+            @if (_showError)
+            {
+                <MudAlert Severity="Severity.Error">@_errorText</MudAlert>
+            }
+        }
+    </MudContainer>
+</section>
+
+@code {
+    private RegisterUserModel _registerUser = new();
+    private InputType _passwordInput = InputType.Password;
+    private string _passwordInputIcon = Icons.Material.Filled.VisibilityOff;
+    private bool _showPassword = false;
+    private bool _showError = false;
+    private string? _errorText;
+
+    protected override async Task OnInitializedAsync()
+    {
+        AuthenticationState authState = await AuthStateProvider.GetAuthenticationStateAsync();
+        ClaimsPrincipal user = authState.User;
+
+        if (user.Identity?.IsAuthenticated ?? false)
+        {
+            NavManager.NavigateTo("/");
+        }
+    }
+
+    private async Task OnRegisterAsync()
+    {
+        _showError = false;
+        _errorText = "";
+
+        ServiceResponseModel<AuthUserModel> regResult = await AuthService.RegisterAsync(_registerUser);
+
+        if (regResult.Success)
+        {
+            NavManager.NavigateTo("/");
+        }
+        else
+        {
+            _showError = true;
+            _errorText = $"Registration failed: {regResult.Message}";
+            Snackbar.Add($"Registration failed: {regResult.Message}", Severity.Error);
+        }
+
+        _registerUser = new();
+    }
+
+    private void OnCancel()
+    {
+        NavManager.NavigateTo("/");
+    }
+
+    private void ToggleShowPassword()
+    {
+        if (_showPassword)
+        {
+            _showPassword = false;
+            _passwordInputIcon = Icons.Material.Filled.VisibilityOff;
+            _passwordInput = InputType.Password;
+        }
+        else
+        {
+            _showPassword = true;
+            _passwordInputIcon = Icons.Material.Filled.Visibility;
+            _passwordInput = InputType.Text;
+        }
+    }
+}

@@ -1,0 +1,194 @@
+﻿@inject ISnackbar Snackbar
+
+@if (ShowSuccess)
+{
+    <MudAlert Class="@Class" Dense="@Dense" Variant="@Variant" Elevation="@Elevation" Square="@Square" Severity="Severity.Success" Style="@Style">@_message</MudAlert>
+}
+else if (ShowError)
+{
+    <MudAlert Class="@Class" Dense="@Dense" Variant="@Variant" Elevation="@Elevation" Square="@Square" Severity="Severity.Error" Style="@Style">@_message</MudAlert>
+}
+else if (ShowInfo)
+{
+    <MudAlert Class="@Class" Dense="@Dense" Variant="@Variant" Elevation="@Elevation" Square="@Square" Severity="Severity.Info" Style="@Style">@_message</MudAlert>
+}
+else if (ShowWarning)
+{
+    <MudAlert Class="@Class" Dense="@Dense" Variant="@Variant" Elevation="@Elevation" Square="@Square" Severity="Severity.Warning" Style="@Style">@_message</MudAlert>
+}
+else if (ShowDefault)
+{
+    <MudAlert Class="@Class" Dense="@Dense" Variant="@Variant" Elevation="@Elevation" Square="@Square" Severity="Severity.Normal" Style="@Style">@_message</MudAlert>
+}
+
+@code {
+    [Parameter] public string Class { get; set; } = "";
+    [Parameter] public bool Dense { get; set; } = false;
+    [Parameter] public Variant Variant { get; set; } = Variant.Filled;
+    [Parameter] public int Elevation { get; set; } = 0;
+    [Parameter] public bool Square { get; set; } = true;
+    [Parameter] public string Style { get; set; } = "";
+
+    private bool _showDefault = false;
+    public bool ShowDefault
+    {
+        get => _showDefault;
+        private set
+        {
+            if (value)
+            {
+                _showError = false;
+                _showInfo = false;
+                _showWarning = false;
+                _showSuccess = false;
+            }
+
+            _showDefault = value;
+        }
+    }
+
+    private bool _showSuccess = false;
+    public bool ShowSuccess
+    {
+        get => _showSuccess;
+        private set
+        {
+            if (value)
+            {
+                _showError = false;
+                _showInfo = false;
+                _showWarning = false;
+                _showDefault = false;
+            }
+
+            _showSuccess = value;
+        }
+    }
+
+    private bool _showError = false;
+    public bool ShowError
+    {
+        get => _showError;
+        private set
+        {
+            if (value)
+            {
+                _showSuccess = false;
+                _showInfo = false;
+                _showWarning = false;
+                _showDefault = false;
+            }
+
+            _showError = value;
+        }
+    }
+
+    private bool _showInfo = false;
+    public bool ShowInfo
+    {
+        get => _showInfo;
+        private set
+        {
+            if (value)
+            {
+                _showSuccess = false;
+                _showError = false;
+                _showWarning = false;
+                _showDefault = false;
+            }
+
+            _showInfo = value;
+        }
+    }
+
+    private bool _showWarning = false;
+    public bool ShowWarning
+    {
+        get => _showWarning;
+        private set
+        {
+            if (value)
+            {
+                _showSuccess = false;
+                _showError = false;
+                _showInfo = false;
+                _showDefault = false;
+            }
+
+            _showWarning = value;
+        }
+    }
+
+    private string? _message;
+
+    public void AlertDefault(string message)
+    {
+        _message = message;
+        ShowDefault = true;
+        StateHasChanged();
+    }
+
+    public void AlertSuccess(string message)
+    {
+        _message = message;
+        ShowSuccess = true;
+        StateHasChanged();
+    }
+
+    public void AlertInfo(string message)
+    {
+        _message = message;
+        ShowInfo = true;
+        StateHasChanged();
+    }
+
+    public void AlertWarning(string message)
+    {
+        _message = message;
+        ShowWarning = true;
+        StateHasChanged();
+    }
+
+    public void AlertError(string message)
+    {
+        _message = message;
+        ShowError = true;
+        StateHasChanged();
+    }
+
+    public void ResetAlert()
+    {
+        _message = "";
+        ShowDefault = false;
+        ShowSuccess = false;
+        ShowInfo = false;
+        ShowWarning = false;
+        ShowError = false;
+        StateHasChanged();
+    }
+
+    public void FireNormal(string message, Action<SnackbarOptions>? configure = null)
+    {
+        Snackbar.Add(message, Severity.Normal, configure);
+    }
+
+    public void FireSuccess(string message, Action<SnackbarOptions>? configure = null)
+    {
+        Snackbar.Add(message, Severity.Success, configure);
+    }
+
+    public void FireInfo(string message, Action<SnackbarOptions>? configure = null)
+    {
+        Snackbar.Add(message, Severity.Info, configure);
+    }
+
+    public void FireWarning(string message, Action<SnackbarOptions>? configure = null)
+    {
+        Snackbar.Add(message, Severity.Warning, configure);
+    }
+
+    public void FireError(string message, Action<SnackbarOptions>? configure = null)
+    {
+        Snackbar.Add(message, Severity.Error, configure);
+    }
+}

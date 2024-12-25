@@ -1,0 +1,194 @@
+﻿@inherits LayoutComponentBase
+@inject AuthenticationStateProvider AuthStateProvider
+@inject IAuthenticationService AuthService
+@inject IWebAssemblyHostEnvironment HostEnv
+@inject NavigationManager NavMan
+@inject ISnackbar Snackbar
+@inject ILocalStorageService LocalStorage
+
+<PageTitle>Blazor Client</PageTitle>
+
+<MudThemeProvider Theme="_theme" IsDarkMode="_isDarkMode" />
+<MudDialogProvider />
+<MudSnackbarProvider />
+
+<MudLayout Style="min-width: 350px;">
+    <MudAppBar Elevation="5" Dense="true">
+
+        @if (_drawerOpen == false)
+        {
+            <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="() => _drawerOpen = !_drawerOpen" />
+            <MudText Typo="Typo.h6" Style="white-space: nowrap">Blazor Client</MudText>
+        }
+
+        <AuthorizeView Context="AppBarContext">
+
+            <Authorized>
+                <MudSpacer />
+                <MudLink Class="d-flex gap-2 mx-2" Href="/logout" Typo="Typo.body2">
+                    <MudIcon Icon="@Icons.Material.Filled.Logout" Style="color: white;" />
+                    <MudText Typo="Typo.body1" Inline="true" Style="color: white;">Logout</MudText>
+                </MudLink>
+            </Authorized>
+
+            <NotAuthorized>
+                <MudSpacer />
+            </NotAuthorized>
+
+        </AuthorizeView>
+
+        @if (_isDarkMode == false)
+        {
+            <MudButton OnClick="@((e) => ToggleThemeAsync())" Style="color: white;"><MudIcon Icon="@Icons.Material.Filled.DarkMode"></MudIcon></MudButton>
+        }
+        else
+        {
+            <MudButton OnClick="@((e) => ToggleThemeAsync())" Style="color: white;"><MudIcon Icon="@Icons.Material.Filled.LightMode"></MudIcon></MudButton>
+        }
+
+    </MudAppBar>
+
+    <MudDrawer @bind-Open="_drawerOpen" Elevation="5">
+        <MudDrawerHeader Class="d-flex align-center pt-0">
+            <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="() => _drawerOpen = !_drawerOpen" />
+            <MudText Typo="Typo.h6" Style="white-space: nowrap">Blazor Client</MudText>
+        </MudDrawerHeader>
+        <MudDrawerContainer>
+
+            <AuthorizeView Context="DrawerContext">
+                <NotAuthorized>
+
+                    <MudNavLink Href="/login" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Login">
+                        <MudText Typo="Typo.body1">Login</MudText>
+                    </MudNavLink>
+
+                    <MudNavLink Href="/register" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.EditNote">
+                        <MudText Typo="Typo.body1">Register</MudText>
+                    </MudNavLink>
+
+                </NotAuthorized>
+            </AuthorizeView>
+
+            <MudNavLink Href="/" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home">
+                <MudText Typo="Typo.body1">Home</MudText>
+            </MudNavLink>
+
+            <MudNavLink Href="/counter" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Add">
+                <MudText Typo="Typo.body1">Counter</MudText>
+            </MudNavLink>
+
+            @if (HostEnv.IsDevelopment())
+            {
+                <MudNavLink Href="/verifyauth" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Lock">
+                    <MudText Typo="Typo.body1">Verify Authentication</MudText>
+                </MudNavLink>
+
+                <MudNavLink Href="/theme" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Palette">
+                    <MudText Typo="Typo.body1">Color Theme</MudText>
+                </MudNavLink>
+            }
+
+            <AuthorizeView Context="DrawerContext">
+                <Authorized>
+                    <MudNavLink Href="/logout" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Logout">
+                        <MudText Typo="Typo.body1">Logout</MudText>
+                    </MudNavLink>
+                </Authorized>
+            </AuthorizeView>
+
+        </MudDrawerContainer>
+    </MudDrawer>
+
+    <MudMainContent>
+        <MudContainer MaxWidth="MaxWidth.False" Class="mt-4 px-0">
+            @Body
+        </MudContainer>
+    </MudMainContent>
+</MudLayout>
+
+@code {
+    private MudTheme _theme = new();
+    private bool _isDarkMode;
+    private bool _drawerOpen = true;
+    private LoginUserModel _loginUser = new();
+    private InputType _passwordInput = InputType.Password;
+    private string _passwordInputIcon = Icons.Material.Filled.VisibilityOff;
+    private bool _showPassword = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        string? theme = await LocalStorage.GetItemAsync<string>("Theme");
+
+        if (string.IsNullOrWhiteSpace(theme)
+            || string.Equals(theme, "Light", System.StringComparison.InvariantCultureIgnoreCase))
+        {
+            _isDarkMode = false;
+        }
+        else
+        {
+            _isDarkMode = true;
+        }
+    }
+
+    private async Task HandleLoginAsync()
+    {
+        if (string.IsNullOrEmpty(_loginUser.Username))
+        {
+            Snackbar.Add("Please enter your username", Severity.Info);
+            return;
+        }
+        else if (string.IsNullOrEmpty(_loginUser.Password))
+        {
+            Snackbar.Add("Please enter your password", Severity.Info);
+            return;
+        }
+
+        ServiceResponseModel<AuthUserModel> authResult = await AuthService.LoginAsync(_loginUser);
+        _loginUser = new();
+
+        if (authResult.Success)
+        {
+            NavMan.NavigateTo("/");
+        }
+        else
+        {
+            Snackbar.Add($"Login failed: {authResult.Message}", Severity.Error);
+        }
+    }
+
+    private async Task HandleLogoutAsync()
+    {
+        NavMan.NavigateTo("/");
+        await AuthService.LogoutAsync();
+    }
+
+    private void ToggleShowPassword()
+    {
+        if (_showPassword)
+        {
+            _showPassword = false;
+            _passwordInputIcon = Icons.Material.Filled.VisibilityOff;
+            _passwordInput = InputType.Password;
+        }
+        else
+        {
+            _showPassword = true;
+            _passwordInputIcon = Icons.Material.Filled.Visibility;
+            _passwordInput = InputType.Text;
+        }
+    }
+
+    private async Task ToggleThemeAsync()
+    {
+        if (_isDarkMode == false)
+        {
+            _isDarkMode = true;
+            await LocalStorage.SetItemAsync("Theme", "Dark");
+        }
+        else
+        {
+            _isDarkMode = false;
+            await LocalStorage.SetItemAsync("Theme", "Light");
+        }
+    }
+}

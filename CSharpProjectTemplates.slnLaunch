@@ -1,0 +1,17 @@
+[
+  {
+    "Name": "Blazor WASM + API",
+    "Projects": [
+      {
+        "Path": "MudBlazorWasmUI\\MudBlazorWasmUI.csproj",
+        "Action": "Start",
+        "DebugTarget": "MudBlazorWasmUI"
+      },
+      {
+        "Path": "WebApi\\WebApi.csproj",
+        "Action": "Start",
+        "DebugTarget": "WebApi"
+      }
+    ]
+  }
+]

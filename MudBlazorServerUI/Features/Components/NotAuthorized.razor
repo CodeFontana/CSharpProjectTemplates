@@ -1,0 +1,37 @@
+﻿@inject NavigationManager Nav
+@inject AuthenticationStateProvider AuthState
+@attribute [AllowAnonymous]
+
+<PageTitle>Not Authorized</PageTitle>
+
+<AuthorizeView>
+    <Authorized>
+        <MudContainer MaxWidth="MaxWidth.ExtraLarge">
+            <MudText Align="Align.Center" Typo="Typo.h3">You are not authorized to view this page.</MudText>
+            <MudDivider DividerType="DividerType.Middle" Class="my-5" Style="background-color: var(--mud-palette-primary-lighten);" />
+            <MudButton Class="d-flex mx-auto" Variant="Variant.Filled" Color="Color.Primary" @onclick="HandleClick">Go Home</MudButton>
+        </MudContainer>
+    </Authorized>
+</AuthorizeView>
+
+@code {
+    [Parameter] public string ReturnUrl { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        AuthenticationState authState = await AuthState.GetAuthenticationStateAsync();
+        ClaimsPrincipal user = authState.User;
+
+        if (user.Identity.IsAuthenticated == false)
+        {
+            Nav.NavigateTo($"login?ReturnUrl={ReturnUrl}");
+        }
+
+        await base.OnParametersSetAsync();
+    }
+
+    private void HandleClick()
+    {
+        Nav.NavigateTo("/");
+    }
+}

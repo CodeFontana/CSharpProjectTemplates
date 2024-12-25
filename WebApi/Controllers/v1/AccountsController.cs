@@ -31,7 +31,18 @@ public class AccountsController : ControllerBase
     {
         try
         {
-            ServiceResponseModel<List<AccountModel>> response = await _accountService.GetAccountsAsync(HttpContext.User.Identity.Name);
+            string? userName = HttpContext.User.Identity?.Name;
+
+            if (string.IsNullOrWhiteSpace(userName))
+            {
+                return BadRequest(new ServiceResponseModel<List<AccountModel>> 
+                { 
+                    Success = false, 
+                    Message = "User is not authenticated" 
+                });
+            }
+
+            ServiceResponseModel<List<AccountModel>> response = await _accountService.GetAccountsAsync(userName);
 
             if (response.Success)
             {
@@ -62,7 +73,18 @@ public class AccountsController : ControllerBase
     {
         try
         {
-            ServiceResponseModel<AccountModel> response = await _accountService.GetAccountAsync(HttpContext.User.Identity.Name, username);
+            string? userName = HttpContext.User.Identity?.Name;
+
+            if (string.IsNullOrWhiteSpace(userName))
+            {
+                return BadRequest(new ServiceResponseModel<AccountModel> 
+                { 
+                    Success = false, 
+                    Message = "User is not authenticated" 
+                });
+            }
+
+            ServiceResponseModel<AccountModel> response = await _accountService.GetAccountAsync(userName, username);
 
             if (response.Success)
             {
@@ -93,7 +115,18 @@ public class AccountsController : ControllerBase
     {
         try
         {
-            ServiceResponseModel<AuthUserModel> response = await _accountService.RegisterAsync(HttpContext.User.Identity.Name, registerUser);
+            string? userName = HttpContext.User.Identity?.Name;
+
+            if (string.IsNullOrWhiteSpace(userName))
+            {
+                return BadRequest(new ServiceResponseModel<AuthUserModel>
+                {
+                    Success = false,
+                    Message = "User is not authenticated"
+                });
+            }
+
+            ServiceResponseModel<AuthUserModel> response = await _accountService.RegisterAsync(userName, registerUser);
 
             if (response.Success)
             {
@@ -155,7 +188,18 @@ public class AccountsController : ControllerBase
     {
         try
         {
-            ServiceResponseModel<bool> response = await _accountService.UpdateAccountAsync(HttpContext.User.Identity.Name, updateAccount);
+            string? userName = HttpContext.User.Identity?.Name;
+
+            if (string.IsNullOrWhiteSpace(userName))
+            {
+                return BadRequest(new ServiceResponseModel<bool> 
+                { 
+                    Success = false, 
+                    Message = "User is not authenticated" 
+                });
+            }
+
+            ServiceResponseModel<bool> response = await _accountService.UpdateAccountAsync(userName, updateAccount);
 
             if (response.Success)
             {
@@ -186,7 +230,18 @@ public class AccountsController : ControllerBase
     {
         try
         {
-            ServiceResponseModel<bool> response = await _accountService.DeleteAccountAsync(HttpContext.User.Identity.Name, username);
+            string? userName = HttpContext.User.Identity?.Name;
+
+            if (string.IsNullOrWhiteSpace(userName))
+            {
+                return BadRequest(new ServiceResponseModel<bool> 
+                { 
+                    Success = false, 
+                    Message = "User is not authenticated" 
+                });
+            }
+
+            ServiceResponseModel<bool> response = await _accountService.DeleteAccountAsync(userName, username);
 
             if (response.Success)
             {

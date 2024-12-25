@@ -24,7 +24,8 @@ public class SeedData
     {
         try
         {
-            if (await _roleManager.Roles.AnyAsync(x => x.Name.Equals("Administrator")) == false)
+            if (_roleManager.Roles != null
+                && await _roleManager.Roles.AnyAsync() == false)
             {
                 List<AppRole> roles =
                 [
@@ -38,7 +39,8 @@ public class SeedData
                 }
             }
 
-            if (await _userManager.Users.AnyAsync(x => x.UserName.ToLower().Equals("brian@codefoxtrot.com")) == false)
+            if (_userManager.Users != null
+                && await _userManager.Users.AnyAsync() == false)
             {
                 AppUser admin = new()
                 {
@@ -47,7 +49,7 @@ public class SeedData
                 };
 
                 await _userManager.CreateAsync(admin, "Passw0rd123!!");
-                await _userManager.AddToRolesAsync(admin, new[] { "Administrator", "User" });
+                await _userManager.AddToRolesAsync(admin, ["Administrator", "User"]);
             }
         }
         catch (Exception ex)

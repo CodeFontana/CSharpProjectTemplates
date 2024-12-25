@@ -17,12 +17,15 @@ public static class JwtParser
             return claims;
         }
 
-        ExtractRolesFromJwt(claims, keyValuePairs);
+        if (keyValuePairs is null)
+        {
+            return claims;
+        }
 
+        ExtractRolesFromJwt(claims, keyValuePairs);
         claims.AddRange(keyValuePairs
             .Select(kvp => new Claim(
                 kvp.Key, kvp.Value?.ToString() ?? "")));
-
         return claims;
     }
 
@@ -37,7 +40,7 @@ public static class JwtParser
 
         if (roles != null)
         {
-            var parsedRoles = roles?.ToString()?.Trim().TrimStart('[').TrimEnd(']').Split(',');
+            string[]? parsedRoles = roles?.ToString()?.Trim().TrimStart('[').TrimEnd(']').Split(',');
 
             if (parsedRoles?.Length > 1)
             {

@@ -67,7 +67,8 @@ public class Program
                         ValidateIssuerSigningKey = true,
                         IssuerSigningKey = new SymmetricSecurityKey(
                             Encoding.ASCII.GetBytes(
-                                builder.Configuration.GetValue<string>("Authentication:JwtSecurityKey"))),
+                                builder.Configuration.GetValue<string>("Authentication:JwtSecurityKey") 
+                                ?? throw new InvalidOperationException("Configuration is missing JwtSecurityKey"))),
                         ValidateLifetime = true,
                         ClockSkew = TimeSpan.FromMinutes(10)
                     };
