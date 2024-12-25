@@ -36,7 +36,7 @@
     }
 
         /* Transition/scale the navigation link being pressed like a button */
-        ::deep .nav-link:active, ::deep .nav-link.active:active {
+        ::deep .nav-link:active, .nav-link.active:active {
             transform: scale(0.95);
             transition-duration: 0.05s;
             transition-timing-function: cubic-bezier(.06,.89,.57,1.04);
@@ -45,4 +45,9 @@
     /* Off-white semi-transparent hover effect for nav-link */
     ::deep .nav-link:hover {
         background-color: #ffffff26;
+    }
+
+    /* Add some margin to a dropdown menu nav-link */
+    ::deep .dropdown-menu .nav-link {
+        margin: 4px 4px;
     }
