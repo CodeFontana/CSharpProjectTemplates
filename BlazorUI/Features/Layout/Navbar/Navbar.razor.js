@@ -13,6 +13,7 @@ const setTheme = function (theme) {
 }
 
 export function onLoad() {
+    // Add click listeners to theme switches
     const themeSwitches = document.querySelectorAll('.theme-switch');
     themeSwitches.forEach(switchElement => {
         switchElement.addEventListener('click', () => {
@@ -24,6 +25,7 @@ export function onLoad() {
 }
 
 export function onUpdate() {
+    // Ensure theme is applied
     const theme = localStorage.getItem('theme') || 'light';
     setTheme(theme);
 }

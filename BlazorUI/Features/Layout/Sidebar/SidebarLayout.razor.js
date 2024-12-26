@@ -26,7 +26,8 @@ function reinitializeOffcanvas() {
 }
 
 export function onLoad() {
-        const themeSwitches = document.querySelectorAll('.theme-switch');
+    // Add click listeners to theme switches
+    const themeSwitches = document.querySelectorAll('.theme-switch');
     themeSwitches.forEach(switchElement => {
         switchElement.addEventListener('click', () => {
             const currentTheme = localStorage.getItem('theme') || 'light';
@@ -37,8 +38,10 @@ export function onLoad() {
 }
 
 export function onUpdate() {
+    // Ensure theme is applied
     const theme = localStorage.getItem('theme') || 'light';
     setTheme(theme);
+
     reinitializeOffcanvas();
 }
 

@@ -1,0 +1,29 @@
+﻿@inherits LayoutComponentBase
+
+<CascadingValue Name="LayoutName" Value="@LayoutName">
+    <div id="combined-layout" class="d-flex flex-column vh-100" style="min-width: 350px; padding-top: 4rem;">
+        
+        <div id="sidebar" class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1">
+            <CombinedSidebar Class="sidebar-offcanvas" />
+        </div>
+        
+        <CombinedNavbar />
+
+        <main class="container-fluid flex-grow-1">
+            @Body
+        </main>
+
+        <div id="blazor-error-ui">
+            An unhandled error has occurred.
+            <a href="" class="reload">Reload</a>
+            <a class="dismiss">🗙</a>
+        </div>
+        
+    </div>
+</CascadingValue>
+
+<PageScript Src="./Features/Layout/Combined/CombinedLayout.razor.js" />
+
+@code {
+    private const string LayoutName = "CombinedLayout";
+}

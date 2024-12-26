@@ -1,7 +1,8 @@
 ﻿<Router AppAssembly="typeof(Program).Assembly">
     <Found Context="routeData">
-        <RouteView RouteData="routeData" DefaultLayout="typeof(Layout.NavbarLayout)" />
-        @* <RouteView RouteData="routeData" DefaultLayout="typeof(Layout.SidebarLayout)" /> *@
+        @* <RouteView RouteData="routeData" DefaultLayout="typeof(Layout.Navbar.NavbarLayout)" /> *@
+        @* <RouteView RouteData="routeData" DefaultLayout="typeof(Layout.Sidebar.SidebarLayout)" /> *@
+        <RouteView RouteData="routeData" DefaultLayout="typeof(Layout.Combined.CombinedLayout)" />
         <FocusOnNavigate RouteData="routeData" Selector="h1" />
     </Found>
 </Router>
