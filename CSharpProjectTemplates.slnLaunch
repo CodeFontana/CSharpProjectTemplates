@@ -13,5 +13,45 @@
         "DebugTarget": "WebApi"
       }
     ]
+  },
+  {
+    "Name": "All",
+    "Projects": [
+      {
+        "Path": "WebApi\\WebApi.csproj",
+        "Action": "Start",
+        "DebugTarget": "WebApi"
+      },
+      {
+        "Path": "BlazorUI\\BlazorUI.csproj",
+        "Action": "Start",
+        "DebugTarget": "https"
+      },
+      {
+        "Path": "MudBlazorServerUI\\MudBlazorServerUI.csproj",
+        "Action": "Start",
+        "DebugTarget": "https"
+      },
+      {
+        "Path": "MudBlazorWasmUI\\MudBlazorWasmUI.csproj",
+        "Action": "Start",
+        "DebugTarget": "MudBlazorWasmUI"
+      },
+      {
+        "Path": "WpfUI\\WpfUI.csproj",
+        "Action": "Start",
+        "DebugTarget": "WpfUI"
+      },
+      {
+        "Path": "ConsoleUI\\ConsoleUI.csproj",
+        "Action": "Start",
+        "DebugTarget": "ConsoleUI"
+      },
+      {
+        "Path": "WorkerService\\WorkerService.csproj",
+        "Action": "Start",
+        "DebugTarget": "WorkerService"
+      }
+    ]
   }
 ]
