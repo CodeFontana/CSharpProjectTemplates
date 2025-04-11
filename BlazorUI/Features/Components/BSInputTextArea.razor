@@ -1,26 +1,87 @@
 ﻿@using System.Linq.Expressions
 
-<div class="@Class">
-    <InputTextArea id="@Id"
-                   class="form-control"
-                   rows="@Rows"
-                   Value="@Value"
-                   ValueChanged="ValueChanged"
-                   ValueExpression="ValueExpression"
-                   @oninput="OnInput"
-                   @onfocus="OnFocus"
-                   @onblur="OnBlur"
-                   @onclick="OnClick"
-                   @onchange="OnChange"
-                   @onmouseover="OnMouseOver"
-                   @onmouseout="OnMouseOut"
-                   Disabled="@Disabled" />
+@if (InputType == InputType.Standard)
+{
+    <div class="@Class">
+        <label for="@Id" class="form-label mb-0" style="@($"width: {LabelWidth}px;")">@Label</label>
+        <InputTextArea id="@Id"
+                       class="form-control"
+                       rows="@Rows"
+                       Value="@Value"
+                       ValueChanged="ValueChanged"
+                       ValueExpression="ValueExpression"
+                       @oninput="OnInput"
+                       @onfocus="OnFocus"
+                       @onblur="OnBlur"
+                       @onclick="OnClick"
+                       @onchange="OnChange"
+                       @onmouseover="OnMouseOver"
+                       @onmouseout="OnMouseOut"
+                       Disabled="@Disabled" />
+    </div>
+}
+else if (InputType == InputType.InputGroup)
+{
+    <div class="input-group @Class">
+        <span class="input-group-text" style="@($"width: {LabelWidth}px;")">@Label</span>
+        <InputTextArea id="@Id"
+                       class="form-control"
+                       rows="@Rows"
+                       Value="@Value"
+                       ValueChanged="ValueChanged"
+                       ValueExpression="ValueExpression"
+                       @oninput="OnInput"
+                       @onfocus="OnFocus"
+                       @onblur="OnBlur"
+                       @onclick="OnClick"
+                       @onchange="OnChange"
+                       @onmouseover="OnMouseOver"
+                       @onmouseout="OnMouseOut"
+                       Disabled="@Disabled" />
+    </div>
+}
+else if (InputType == InputType.FloatingLabel)
+{
+    <div class="@($"form-floating {Class}")">
+        <InputTextArea id="@Id"
+                       class="form-control"
+                       rows="@Rows"
+                       style="@($"height: {Rows * 1.5}rem;")"
+                       Value="@Value"
+                       ValueChanged="ValueChanged"
+                       ValueExpression="ValueExpression"
+                       @oninput="OnInput"
+                       @onfocus="OnFocus"
+                       @onblur="OnBlur"
+                       @onclick="OnClick"
+                       @onchange="OnChange"
+                       @onmouseover="OnMouseOver"
+                       @onmouseout="OnMouseOut"
+                       Disabled="@Disabled" />
+        <label for="@Id">@Label</label>
+    </div>
+}
+
+@if (EditContext != null)
+{
     <ValidationMessage For="@ValueExpression" class="text-danger validation-spacing" />
-</div>
+}
 
 @code {
+    [CascadingParameter]
+    private EditContext? EditContext { get; set; }
+
+    [Parameter]
+    public InputType InputType { get; set; } = InputType.Standard;
+
     [Parameter]
     public string? Class { get; set; }
+
+    [Parameter, EditorRequired]
+    public required string Label { get; set; }
+
+    [Parameter]
+    public ushort LabelWidth { get; set; } = 150;
 
     [Parameter]
     public ushort Rows { get; set; } = 10;

@@ -1,0 +1,56 @@
+﻿@using System.Net.Mail
+
+@_formattedValue
+
+@code {
+    [Parameter]
+    public string? Value { get; set; }
+
+    private string _formattedValue = string.Empty;
+
+    protected override void OnParametersSet()
+    {
+        _formattedValue = FormatIdentity(Value);
+    }
+
+    private static string FormatIdentity(string? input)
+    {
+        if (input is null)
+        {
+            return string.Empty;
+        }
+
+        int atIndex = input.IndexOf('@');
+
+        if (atIndex < 0)
+        {
+            // No '@' => just return as is
+            return input;
+        }
+
+        string beforeAt = input.Substring(0, atIndex);
+        string afterAt = input.Substring(atIndex + 1);
+
+        bool isFirstGuid = Guid.TryParse(beforeAt, out Guid firstGuid);
+        bool isSecondGuid = Guid.TryParse(afterAt, out Guid secondGuid);
+
+        // GUID@GUID => return the first GUID
+        if (isFirstGuid && isSecondGuid)
+        {
+            return beforeAt;
+        }
+
+        // Otherwise, check if it's a valid email
+        try
+        {
+            MailAddress mailAddress = new(input);
+            // If no exception, it’s valid => return the full string
+            return input;
+        }
+        catch (FormatException)
+        {
+            // Not an email => return as is
+            return input;
+        }
+    }
+}

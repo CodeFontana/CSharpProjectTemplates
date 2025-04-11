@@ -17,9 +17,15 @@
                 Disabled="@Disabled" />
     <label class="form-check-label" for="@Id">@Label</label>
 </div>
-<ValidationMessage For="@ValueExpression" class="text-danger validation-spacing" />
+@if (EditContext != null)
+{
+    <ValidationMessage For="@ValueExpression" class="text-danger validation-spacing" />
+}
 
 @code {
+    [CascadingParameter]
+    private EditContext? EditContext { get; set; }
+
     [Parameter]
     public string? Class { get; set; }
 

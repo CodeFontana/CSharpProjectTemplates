@@ -1,6 +1,6 @@
 ﻿@using System.Linq.Expressions
 
-<label class="@($"form-control {Class}")">
+<label class="@($"{LabelClass}")" style="@LabelStyle">
     <InputCheckbox id="@Id"
                    class="form-check-input me-2"
                    Value="@Value"
@@ -14,16 +14,26 @@
                    @onmouseover="OnMouseOver"
                    @onmouseout="OnMouseOut"
                    Disabled="@Disabled"
-                   style="@(Class?.ToLower().Contains("form-switch") ?? false ? "margin-left: -2em;" : "")" />
-    @Label
+                   style="@(LabelClass?.ToLower().Contains("form-switch") ?? false ? $"margin-left: -2em; {InputStyle}" : InputStyle)" />
+
+    @if (string.IsNullOrWhiteSpace(Label) == false)
+    {
+        @Label
+    }
 </label>
 
 @code {
     [Parameter]
-    public string? Class { get; set; }
+    public string? LabelClass { get; set; }
 
-    [Parameter, EditorRequired]
-    public required string Label { get; set; }
+    [Parameter]
+    public string LabelStyle { get; set; } = "";
+
+    [Parameter]
+    public string InputStyle { get; set; } = "";
+
+    [Parameter]
+    public string? Label { get; set; }
 
     [Parameter, EditorRequired]
     public required string Id { get; set; }
