@@ -48,7 +48,7 @@
 
     </MudAppBar>
 
-    <MudDrawer @bind-Open="_drawerOpen" Elevation="5">
+    <MudDrawer @bind-Open="_drawerOpen" Elevation="5" Variant="DrawerVariant.Responsive" Color="Color.Dark">
         <MudDrawerHeader Class="d-flex align-center pt-0">
             <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="() => _drawerOpen = !_drawerOpen" />
             <MudText Typo="Typo.h6" Style="white-space: nowrap">Blazor Client</MudText>
@@ -58,39 +58,39 @@
             <AuthorizeView Context="DrawerContext">
                 <NotAuthorized>
 
-                    <MudNavLink Href="/login" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Login">
+                    <MudNavLink Href="/login" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Login" IconColor="Color.Surface">
                         <MudText Typo="Typo.body1">Login</MudText>
                     </MudNavLink>
 
-                    <MudNavLink Href="/register" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.EditNote">
+                    <MudNavLink Href="/register" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.EditNote" IconColor="Color.Surface">
                         <MudText Typo="Typo.body1">Register</MudText>
                     </MudNavLink>
 
                 </NotAuthorized>
             </AuthorizeView>
 
-            <MudNavLink Href="/" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home">
+            <MudNavLink Href="/" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home" IconColor="Color.Surface">
                 <MudText Typo="Typo.body1">Home</MudText>
             </MudNavLink>
 
-            <MudNavLink Href="/counter" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Add">
+            <MudNavLink Href="/counter" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Add" IconColor="Color.Surface">
                 <MudText Typo="Typo.body1">Counter</MudText>
             </MudNavLink>
 
             @if (HostEnv.IsDevelopment())
             {
-                <MudNavLink Href="/verifyauth" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Lock">
+                <MudNavLink Href="/verifyauth" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Lock" IconColor="Color.Surface">
                     <MudText Typo="Typo.body1">Verify Authentication</MudText>
                 </MudNavLink>
 
-                <MudNavLink Href="/theme" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Palette">
+                <MudNavLink Href="/theme" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Palette" IconColor="Color.Surface">
                     <MudText Typo="Typo.body1">Color Theme</MudText>
                 </MudNavLink>
             }
 
             <AuthorizeView Context="DrawerContext">
                 <Authorized>
-                    <MudNavLink Href="/logout" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Logout">
+                    <MudNavLink Href="/logout" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Logout" IconColor="Color.Surface">
                         <MudText Typo="Typo.body1">Logout</MudText>
                     </MudNavLink>
                 </Authorized>

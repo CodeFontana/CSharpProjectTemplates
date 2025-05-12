@@ -8,8 +8,8 @@
         <MudGrid Justify="Justify.Center">
 
             <MudItem xs="12" Class="d-flex flex-column align-center">
-                <MudText Typo="Typo.h2" Style="white-space: nowrap;">Hello, world!</MudText>
-                <MudText Typo="Typo.h5" Style="white-space: nowrap;">Welcome to your new app.</MudText>
+                <MudText Typo="Typo.h3" Style="white-space: nowrap;">Hello, world!</MudText>
+                <MudText Typo="Typo.h6" Style="white-space: nowrap;">Welcome to your new app.</MudText>
             </MudItem>
 
             <AuthorizeView Context="AuthContext">
@@ -25,7 +25,7 @@
                                    Color="Color.Primary"
                                    @onclick="OnLogin"
                                    StartIcon="@Icons.Material.Filled.Login"
-                                   Size="Size.Large">
+                                   Size="Size.Medium">
                             Login
                         </MudButton>
                         <MudButton Class="mx-2"
@@ -33,7 +33,7 @@
                                    Color="Color.Tertiary"
                                    @onclick="OnRegister"
                                    StartIcon="@Icons.Material.Filled.EditNote"
-                                   Size="Size.Large">
+                                   Size="Size.Medium">
                             Register
                         </MudButton>
                     </MudItem>
