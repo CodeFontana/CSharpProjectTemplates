@@ -1,5 +1,12 @@
 ﻿@using System.Linq.Expressions
 
+@*
+Sample usage:
+<BSInputText Id="myId" Class="mb-3" Label="My Label" InputType="InputType.Standard" @bind-Value="_demo" Placeholder="All work and no play..." Disabled="@_isRequesting" />
+<BSInputText Id="myId" Class="mb-3" Label="My Label" InputType="InputType.InputGroup" @bind-Value="_demo" Placeholder="All work and no play..." Disabled="@_isRequesting" />
+<BSInputText Id="myId" Class="mb-3" Label="My Label" InputType="InputType.FloatingLabel" @bind-Value="_demo" Disabled="@_isRequesting" />
+*@
+
 @if (InputType == InputType.Standard)
 {
     <div class="@($"{Class}")">

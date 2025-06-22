@@ -1,5 +1,12 @@
 ﻿@using System.Linq.Expressions
 
+@*
+Sample usage:
+<BSInputTextArea Id="myId" Class="mb-3" InputType="InputType.Standard" @bind-Value="@_demo" Label="My Label" Placeholder="All work and no play..." Rows="3" Disabled="_isRequesting" />
+<BSInputTextArea Id="myId" Class="mb-3" InputType="InputType.InputGroup" @bind-Value="@_demo" Label="My Label" Placeholder="All work and no play..." Rows="3" Disabled="_isRequesting" />
+<BSInputTextArea Id="myId" Class="mb-3" InputType="InputType.FloatingLabel" @bind-Value="@_demo" Label="My Label" Rows="3" Disabled="_isRequesting" />
+*@
+
 @if (InputType == InputType.Standard)
 {
     <div class="@Class">
@@ -10,6 +17,7 @@
                        Value="@Value"
                        ValueChanged="ValueChanged"
                        ValueExpression="ValueExpression"
+                       placeholder="@Placeholder"
                        @oninput="OnInput"
                        @onfocus="OnFocus"
                        @onblur="OnBlur"
@@ -30,6 +38,7 @@ else if (InputType == InputType.InputGroup)
                        Value="@Value"
                        ValueChanged="ValueChanged"
                        ValueExpression="ValueExpression"
+                       placeholder="@Placeholder"
                        @oninput="OnInput"
                        @onfocus="OnFocus"
                        @onblur="OnBlur"
@@ -46,10 +55,11 @@ else if (InputType == InputType.FloatingLabel)
         <InputTextArea id="@Id"
                        class="form-control"
                        rows="@Rows"
-                       style="@($"height: {Rows * 1.5}rem;")"
+                       style="height: unset"
                        Value="@Value"
                        ValueChanged="ValueChanged"
                        ValueExpression="ValueExpression"
+                       placeholder="@Placeholder"
                        @oninput="OnInput"
                        @onfocus="OnFocus"
                        @onblur="OnBlur"
@@ -121,4 +131,7 @@ else if (InputType == InputType.FloatingLabel)
 
     [Parameter]
     public bool Disabled { get; set; } = false;
+
+    [Parameter]
+    public string? Placeholder { get; set; }
 }
