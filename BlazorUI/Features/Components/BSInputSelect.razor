@@ -3,22 +3,22 @@
 
 @*
 Sample usage:
-<BSInputSelect Id="myId" Class="mb-3" Label="My Label" LabelWidth="150" InputType="InputType.InputGroup" FitContent="true" @bind-Value="SelectedItem">
-    <option value="">All</option>
-    @foreach (var option in _options)
-    {
-        <option value="value">Name</option>
-    }
+<BSInputSelect Id="payerFilter" Class="mb-3" Label="Payer Filter" LabelWidth="150" InputType="InputType.InputGroup" FitContent="true" @bind-Value="SelectedPayerKey" Disabled="@_isRequesting">
+<option value="">All</option>
+@foreach (var payer in _payerList)
+{
+    <option value="@payer.PayerKey">@payer.PayerName</option>
+}
 </BSInputSelect>
 *@
 
 @if (InputType == InputType.Standard)
 {
-    <div class="@($"{Class}")">
-        <label for="@Id" class="form-label mb-0" style="@($"width: {LabelWidth}px;")">@Label</label>
+    <div class="@($"{Class}")" style="@($"{Style}")">
+        <label for="@Id" class="form-label mb-0" style="@($"width: {LabelWidth}px; {LabelStyle}")">@Label</label>
         <InputSelect id="@Id"
                      class="form-select"
-                     style="@(FitContent ? "width: auto;" : "")"
+                     style="@(FitContent ? $"width: auto; {@InputStyle}" : @InputStyle)"
                      Value="@Value"
                      ValueChanged="ValueChanged"
                      ValueExpression="ValueExpression"
@@ -39,8 +39,8 @@ Sample usage:
 }
 else if (InputType == InputType.InputGroup)
 {
-    <div class="@($"input-group d-{(FitContent ? "inline-flex" : "flex")} align-items-center {Class}")" style="@(FitContent ? "width: auto;" : "")">
-        <span class="input-group-text" style="@($"width: {LabelWidth}px;")">@Label</span>
+    <div class="@($"input-group d-{(FitContent ? "inline-flex flex-nowrap" : "flex")} align-items-center {Class}")" style="@(FitContent ? $"width: auto; {Style}" : Style)">
+        <span class="input-group-text" style="@($"width: {LabelWidth}px; {LabelStyle}")">@Label</span>
         <InputSelect id="@Id"
                      class="form-select"
                      Value="@Value"
@@ -53,7 +53,8 @@ else if (InputType == InputType.InputGroup)
                      @onchange="OnChange"
                      @onmouseover="OnMouseOver"
                      @onmouseout="OnMouseOut"
-                     Disabled="@Disabled">
+                     Disabled="@Disabled"
+                     style="@InputStyle">
             @if (ChildContent != null)
             {
                 @ChildContent
@@ -63,7 +64,7 @@ else if (InputType == InputType.InputGroup)
 }
 else if (InputType == InputType.FloatingLabel)
 {
-    <div class="@($"form-floating d-{(FitContent ? "inline-block" : "block")} {Class}")">
+    <div class="@($"form-floating d-{(FitContent ? "inline-block" : "block")} {Class}")" style="@($"{Style}")">
         <InputSelect id="@Id"
                      class="form-select"
                      Value="@Value"
@@ -76,13 +77,14 @@ else if (InputType == InputType.FloatingLabel)
                      @onchange="OnChange"
                      @onmouseover="OnMouseOver"
                      @onmouseout="OnMouseOut"
-                     Disabled="@Disabled">
+                     Disabled="@Disabled"
+                     style="@InputStyle">
             @if (ChildContent != null)
             {
                 @ChildContent
             }
         </InputSelect>
-        <label for="@Id">@Label</label>
+        <label for="@Id" style="@LabelStyle">@Label</label>
     </div>
 }
 
@@ -106,6 +108,15 @@ else if (InputType == InputType.FloatingLabel)
 
     [Parameter]
     public ushort LabelWidth { get; set; } = 150;
+
+    [Parameter]
+    public string Style { get; set; } = "";
+
+    [Parameter]
+    public string LabelStyle { get; set; } = "";
+
+    [Parameter]
+    public string InputStyle { get; set; } = "";
 
     [Parameter, EditorRequired]
     public required string Id { get; set; }

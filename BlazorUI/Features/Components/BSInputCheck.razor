@@ -1,5 +1,11 @@
 ﻿@using System.Linq.Expressions
 
+@*
+Sample usage:
+<BSInputCheck Id="isMPPayer" Label="Is MP Payer" LabelClass="form-control form-switch mb-3" @bind-Value="_newPayer.IsMPPayer" Disabled="@_isRequesting" />
+<BSInputCheck Id="IsMappingEnabled" Label="Enable mapping" LabelClass="form-control form-switch" LabelStyle="width: auto;" @bind-Value="@_enableMappings" Disabled="@(IsUploading || IsProcessing)" />
+*@
+
 <label class="@($"{LabelClass}")" style="@LabelStyle">
     <InputCheckbox id="@Id"
                    class="form-check-input me-2"

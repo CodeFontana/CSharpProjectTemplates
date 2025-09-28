@@ -2,18 +2,19 @@
 
 @*
 Sample usage:
-<BSInputText Id="myId" Class="mb-3" Label="My Label" InputType="InputType.Standard" @bind-Value="_demo" Placeholder="All work and no play..." Disabled="@_isRequesting" />
-<BSInputText Id="myId" Class="mb-3" Label="My Label" InputType="InputType.InputGroup" @bind-Value="_demo" Placeholder="All work and no play..." Disabled="@_isRequesting" />
-<BSInputText Id="myId" Class="mb-3" Label="My Label" InputType="InputType.FloatingLabel" @bind-Value="_demo" Disabled="@_isRequesting" />
+<BSInputText Id="inputText" Class="mb-3" Label="InputText" InputType="InputType.Standard" @bind-Value="_demo" Placeholder="All work and no play..." Disabled="@_isRequesting" />
+<BSInputText Id="inputText" Class="mb-3" Label="InputText" InputType="InputType.InputGroup" @bind-Value="_demo" Placeholder="All work and no play..." Disabled="@_isRequesting" />
+<BSInputText Id="inputText" Class="mb-3" Label="InputText" InputType="InputType.FloatingLabel" @bind-Value="_demo" Disabled="@_isRequesting" />
 *@
 
 @if (InputType == InputType.Standard)
 {
-    <div class="@($"{Class}")">
-        <label for="@Id" class="form-label mb-0" style="@($"width: {LabelWidth}px;")">@Label</label>
+    <div class="@($"{Class}")" style="@($"{Style}")">
+        <label for="@Id" class="form-label mb-0" style="@($"width: {LabelWidth}px; {LabelStyle}")">@Label</label>
         <InputText id="@Id"
                    type="@Type"
                    class="form-control"
+                   style="@InputStyle"
                    placeholder="@Placeholder"
                    Value="@Value"
                    ValueChanged="ValueChanged"
@@ -30,11 +31,12 @@ Sample usage:
 }
 else if (InputType == InputType.InputGroup)
 {
-    <div class="@($"input-group {Class}")">
-        <span class="input-group-text" style="@($"width: {LabelWidth}px;")">@Label</span>
+    <div class="@($"input-group {Class}")" style="@($"{Style}")">
+        <span class="input-group-text" style="@($"width: {LabelWidth}px; {LabelStyle}")">@Label</span>
         <InputText id="@Id"
                    type="@Type"
                    class="form-control"
+                   style="@InputStyle"
                    placeholder="@Placeholder"
                    Value="@Value"
                    ValueChanged="ValueChanged"
@@ -51,10 +53,11 @@ else if (InputType == InputType.InputGroup)
 }
 else if (InputType == InputType.FloatingLabel)
 {
-    <div class="@($"form-floating {Class}")">
+    <div class="@($"form-floating {Class}")" style="@($"{Style}")">
         <InputText id="@Id"
                    type="@Type"
                    class="form-control"
+                   style="@InputStyle"
                    placeholder="@Placeholder"
                    Value="@Value"
                    ValueChanged="ValueChanged"
@@ -67,7 +70,7 @@ else if (InputType == InputType.FloatingLabel)
                    @onmouseover="OnMouseOver"
                    @onmouseout="OnMouseOut"
                    Disabled="@Disabled" />
-        <label for="@Id">@Label</label>
+        <label for="@Id" style="@LabelStyle">@Label</label>
     </div>
 }
 
@@ -94,6 +97,15 @@ else if (InputType == InputType.FloatingLabel)
 
     [Parameter]
     public ushort LabelWidth { get; set; } = 150;
+
+    [Parameter]
+    public string Style { get; set; } = "";
+
+    [Parameter]
+    public string LabelStyle { get; set; } = "";
+
+    [Parameter]
+    public string InputStyle { get; set; } = "";
 
     [Parameter, EditorRequired]
     public required string Id { get; set; }

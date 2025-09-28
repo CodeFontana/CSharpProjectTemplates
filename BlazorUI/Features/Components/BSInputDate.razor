@@ -1,5 +1,10 @@
 ﻿@using System.Linq.Expressions
 
+@*
+Sample usage:
+<BSInputDate Id="dob" InputType="InputType.InputGroup" Label="Date of Birth" @bind-Value="_searchRequest.DateOfBirth" Disabled="@_isRequesting" />
+*@
+
 @if (InputType == InputType.Standard)
 {
     <div class="@($"{Class}")">
