@@ -125,7 +125,7 @@ else if (InputType == InputType.FloatingLabel)
     public T? Value { get; set; }
 
     [Parameter]
-    public EventCallback<T> ValueChanged { get; set; }
+    public EventCallback<T?> ValueChanged { get; set; }
 
     [Parameter]
     public Expression<Func<T?>>? ValueExpression { get; set; }
