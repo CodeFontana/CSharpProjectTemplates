@@ -1,0 +1,269 @@
+﻿@using System.Linq.Expressions
+@typeparam T where T : IEquatable<T>
+
+@*
+Sample usage:
+<BSInputMultiSelect Id="countryFilter" Class="mb-3" Label="Choose countries..." LabelWidth="150" InputType="InputType.InputGroup" FitContent="true" @bind-Value="SelectedCountries" AllowSelectAll="true" SelectAllText="All Countries" Placeholder="Select countries...">
+    <BSMultiOption Value="@("USA")" Text="United States" />
+    <BSMultiOption Value="@("CAN")" Text="Canada" />
+    <BSMultiOption Value="@("MEX")" Text="Mexico" />
+</BSInputMultiSelect>
+
+<p>Selected countries: @(string.Join(", ", _selectedCountries ?? Enumerable.Empty<string>()))</p>
+
+@code {
+    private List<string> _selectedCountries = new();
+    private List<string> SelectedCountries
+    {
+        get => _selectedCountries;
+        set
+        {
+            _selectedCountries = value.ToList();
+        }
+    }
+}
+*@
+
+<CascadingValue Value="this">
+    @if (InputType == InputType.Standard)
+    {
+        <div class="@($"{Class}")" style="@(FitContent ? $"width: auto; {Style}" : $"{Style}")">
+            <label for="@Id" class="form-label mb-0" style="@($"width: {LabelWidth}px; {LabelStyle}")">@Label</label>
+            <div class="dropdown d-inline-block w-auto">
+                <button id="@Id" type="button" class="form-control dropdown-toggle multi-select-toggle @(HasSelections ? "" : "text-muted")" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" disabled="@Disabled" style="@InputStyle">
+                    @DisplayText
+                </button>
+                <div class="dropdown-menu">
+                    @if (AllowSelectAll)
+                    {
+                        <div class="form-check ms-3">
+                            <BSInputCheck Id="@($"{Id}-selectall")" 
+                                          Label="@SelectAllText" 
+                                          Value="@IsAllSelected" 
+                                          ValueChanged="HandleSelectAll" 
+                                          ValueExpression="() => IsAllSelected" Disabled="@Disabled" />
+                        </div>
+                        <hr class="dropdown-divider" />
+                    }
+                    @ChildContent
+                </div>
+            </div>
+        </div>
+    }
+    else if (InputType == InputType.InputGroup)
+    {
+        <div class="@($"input-group d-{(FitContent ? "inline-flex flex-nowrap" : "flex")} align-items-center {Class}")" style="@(FitContent ? $"width: auto; {Style}" : Style)">
+            <span class="input-group-text" style="@($"width: {LabelWidth}px; {LabelStyle}")">@Label</span>
+            <div class="dropdown flex-grow-1">
+                <button id="@Id" type="button" class="form-control dropdown-toggle multi-select-toggle @(HasSelections ? "" : "text-muted")" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" disabled="@Disabled" style="@InputStyle">
+                    @DisplayText
+                </button>
+                <div class="dropdown-menu">
+                    @if (AllowSelectAll)
+                    {
+                        <div class="form-check ms-3">
+                            <BSInputCheck Id="@($"{Id}-selectall")" 
+                                          Label="@SelectAllText" 
+                                          Value="@IsAllSelected" 
+                                          ValueChanged="HandleSelectAll" 
+                                          ValueExpression="() => IsAllSelected" 
+                                          Disabled="@Disabled" />
+                        </div>
+                        <hr class="dropdown-divider" />
+                    }
+                    @ChildContent
+                </div>
+            </div>
+        </div>
+    }
+    else if (InputType == InputType.FloatingLabel)
+    {
+        <div class="@($"form-floating d-{(FitContent ? "inline-block" : "block")} {Class}")" style="@($"{Style}")">
+            <div class="dropdown">
+                <button id="@Id" type="button" class="form-control dropdown-toggle multi-select-toggle @(HasSelections ? "" : "text-muted")" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" placeholder="@Label" disabled="@Disabled" style="@InputStyle">
+                    @DisplayText
+                </button>
+                <div class="dropdown-menu">
+                    @if (AllowSelectAll)
+                    {
+                        <div class="form-check ms-3">
+                            <BSInputCheck Id="@($"{Id}-selectall")" 
+                                          Label="@SelectAllText" 
+                                          Value="@IsAllSelected" 
+                                          ValueChanged="HandleSelectAll" 
+                                          ValueExpression="() => IsAllSelected" 
+                                          Disabled="@Disabled" />
+                        </div>
+                        <hr class="dropdown-divider" />
+                    }
+                    @ChildContent
+                </div>
+            </div>
+            <label for="@Id" style="@LabelStyle">@Label</label>
+        </div>
+    }
+    @if (EditContext != null && ValueExpression != null)
+    {
+        <ValidationMessage For="@ValueExpression" class="text-danger validation-spacing" />
+    }
+</CascadingValue>
+
+<PageScript Src="./Features/Components/BSInputMultiSelect.razor.js" />
+
+@code {
+    [CascadingParameter] 
+    private EditContext? EditContext { get; set; }
+
+    [Parameter] 
+    public InputType InputType { get; set; } = InputType.InputGroup;
+
+    [Parameter] 
+    public string? Class { get; set; }
+
+    [Parameter, EditorRequired] 
+    public required string Label { get; set; }
+
+    [Parameter] 
+    public ushort LabelWidth { get; set; } = 150;
+
+    [Parameter] 
+    public string Style { get; set; } = "";
+
+    [Parameter] 
+    public string LabelStyle { get; set; } = "";
+
+    [Parameter] 
+    public string InputStyle { get; set; } = "";
+
+    [Parameter, EditorRequired] 
+    public required string Id { get; set; }
+
+    [Parameter] 
+    public string? Placeholder { get; set; } = "Select options";
+
+    [Parameter] 
+    public List<T>? Value { get; set; }
+
+    [Parameter] 
+    public EventCallback<List<T>> ValueChanged { get; set; }
+
+    [Parameter] 
+    public Expression<Func<List<T>>>? ValueExpression { get; set; }
+
+    [Parameter] 
+    public EventCallback<ChangeEventArgs> OnInput { get; set; }
+
+    [Parameter] 
+    public EventCallback<FocusEventArgs> OnFocus { get; set; }
+
+    [Parameter] 
+    public EventCallback<FocusEventArgs> OnBlur { get; set; }
+
+    [Parameter] 
+    public EventCallback<MouseEventArgs> OnClick { get; set; }
+
+    [Parameter] 
+    public EventCallback<ChangeEventArgs> OnChange { get; set; }
+
+    [Parameter] 
+    public EventCallback<MouseEventArgs> OnMouseOver { get; set; }
+
+    [Parameter] 
+    public EventCallback<MouseEventArgs> OnMouseOut { get; set; }
+
+    [Parameter] 
+    public bool Disabled { get; set; } = false;
+
+    [Parameter] 
+    public bool FitContent { get; set; } = false;
+
+    [Parameter] 
+    public bool AllowSelectAll { get; set; } = false;
+
+    [Parameter] 
+    public string SelectAllText { get; set; } = "Select All";
+
+    [Parameter] 
+    public RenderFragment? ChildContent { get; set; }
+
+    private List<T> _selected = new();
+    private List<T> _allValues = new();
+    private Dictionary<T, string> _optionTexts = new();
+    
+    private string DisplayText
+    {
+        get
+        {
+            int count = _selected.Count;
+            if (count == 0)
+            {
+                return Placeholder ?? "";
+            }
+
+            if (count == 1)
+            {
+                T single = _selected[0];
+                return _optionTexts.GetValueOrDefault(single) ?? single?.ToString() ?? "";
+            }
+
+            return $"{count} items selected";
+        }
+    }
+
+    private bool HasSelections => _selected.Any();
+    private bool IsAllSelected => _allValues.Count > 0 && _selected.Count == _allValues.Count && _allValues.All(v => _selected.Contains(v));
+    
+    protected override void OnParametersSet()
+    {
+        if (Value is not null && !_selected.SequenceEqual(Value))
+        {
+            _selected = Value.ToList();
+        }
+    }
+
+    internal void RegisterOption(T value, string text)
+    {
+        if (!_allValues.Contains(value))
+        {
+            _allValues.Add(value);
+        }
+
+        _optionTexts[value] = text;
+    }
+
+    internal bool IsValueSelected(T value)
+    {
+        return _selected.Contains(value);
+    }
+
+    internal async Task UpdateSelected(T value, bool selected)
+    {
+        if (selected)
+        {
+            if (!_selected.Contains(value))
+            {
+                _selected.Add(value);
+            }
+        }
+        else
+        {
+            _selected.Remove(value);
+        }
+
+        await ValueChanged.InvokeAsync(_selected);
+    }
+
+    private async Task HandleSelectAll(bool selected)
+    {
+        if (selected)
+        {
+            _selected = new List<T>(_allValues);
+        }
+        else
+        {
+            _selected.Clear();
+        }
+
+        await ValueChanged.InvokeAsync(_selected);
+    }
+}

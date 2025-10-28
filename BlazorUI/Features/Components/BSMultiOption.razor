@@ -1,0 +1,38 @@
+﻿@typeparam T where T : IEquatable<T>
+
+<div class="form-check ms-3">
+    <BSInputCheck Id="@($"multioption-{Value?.GetHashCode()}")" 
+                  Label="@Text" 
+                  Value="@_isSelected" 
+                  ValueChanged="@(async selected => { _isSelected = selected; await Parent!.UpdateSelected(Value, selected); })" 
+                  ValueExpression="() => _isSelected" 
+                  Disabled="@Parent!.Disabled" />
+</div>
+
+@code {
+    [CascadingParameter] 
+    public BSInputMultiSelect<T>? Parent { get; set; }
+
+    [Parameter, EditorRequired] 
+    public required T Value { get; set; }
+
+    [Parameter, EditorRequired] 
+    public required string Text { get; set; }
+
+    private bool _isSelected;
+    
+    protected override void OnInitialized()
+    {
+        if (Parent is null)
+        {
+            throw new InvalidOperationException("BSMultiOption must be used within BSInputMultiSelect.");
+        }
+
+        Parent.RegisterOption(Value, Text);
+    }
+    
+    protected override void OnParametersSet()
+    {
+        _isSelected = Parent!.IsValueSelected(Value);
+    }
+}
