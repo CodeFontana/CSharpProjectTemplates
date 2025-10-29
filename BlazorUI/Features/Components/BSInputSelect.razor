@@ -103,7 +103,7 @@ else if (InputType == InputType.FloatingLabel)
                      @onmouseover="OnMouseOver"
                      @onmouseout="OnMouseOut"
                      Disabled="@Disabled"
-                     style="@InputStyle">
+                     style=@($"width: {LabelWidth}px; {InputStyle}")>
             @if (ChildContent != null)
             {
                 @ChildContent
