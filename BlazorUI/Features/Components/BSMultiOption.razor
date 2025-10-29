@@ -1,7 +1,7 @@
-﻿@typeparam T where T : IEquatable<T>
+﻿@typeparam T where T : notnull, IEquatable<T>
 
 <div class="form-check ms-3">
-    <BSInputCheck Id="@($"multioption-{Value?.GetHashCode()}")" 
+    <BSInputCheck Id="@($"multioption-{Value.GetHashCode()}")" 
                   Label="@Text" 
                   Value="@_isSelected" 
                   ValueChanged="@(async selected => { _isSelected = selected; await Parent!.UpdateSelected(Value, selected); })" 
