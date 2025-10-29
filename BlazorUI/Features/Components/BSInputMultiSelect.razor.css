@@ -4,3 +4,8 @@
     margin-bottom: 0.5rem; /* Ensures some space between this message and the next input */
     margin-left: 0.5rem;
 }
+
+/* Remove the caret from the dropdown, in favor of the one applied from form-select class */
+.dropdown-toggle::after {
+    display: none;
+}

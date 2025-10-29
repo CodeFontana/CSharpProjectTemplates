@@ -3,15 +3,57 @@
 
 @*
 Sample usage:
-<BSInputMultiSelect Id="countryFilter" Class="mb-3" Label="Choose countries..." LabelWidth="150" InputType="InputType.InputGroup" FitContent="true" @bind-Value="SelectedCountries" AllowSelectAll="true" SelectAllText="All Countries" Placeholder="Select countries...">
-    <BSMultiOption Value="@("USA")" Text="United States" />
-    <BSMultiOption Value="@("CAN")" Text="Canada" />
-    <BSMultiOption Value="@("MEX")" Text="Mexico" />
-</BSInputMultiSelect>
+<h4 class="mt-3">Countries</h4>
+
+<div>
+    <BSInputMultiSelect Id="countryFilter" 
+                        Class="my-3" 
+                        Label="Countries" 
+                        LabelWidth="150" 
+                        InputType="InputType.Standard" 
+                        FitContent="true" 
+                        @bind-Value="SelectedCountries" 
+                        AllowSelectAll="true" 
+                        SelectAllText="All Countries" 
+                        Placeholder="Select countries..." 
+                        Disabled="@_isRequesting">
+        <BSMultiOption Value="@("USA")" Text="United States" />
+        <BSMultiOption Value="@("CAN")" Text="Canada" />
+        <BSMultiOption Value="@("MEX")" Text="Mexico" />
+    </BSInputMultiSelect>
+</div>
+
+<div>
+    <BSInputMultiSelect Id="countryFilter" 
+                        Class="my-3" 
+                        Label="Countries" 
+                        LabelWidth="150" 
+                        InputType="InputType.InputGroup" 
+                        FitContent="true" 
+                        @bind-Value="SelectedCountries" 
+                        AllowSelectAll="true" 
+                        SelectAllText="All Countries" 
+                        Placeholder="Select countries..." 
+                        Disabled="@_isRequesting">
+        <BSMultiOption Value="@("USA")" Text="United States" />
+        <BSMultiOption Value="@("CAN")" Text="Canada" />
+        <BSMultiOption Value="@("MEX")" Text="Mexico" />
+    </BSInputMultiSelect>
+</div>
+
+<div>
+    <BSInputMultiSelect Id="countryFilter" Class="my-3" Label="Countries" LabelWidth="150" InputType="InputType.FloatingLabel" FitContent="true" @bind-Value="SelectedCountries" AllowSelectAll="true" SelectAllText="All Countries" Placeholder="Select countries..." Disabled="@_isRequesting">
+        <BSMultiOption Value="@("USA")" Text="United States" />
+        <BSMultiOption Value="@("CAN")" Text="Canada" />
+        <BSMultiOption Value="@("MEX")" Text="Mexico" />
+    </BSInputMultiSelect>
+</div>
 
 <p>Selected countries: @(string.Join(", ", _selectedCountries ?? Enumerable.Empty<string>()))</p>
 
 @code {
+	private bool _isRequesting = false;
+    
     private List<string> _selectedCountries = new();
     private List<string> SelectedCountries
     {
@@ -28,12 +70,11 @@ Sample usage:
     @if (InputType == InputType.Standard)
     {
         <div class="@($"{Class}")" style="@(FitContent ? $"width: auto; {Style}" : $"{Style}")">
-            <label for="@Id" class="form-label mb-0" style="@($"width: {LabelWidth}px; {LabelStyle}")">@Label</label>
-            <div class="dropdown d-inline-block w-auto">
-                <button id="@Id" type="button" class="form-control dropdown-toggle multi-select-toggle @(HasSelections ? "" : "text-muted")" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" disabled="@Disabled" style="@InputStyle">
+            <div class=@($"dropdown d-{(FitContent ? "inline-block" : "block")} w-auto")>
+                <button id="@Id" type="button" class="form-select dropdown-toggle multi-select-toggle @(HasSelections ? "" : "text-muted")" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" disabled="@Disabled" style="@InputStyle">
                     @DisplayText
                 </button>
-                <div class="dropdown-menu">
+                <div class="dropdown-menu w-100">
                     @if (AllowSelectAll)
                     {
                         <div class="form-check ms-3">
@@ -55,10 +96,10 @@ Sample usage:
         <div class="@($"input-group d-{(FitContent ? "inline-flex flex-nowrap" : "flex")} align-items-center {Class}")" style="@(FitContent ? $"width: auto; {Style}" : Style)">
             <span class="input-group-text" style="@($"width: {LabelWidth}px; {LabelStyle}")">@Label</span>
             <div class="dropdown flex-grow-1">
-                <button id="@Id" type="button" class="form-control dropdown-toggle multi-select-toggle @(HasSelections ? "" : "text-muted")" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" disabled="@Disabled" style="@InputStyle">
+                <button id="@Id" type="button" class="form-select dropdown-toggle multi-select-toggle @(HasSelections ? "" : "text-muted")" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" disabled="@Disabled" style="@InputStyle">
                     @DisplayText
                 </button>
-                <div class="dropdown-menu">
+                <div class="dropdown-menu w-100">
                     @if (AllowSelectAll)
                     {
                         <div class="form-check ms-3">
@@ -75,36 +116,6 @@ Sample usage:
                 </div>
             </div>
         </div>
-    }
-    else if (InputType == InputType.FloatingLabel)
-    {
-        <div class="@($"form-floating d-{(FitContent ? "inline-block" : "block")} {Class}")" style="@($"{Style}")">
-            <div class="dropdown">
-                <button id="@Id" type="button" class="form-control dropdown-toggle multi-select-toggle @(HasSelections ? "" : "text-muted")" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" placeholder="@Label" disabled="@Disabled" style="@InputStyle">
-                    @DisplayText
-                </button>
-                <div class="dropdown-menu">
-                    @if (AllowSelectAll)
-                    {
-                        <div class="form-check ms-3">
-                            <BSInputCheck Id="@($"{Id}-selectall")" 
-                                          Label="@SelectAllText" 
-                                          Value="@IsAllSelected" 
-                                          ValueChanged="HandleSelectAll" 
-                                          ValueExpression="() => IsAllSelected" 
-                                          Disabled="@Disabled" />
-                        </div>
-                        <hr class="dropdown-divider" />
-                    }
-                    @ChildContent
-                </div>
-            </div>
-            <label for="@Id" style="@LabelStyle">@Label</label>
-        </div>
-    }
-    @if (EditContext != null && ValueExpression != null)
-    {
-        <ValidationMessage For="@ValueExpression" class="text-danger validation-spacing" />
     }
 </CascadingValue>
 
