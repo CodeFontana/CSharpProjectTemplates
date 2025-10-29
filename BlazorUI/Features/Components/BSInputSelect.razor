@@ -3,13 +3,38 @@
 
 @*
 Sample usage:
-<BSInputSelect Id="payerFilter" Class="mb-3" Label="Payer Filter" LabelWidth="150" InputType="InputType.InputGroup" FitContent="true" @bind-Value="SelectedPayerKey" Disabled="@_isRequesting">
-<option value="">All</option>
+<BSInputSelect Id="planetFilter" Class="mb-3" Label="Planet Filter" LabelWidth="150" InputType="InputType.InputGroup" FitContent="true" @bind-Value="SelectedPlanet" Disabled="@_isRequesting">
+<option value="">Select...</option>
 @foreach (var payer in _payerList)
 {
-    <option value="@payer.PayerKey">@payer.PayerName</option>
+    <option value="@_planets.PlanetKey">@_planets.PlanetName</option>
 }
 </BSInputSelect>
+
+@code {
+    private List<Planet> _planets = new()
+    {
+        new Planet { PlanetKey = "1", PlanetName = "Mercury" },
+        new Planet { PlanetKey = "2", PlanetName = "Venus" },
+        new Planet { PlanetKey = "3", PlanetName = "Earth" },
+        new Planet { PlanetKey = "4", PlanetName = "Mars" },
+        new Planet { PlanetKey = "5", PlanetName = "Jupiter" },
+        new Planet { PlanetKey = "6", PlanetName = "Saturn" },
+        new Planet { PlanetKey = "7", PlanetName = "Uranus" },
+        new Planet { PlanetKey = "8", PlanetName = "Neptune" },
+        new Planet { PlanetKey = "9", PlanetName = "Pluto" }
+    }
+
+    private string _selectedPlanet = new();
+    private string SelectedPlanet
+    {
+        get => _selectedPlanet;
+        set
+        {
+            _selectedPlanet = value;
+        }
+    }
+}
 *@
 
 @if (InputType == InputType.Standard)

@@ -2,8 +2,8 @@
 
 @*
 Sample usage:
-<BSInputCheck Id="isMPPayer" Label="Is MP Payer" LabelClass="form-control form-switch mb-3" @bind-Value="_newPayer.IsMPPayer" Disabled="@_isRequesting" />
-<BSInputCheck Id="IsMappingEnabled" Label="Enable mapping" LabelClass="form-control form-switch" LabelStyle="width: auto;" @bind-Value="@_enableMappings" Disabled="@(IsUploading || IsProcessing)" />
+<BSInputCheck Id="isMeltdownImminent" Label="Meltdown Imminent" LabelClass="form-control form-switch mb-3" @bind-Value="_reactor.meltdownImminent" Disabled="@_isRequesting" />
+<BSInputCheck Id="IsCriticalAlarm" Label="Critical Alarm" LabelClass="form-control form-switch" LabelStyle="width: auto;" @bind-Value="@_isCriticalAlarm" Disabled="@IsProcessing" />
 *@
 
 <label class="@($"{LabelClass}")" style="@LabelStyle">
