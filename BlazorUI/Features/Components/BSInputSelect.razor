@@ -3,29 +3,60 @@
 
 @*
 Sample usage:
-<BSInputSelect Id="planetFilter" Class="mb-3" Label="Planet Filter" LabelWidth="150" InputType="InputType.InputGroup" FitContent="true" @bind-Value="SelectedPlanet" Disabled="@_isRequesting">
-<option value="">Select...</option>
-@foreach (var payer in _payerList)
-{
-    <option value="@_planets.PlanetKey">@_planets.PlanetName</option>
-}
-</BSInputSelect>
+
+<h4>Planets</h4>
+
+<div>
+    <BSInputSelect Id="planetFilter" Class="mb-3" Label="Planet Filter" LabelWidth="150" InputType="InputType.Standard" FitContent="true" @bind-Value="SelectedPlanet" Disabled="@_isRequesting">
+        <option value="">Select...</option>
+        @foreach (var planet in _planets)
+        {
+            <option value="@($"{planet.PlanetKey}/{planet.PlanetName}")">@planet.PlanetName</option>
+        }
+    </BSInputSelect>
+</div>
+
+<div>
+    <BSInputSelect Id="planetFilter" Class="mb-3" Label="Planet Filter" LabelWidth="150" InputType="InputType.InputGroup" FitContent="true" @bind-Value="SelectedPlanet" Disabled="@_isRequesting">
+        <option value="">Select...</option>
+        @foreach (var planet in _planets)
+        {
+            <option value="@($"{planet.PlanetKey}/{planet.PlanetName}")">@planet.PlanetName</option>
+        }
+    </BSInputSelect>
+</div>
+
+<div>
+    <BSInputSelect Id="planetFilter" Class="mb-3" Label="Planet Filter" LabelWidth="150" InputType="InputType.FloatingLabel" FitContent="true" @bind-Value="SelectedPlanet" Disabled="@_isRequesting">
+        <option value="">Select...</option>
+        @foreach (var planet in _planets)
+        {
+            <option value="@($"{planet.PlanetKey}/{planet.PlanetName}")">@planet.PlanetName</option>
+        }
+    </BSInputSelect>
+</div>
+
+<p>Selected planet: @(_selectedPlanet)</p>
 
 @code {
+    private bool _isRequesting = false;
+
+    record Planet (string PlanetKey, string PlanetName);
+
     private List<Planet> _planets = new()
     {
-        new Planet { PlanetKey = "1", PlanetName = "Mercury" },
-        new Planet { PlanetKey = "2", PlanetName = "Venus" },
-        new Planet { PlanetKey = "3", PlanetName = "Earth" },
-        new Planet { PlanetKey = "4", PlanetName = "Mars" },
-        new Planet { PlanetKey = "5", PlanetName = "Jupiter" },
-        new Planet { PlanetKey = "6", PlanetName = "Saturn" },
-        new Planet { PlanetKey = "7", PlanetName = "Uranus" },
-        new Planet { PlanetKey = "8", PlanetName = "Neptune" },
-        new Planet { PlanetKey = "9", PlanetName = "Pluto" }
-    }
+        new Planet("1", "Mercury"),
+        new Planet("2", "Venus"),
+        new Planet("3", "Earth"),
+        new Planet("4", "Mars"),
+        new Planet("5", "Jupiter"),
+        new Planet("6", "Saturn"),
+        new Planet("7", "Uranus"),
+        new Planet("8", "Neptune"),
+        new Planet("9", "Pluto")
+    };
 
-    private string _selectedPlanet = new();
+    private string _selectedPlanet = string.Empty;
     private string SelectedPlanet
     {
         get => _selectedPlanet;
@@ -35,6 +66,7 @@ Sample usage:
         }
     }
 }
+
 *@
 
 @if (InputType == InputType.Standard)
