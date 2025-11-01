@@ -16,6 +16,7 @@ Sample usage:
                         AllowSelectAll="true" 
                         SelectAllText="All Countries" 
                         Placeholder="Select countries..." 
+                        MaxVisibleOptions="10"
                         Disabled="@_isRequesting">
         <BSMultiOption Value="@("USA")" Text="United States" />
         <BSMultiOption Value="@("CAN")" Text="Canada" />
@@ -34,15 +35,8 @@ Sample usage:
                         AllowSelectAll="true" 
                         SelectAllText="All Countries" 
                         Placeholder="Select countries..." 
+                        MaxVisibleOptions="10"
                         Disabled="@_isRequesting">
-        <BSMultiOption Value="@("USA")" Text="United States" />
-        <BSMultiOption Value="@("CAN")" Text="Canada" />
-        <BSMultiOption Value="@("MEX")" Text="Mexico" />
-    </BSInputMultiSelect>
-</div>
-
-<div>
-    <BSInputMultiSelect Id="countryFilter" Class="my-3" Label="Countries" LabelWidth="150" InputType="InputType.FloatingLabel" FitContent="true" @bind-Value="SelectedCountries" AllowSelectAll="true" SelectAllText="All Countries" Placeholder="Select countries..." Disabled="@_isRequesting">
         <BSMultiOption Value="@("USA")" Text="United States" />
         <BSMultiOption Value="@("CAN")" Text="Canada" />
         <BSMultiOption Value="@("MEX")" Text="Mexico" />
@@ -71,7 +65,7 @@ Sample usage:
     {
         <div class="@($"{Class}")" style="@(FitContent ? $"width: auto; {Style}" : $"{Style}")">
             <div class=@($"dropdown d-{(FitContent ? "inline-block" : "block")} w-auto")>
-                <button id="@Id" type="button" class="form-select dropdown-toggle multi-select-toggle @(HasSelections ? "" : "text-muted")" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" disabled="@Disabled" style="@InputStyle">
+                <button id="@Id" type="button" class="form-select dropdown-toggle multi-select-toggle @(HasSelections ? "" : "text-muted")" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" data-max-visible="@MaxVisibleOptions" disabled="@Disabled" style="@InputStyle">
                     @DisplayText
                 </button>
                 <div class="dropdown-menu w-100">
@@ -86,7 +80,9 @@ Sample usage:
                         </div>
                         <hr class="dropdown-divider" />
                     }
-                    @ChildContent
+                    <div class="multi-select-options" style="overflow-y: auto;">
+                        @ChildContent
+                    </div>
                 </div>
             </div>
         </div>
@@ -96,7 +92,7 @@ Sample usage:
         <div class="@($"input-group d-{(FitContent ? "inline-flex flex-nowrap" : "flex")} align-items-center {Class}")" style="@(FitContent ? $"width: auto; {Style}" : Style)">
             <span class="input-group-text" style="@($"width: {LabelWidth}px; {LabelStyle}")">@Label</span>
             <div class="dropdown flex-grow-1">
-                <button id="@Id" type="button" class="form-select dropdown-toggle multi-select-toggle @(HasSelections ? "" : "text-muted")" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" disabled="@Disabled" style="@InputStyle">
+                <button id="@Id" type="button" class="form-select dropdown-toggle multi-select-toggle @(HasSelections ? "" : "text-muted")" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" data-max-visible="@MaxVisibleOptions" disabled="@Disabled" style="@InputStyle">
                     @DisplayText
                 </button>
                 <div class="dropdown-menu w-100">
@@ -112,7 +108,9 @@ Sample usage:
                         </div>
                         <hr class="dropdown-divider" />
                     }
-                    @ChildContent
+                    <div class="multi-select-options" style="overflow-y: auto;">
+                        @ChildContent
+                    </div>
                 </div>
             </div>
         </div>
@@ -126,7 +124,7 @@ Sample usage:
     private EditContext? EditContext { get; set; }
 
     [Parameter] 
-    public InputType InputType { get; set; } = InputType.InputGroup;
+    public InputType InputType { get; set; } = InputType.Standard;
 
     [Parameter] 
     public string? Class { get; set; }
@@ -150,7 +148,7 @@ Sample usage:
     public required string Id { get; set; }
 
     [Parameter] 
-    public string? Placeholder { get; set; } = "Select options";
+    public string? Placeholder { get; set; } = "Select...";
 
     [Parameter] 
     public List<T>? Value { get; set; }
@@ -193,6 +191,9 @@ Sample usage:
 
     [Parameter] 
     public string SelectAllText { get; set; } = "Select All";
+
+    [Parameter]
+    public int MaxVisibleOptions { get; set; } = 10;
 
     [Parameter] 
     public RenderFragment? ChildContent { get; set; }
