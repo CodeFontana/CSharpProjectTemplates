@@ -34,11 +34,35 @@
                         </li>
                     </ul>
                 </li>
-                <li class="nav-item">
-                    <NavLink class="nav-link" Match="NavLinkMatch.All" href="counter">Static Counter</NavLink>
+                <li class="nav-item dropdown">
+                    <NavLink class="@($"nav-link dropdown-toggle")" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Lifecycle Demos
+                    </NavLink>
+                    <ul class="dropdown-menu bg-dark">
+                        <li>
+                            <NavLink class="nav-link" Match="NavLinkMatch.All" href="LifecycleDemo">
+                                Static Lifecycle
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink class="nav-link" Match="NavLinkMatch.All" href="LifecycleDemoAsync">
+                                Static Lifecycle v/Async
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink class="nav-link" Match="NavLinkMatch.All" href="LifecycleDemo/interactive">
+                                Interactive Lifecycle
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink class="nav-link" Match="NavLinkMatch.All" href="LifecycleDemoAsync/interactive">
+                                Interactive Lifecycle v/Async
+                            </NavLink>
+                        </li>
+                    </ul>
                 </li>
                 <li class="nav-item">
-                    <NavLink class="nav-link" Match="NavLinkMatch.All" href="counter/interactive">Interactive Counter</NavLink>
+                    <NavLink class="nav-link" Match="NavLinkMatch.All" href="LifetimeDemo">Lifetime Demo</NavLink>
                 </li>
                 <li class="nav-item">
                     <NavLink class="nav-link" Match="NavLinkMatch.All" href="SpinDemo">Spinner Demo</NavLink>
