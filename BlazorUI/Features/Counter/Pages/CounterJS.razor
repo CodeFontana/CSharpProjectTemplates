@@ -1,0 +1,13 @@
+﻿@page "/counter/js"
+@attribute [DiscoverCollocatedJS]
+@inject JSElementReferenceScope Refs
+
+<PageTitle>Javascript Counter - BlazorUI</PageTitle>
+
+<h1>Counter - Javascript</h1>
+
+<p data-ref="@Refs["curCount"]">Current count: 0</p>
+<button class="btn btn-primary" type="button" data-ref="@Refs["btnIncrement"]">Click me</button>
+<button class="btn btn-secondary" type="button" data-ref="@Refs["btnReset"]">Reset</button>
+
+<JS For="this" Args="[Refs]" />
