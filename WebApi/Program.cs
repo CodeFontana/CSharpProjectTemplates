@@ -123,19 +123,6 @@ try
             [new OpenApiSecuritySchemeReference("Bearer", document)] = []
         });
     });
-    builder.Services
-        .AddApiVersioning(options =>
-        {
-            options.AssumeDefaultVersionWhenUnspecified = true;
-            options.DefaultApiVersion = new(1, 0);
-            options.ReportApiVersions = true;
-        })
-        .AddMvc()
-        .AddApiExplorer(options =>
-        {
-            options.GroupNameFormat = "'v'VVV";
-            options.SubstituteApiVersionInUrl = true;
-        });
     builder.Services.AddHealthChecks()
                     .AddDbContextCheck<IdentityContext>("Identity Database Health Check");
     builder.Services.AddRateLimiter(options =>
@@ -152,7 +139,7 @@ try
         {
             context.HttpContext.Response.StatusCode = StatusCodes.Status429TooManyRequests;
             context.HttpContext.Response.ContentType = MediaTypeNames.Text.Plain;
-            context.HttpContext.RequestServices.GetService<ILoggerFactory>()?
+            context.HttpContext.RequestServices.GetRequiredService<ILoggerFactory>()?
                 .CreateLogger("Microsoft.AspNetCore.RateLimitingMiddleware")
                 .LogWarning("OnRejected: {GetUserEndPoint}", GetUserEndPoint(context.HttpContext));
             context.HttpContext.Response.WriteAsync("Rate limit exceeded. Please try again later.", cancellationToken: cancellationToken);

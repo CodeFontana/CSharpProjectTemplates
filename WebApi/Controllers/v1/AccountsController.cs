@@ -8,7 +8,7 @@ using WebApi.SharedLibrary.Models;
 
 namespace WebApi.Controllers.v1;
 
-[Route("api/v{version:apiVersion}/[controller]")]
+[Route("api/v1/[controller]")]
 [ApiController]
 [EnableRateLimiting("fixed")]
 [ServiceFilter(typeof(UserActivity))]
