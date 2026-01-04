@@ -1,0 +1,2 @@
+GET https://localhost:7289/api/v1/Accounts
+Authorization: Bearer <Token here>

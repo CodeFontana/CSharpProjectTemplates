@@ -35,10 +35,10 @@ public class AccountsController : ControllerBase
 
             if (string.IsNullOrWhiteSpace(userName))
             {
-                return BadRequest(new ServiceResponseModel<List<AccountModel>> 
-                { 
-                    Success = false, 
-                    Message = "User is not authenticated" 
+                return BadRequest(new ServiceResponseModel<List<AccountModel>>
+                {
+                    Success = false,
+                    Message = "User is not authenticated"
                 });
             }
 
@@ -77,10 +77,10 @@ public class AccountsController : ControllerBase
 
             if (string.IsNullOrWhiteSpace(userName))
             {
-                return BadRequest(new ServiceResponseModel<AccountModel> 
-                { 
-                    Success = false, 
-                    Message = "User is not authenticated" 
+                return BadRequest(new ServiceResponseModel<AccountModel>
+                {
+                    Success = false,
+                    Message = "User is not authenticated"
                 });
             }
 
@@ -192,10 +192,10 @@ public class AccountsController : ControllerBase
 
             if (string.IsNullOrWhiteSpace(userName))
             {
-                return BadRequest(new ServiceResponseModel<bool> 
-                { 
-                    Success = false, 
-                    Message = "User is not authenticated" 
+                return BadRequest(new ServiceResponseModel<bool>
+                {
+                    Success = false,
+                    Message = "User is not authenticated"
                 });
             }
 
@@ -234,10 +234,10 @@ public class AccountsController : ControllerBase
 
             if (string.IsNullOrWhiteSpace(userName))
             {
-                return BadRequest(new ServiceResponseModel<bool> 
-                { 
-                    Success = false, 
-                    Message = "User is not authenticated" 
+                return BadRequest(new ServiceResponseModel<bool>
+                {
+                    Success = false,
+                    Message = "User is not authenticated"
                 });
             }
 

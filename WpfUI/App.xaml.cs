@@ -10,7 +10,7 @@ namespace WpfUI;
 
 public partial class App : Application
 {
-    private IHost? _appHost;
+    private readonly IHost? _appHost;
 
     public App()
     {

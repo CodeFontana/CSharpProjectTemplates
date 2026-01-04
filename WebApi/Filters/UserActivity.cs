@@ -10,14 +10,23 @@ public class UserActivity : IAsyncActionFilter
     {
         ActionExecutedContext resultContext = await next();
 
-        if (resultContext == null || resultContext.HttpContext.User.Identity.IsAuthenticated == false)
+        if (resultContext == null || resultContext.HttpContext.User.Identity?.IsAuthenticated == false)
         {
             return;
         }
 
-        IAccountRepository repo = resultContext!.HttpContext.RequestServices.GetService<IAccountRepository>();
-        AppUser user = await repo.GetAccountAsync(resultContext.HttpContext.User.Identity.Name);
-        user.LastActive = DateTime.UtcNow;
-        await repo.SaveAllAsync();
+        IAccountRepository repo = resultContext.HttpContext.RequestServices.GetRequiredService<IAccountRepository>();
+        string username = resultContext.HttpContext.User.Identity?.Name ?? string.Empty;
+
+        if (!string.IsNullOrWhiteSpace(username))
+        {
+            AppUser? user = await repo.GetAccountAsync(username);
+
+            if (user is not null)
+            {
+                user.LastActive = DateTime.UtcNow;
+                await repo.SaveAllAsync();
+            }
+        }
     }
 }

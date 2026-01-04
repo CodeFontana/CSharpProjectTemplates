@@ -68,7 +68,7 @@
 </section>
 
 @code {
-    private RegisterUserModel _registerUser = new();
+    private RegisterUserModel? _registerUser;
     private InputType _passwordInput = InputType.Password;
     private string _passwordInputIcon = Icons.Material.Filled.VisibilityOff;
     private bool _showPassword = false;
@@ -91,6 +91,13 @@
         _showError = false;
         _errorText = "";
 
+        if (_registerUser is null)
+        {
+            _errorText = "Registration data is invalid.";
+            _showError = true;
+            return;
+        }
+
         ServiceResponseModel<AuthUserModel> regResult = await AuthService.RegisterAsync(_registerUser);
 
         if (regResult.Success)
@@ -103,8 +110,6 @@
             _errorText = $"Registration failed: {regResult.Message}";
             Snackbar.Add($"Registration failed: {regResult.Message}", Severity.Error);
         }
-
-        _registerUser = new();
     }
 
     private void OnCancel()

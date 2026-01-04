@@ -1,7 +1,8 @@
-﻿using WebApi.IdentityLibrary.Entities;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using WebApi.IdentityLibrary.Entities;
 using WebApi.SharedLibrary.Identity.Models;
+using WebApi.SharedLibrary.Models;
 
 namespace WebApi.IdentityLibrary.Identity;
 
@@ -20,7 +21,7 @@ public class AccountRepository : IAccountRepository
         _signInManager = signInManager;
     }
 
-    public async Task<AppUser> GetAccountAsync(string username)
+    public async Task<AppUser?> GetAccountAsync(string username)
     {
         if (string.IsNullOrWhiteSpace(username))
         {
@@ -30,8 +31,10 @@ public class AccountRepository : IAccountRepository
         return await _userManager.Users
             .AsNoTracking()
             .SingleOrDefaultAsync(u =>
-                u.NormalizedEmail == username.ToUpper()
-                || u.UserName.ToUpper() == username.ToUpper());
+                (!string.IsNullOrWhiteSpace(u.NormalizedEmail)
+                    && u.NormalizedEmail.ToUpper() == username.ToUpper())
+                || (!string.IsNullOrWhiteSpace(u.UserName)
+                    && u.UserName.ToUpper() == username.ToUpper()));
     }
 
     public async Task<List<AppUser>> GetAccountsAsync()
@@ -74,15 +77,13 @@ public class AccountRepository : IAccountRepository
 
     public async Task<AppUser> LoginAsync(LoginUserModel loginUser)
     {
-        AppUser appUser = await _userManager.Users
+        AppUser? appUser = await _userManager.Users
             .SingleOrDefaultAsync(u =>
-                u.NormalizedEmail == loginUser.Username.ToUpper()
-                || u.UserName.ToUpper() == loginUser.Username.ToUpper());
-
-        if (appUser == null)
-        {
-            throw new ArgumentException($"Invalid user [{loginUser.Username}]");
-        }
+                (!string.IsNullOrWhiteSpace(u.NormalizedEmail)
+                    && u.NormalizedEmail.ToUpper() == loginUser.Username.ToUpper())
+                || (!string.IsNullOrWhiteSpace(u.UserName)
+                    && u.UserName.ToUpper() == loginUser.Username.ToUpper()))
+            ?? throw new ArgumentException($"Invalid user [{loginUser.Username}]");
 
         SignInResult result = await _signInManager.CheckPasswordSignInAsync(
                 appUser, loginUser.Password, false);
@@ -110,13 +111,9 @@ public class AccountRepository : IAccountRepository
             throw new ArgumentException("Email cannot be null or empty");
         }
 
-        AppUser user = await _userManager.Users
-            .SingleOrDefaultAsync(u => u.Id == updateAccount.Id);
-
-        if (user == null)
-        {
-            throw new ArgumentException($"Account not found for update [{updateAccount.Id}/{updateAccount.UserName} - {updateAccount.Email}]");
-        }
+        AppUser? user = await _userManager.Users
+            .SingleOrDefaultAsync(u => u.Id == updateAccount.Id)
+            ?? throw new ArgumentException($"Account not found for update [{updateAccount.Id}/{updateAccount.UserName} - {updateAccount.Email}]");
 
         user.Email = updateAccount.Email;
         user.UserName = updateAccount.UserName;
@@ -130,22 +127,17 @@ public class AccountRepository : IAccountRepository
             throw new ArgumentException("Username must not be null or empty");
         }
 
-        AppUser appUser = await _userManager.Users
-            .SingleOrDefaultAsync(u => 
-            u.UserName == username.ToUpper()
-            || u.NormalizedEmail == username.ToUpper());
+        AppUser? appUser = await _userManager.Users
+            .SingleOrDefaultAsync(u =>
+                (!string.IsNullOrWhiteSpace(u.UserName)
+                    && u.UserName.ToUpper() == username.ToUpper())
+                || (!string.IsNullOrWhiteSpace(u.NormalizedEmail)
+                    && u.NormalizedEmail.ToUpper() == username.ToUpper()))
+            ?? throw new Exception("Username not found");
 
-        if (appUser == null)
-        {
-            throw new Exception("Username not found");
-        }
-
-        if (appUser.UserName.ToUpper().Equals(requestor.ToUpper()))
-        {
-            throw new Exception("Unable to delete your own account");
-        }
-
-        return await _userManager.DeleteAsync(appUser);
+        return appUser.UserName!.Equals(requestor, StringComparison.CurrentCultureIgnoreCase)
+            ? throw new InvalidOperationException("Unable to delete your own account")
+            : await _userManager.DeleteAsync(appUser);
     }
 
     private async Task<bool> UserExistsAsync(string username)

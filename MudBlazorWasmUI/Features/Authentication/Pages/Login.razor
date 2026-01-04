@@ -62,7 +62,7 @@
 </section>
 
 @code {
-    private LoginUserModel _loginUser = new();
+    private LoginUserModel? _loginUser;
     private InputType _passwordInput = InputType.Password;
     private string _passwordInputIcon = Icons.Material.Filled.VisibilityOff;
     private bool _showPassword = false;
@@ -84,6 +84,13 @@
     {
         _showError = false;
         _errorText = "";
+
+        if (_loginUser is null)
+        {
+            _errorText = "Login data is invalid.";
+            _showError = true;
+            return;
+        }
 
         ServiceResponseModel<AuthUserModel> result = await AuthService.LoginAsync(_loginUser);
 
