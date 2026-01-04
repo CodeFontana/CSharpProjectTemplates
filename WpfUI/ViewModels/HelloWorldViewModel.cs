@@ -2,8 +2,8 @@
 
 public class HelloWorldViewModel : ViewModelBase
 {
-    private string _userInput;
-    public string UserInput
+    private string? _userInput;
+    public string? UserInput
     {
         get
         {
@@ -27,5 +27,5 @@ public class HelloWorldViewModel : ViewModelBase
         }
     }
 
-    public string Greeting { get; set; }
+    public string? Greeting { get; set; }
 }

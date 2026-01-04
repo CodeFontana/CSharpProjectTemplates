@@ -10,8 +10,8 @@ public class NavigateCommand : CommandBase
     {
         _mainViewModel = mainViewModel;
     }
-    
-    public override void Execute(object parameter)
+
+    public override void Execute(object? parameter)
     {
         if (parameter is string viewType)
         {

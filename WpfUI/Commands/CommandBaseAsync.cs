@@ -9,20 +9,20 @@ public abstract class CommandBaseAsync : CommandBase
     private bool IsExecuting
     {
         get { return _isExecuting; }
-        set 
-        { 
+        set
+        {
             _isExecuting = value;
             OnCanExecutedChanged();
         }
     }
 
-    public override bool CanExecute(object parameter)
+    public override bool CanExecute(object? parameter)
     {
         return !IsExecuting && base.CanExecute(parameter);
     }
 
 
-    public override async void Execute(object parameter)
+    public override async void Execute(object? parameter)
     {
         IsExecuting = true;
 
@@ -34,8 +34,8 @@ public abstract class CommandBaseAsync : CommandBase
         {
             IsExecuting = false;
         }
-        
+
     }
 
-    public abstract Task ExecuteAsync(object parameter);
+    public abstract Task ExecuteAsync(object? parameter);
 }
