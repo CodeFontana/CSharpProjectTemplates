@@ -119,7 +119,7 @@ else if (ShowDefault)
         }
     }
 
-    private string _message;
+    private string? _message;
 
     public void AlertDefault(string message)
     {
@@ -167,27 +167,27 @@ else if (ShowDefault)
         StateHasChanged();
     }
 
-    public void FireNormal(string message, Action<SnackbarOptions> configure = null)
+    public void FireNormal(string message, Action<SnackbarOptions>? configure = null)
     {
         Snackbar.Add(message, Severity.Normal, configure);
     }
 
-    public void FireSuccess(string message, Action<SnackbarOptions> configure = null)
+    public void FireSuccess(string message, Action<SnackbarOptions>? configure = null)
     {
         Snackbar.Add(message, Severity.Success, configure);
     }
 
-    public void FireInfo(string message, Action<SnackbarOptions> configure = null)
+    public void FireInfo(string message, Action<SnackbarOptions>? configure = null)
     {
         Snackbar.Add(message, Severity.Info, configure);
     }
 
-    public void FireWarning(string message, Action<SnackbarOptions> configure = null)
+    public void FireWarning(string message, Action<SnackbarOptions>? configure = null)
     {
         Snackbar.Add(message, Severity.Warning, configure);
     }
 
-    public void FireError(string message, Action<SnackbarOptions> configure = null)
+    public void FireError(string message, Action<SnackbarOptions>? configure = null)
     {
         Snackbar.Add(message, Severity.Error, configure);
     }
