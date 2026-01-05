@@ -11,11 +11,22 @@ public class Worker : BackgroundService
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        // Additional delay for Microsoft.Hosting.Lifetime messages
-        await Task.Delay(250, stoppingToken);
+        try
+        {
+            // Additional delay for Microsoft.Hosting.Lifetime messages
+            await Task.Delay(250, stoppingToken);
 
-        // Run the main logic
-        await RunAsync(stoppingToken);
+            // Run the main logic
+            await RunAsync(stoppingToken);
+        }
+        catch (OperationCanceledException) when (stoppingToken.IsCancellationRequested)
+        {
+            _logger.LogInformation("Worker shutdown requested. Exiting.");
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, "An error occurred in the worker service.");
+        }
     }
 
     private async Task RunAsync(CancellationToken stoppingToken)
