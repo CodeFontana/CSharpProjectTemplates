@@ -355,3 +355,4 @@ FiAgent.WixInstaller/ComponentsGenerated.wxs
 
 # vscode
 .vscode/
+/.github/copilot-instructions.md

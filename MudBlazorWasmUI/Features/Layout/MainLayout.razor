@@ -9,6 +9,7 @@
 <PageTitle>Blazor Client</PageTitle>
 
 <MudThemeProvider Theme="_theme" IsDarkMode="_isDarkMode" />
+<MudPopoverProvider />
 <MudDialogProvider />
 <MudSnackbarProvider />
 
@@ -111,8 +112,6 @@
     private bool _isDarkMode;
     private bool _drawerOpen = true;
     private LoginUserModel _loginUser = new();
-    private InputType _passwordInput = InputType.Password;
-    private string _passwordInputIcon = Icons.Material.Filled.VisibilityOff;
     private bool _showPassword = false;
 
     protected override async Task OnInitializedAsync()
@@ -132,7 +131,12 @@
 
     private async Task HandleLoginAsync()
     {
-        if (string.IsNullOrEmpty(_loginUser.Username))
+        if (_loginUser is null)
+        {
+            Snackbar.Add("Login data is invalid", Severity.Error);
+            return;
+        }
+        else if (string.IsNullOrEmpty(_loginUser.Username))
         {
             Snackbar.Add("Please enter your username", Severity.Info);
             return;
@@ -144,7 +148,6 @@
         }
 
         ServiceResponseModel<AuthUserModel> authResult = await AuthService.LoginAsync(_loginUser);
-        _loginUser = new();
 
         if (authResult.Success)
         {
@@ -167,14 +170,10 @@
         if (_showPassword)
         {
             _showPassword = false;
-            _passwordInputIcon = Icons.Material.Filled.VisibilityOff;
-            _passwordInput = InputType.Password;
         }
         else
         {
             _showPassword = true;
-            _passwordInputIcon = Icons.Material.Filled.Visibility;
-            _passwordInput = InputType.Text;
         }
     }
 

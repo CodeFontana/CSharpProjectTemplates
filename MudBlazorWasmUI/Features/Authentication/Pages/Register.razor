@@ -9,53 +9,56 @@
 <section>
     <MudContainer MaxWidth="MaxWidth.Small">
 
-        <EditForm Model="@_registerUser" OnValidSubmit="OnRegisterAsync">
-            <DataAnnotationsValidator />
+        @if (_registerUser is not null)
+        {
+            <EditForm Model="@_registerUser" OnValidSubmit="OnRegisterAsync">
+                <DataAnnotationsValidator />
 
-            <MudCard Elevation="5">
+                <MudCard Elevation="5">
 
-                <MudCardHeader>
-                    <CardHeaderContent>
-                        <MudText Typo="Typo.h4" Align="Align.Center">Sign up</MudText>
-                    </CardHeaderContent>
-                </MudCardHeader>
-                <MudDivider DividerType="DividerType.Middle" />
-                <MudCardContent>
-                    <MudTextField Label="Username"
-                                  Variant="Variant.Text"
-                                  @bind-Value="_registerUser.Username"
-                                  For="@(() => _registerUser.Username)" />
-                    <MudTextField Label="Email"
-                                  Class="mt-3"
-                                  Variant="Variant.Text"
-                                  @bind-Value="_registerUser.Email"
-                                  For="@(() => _registerUser.Email)" />
-                    <MudTextField Label="Password"
-                                  Class="mt-3"
-                                  Variant="Variant.Text"
-                                  @bind-Value="_registerUser.Password"
-                                  For="@(() => _registerUser.Password)"
-                                  InputType="@_passwordInput"
-                                  Adornment="Adornment.End"
-                                  AdornmentIcon="@_passwordInputIcon"
-                                  OnAdornmentClick="ToggleShowPassword"
-                                  AdornmentAriaLabel="Show Password" />
-                    <MudTextField Label="Confirm Password"
-                                  Class="mt-3"
-                                  Variant="Variant.Text"
-                                  @bind-Value="_registerUser.ConfirmPassword"
-                                  For="@(() => _registerUser.ConfirmPassword)"
-                                  InputType="@_passwordInput" />
-                </MudCardContent>
+                    <MudCardHeader>
+                        <CardHeaderContent>
+                            <MudText Typo="Typo.h4" Align="Align.Center">Sign up</MudText>
+                        </CardHeaderContent>
+                    </MudCardHeader>
+                    <MudDivider DividerType="DividerType.Middle" />
+                    <MudCardContent>
+                        <MudTextField Label="Username"
+                                      Variant="Variant.Text"
+                                      @bind-Value="_registerUser.Username"
+                                      For="@(() => _registerUser.Username)" />
+                        <MudTextField Label="Email"
+                                      Class="mt-3"
+                                      Variant="Variant.Text"
+                                      @bind-Value="_registerUser.Email"
+                                      For="@(() => _registerUser.Email)" />
+                        <MudTextField Label="Password"
+                                      Class="mt-3"
+                                      Variant="Variant.Text"
+                                      @bind-Value="_registerUser.Password"
+                                      For="@(() => _registerUser.Password)"
+                                      InputType="@_passwordInput"
+                                      Adornment="Adornment.End"
+                                      AdornmentIcon="@_passwordInputIcon"
+                                      OnAdornmentClick="ToggleShowPassword"
+                                      AdornmentAriaLabel="Show Password" />
+                        <MudTextField Label="Confirm Password"
+                                      Class="mt-3"
+                                      Variant="Variant.Text"
+                                      @bind-Value="_registerUser.ConfirmPassword"
+                                      For="@(() => _registerUser.ConfirmPassword)"
+                                      InputType="@_passwordInput" />
+                    </MudCardContent>
 
-                <MudCardActions Class="d-flex justify-center">
-                    <MudButton Class="mx-2" ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary">Create Account</MudButton>
-                    <MudButton Class="mx-2" ButtonType="ButtonType.Button" Variant="Variant.Filled" Color="Color.Error" @onclick="() => OnCancel()">Cancel</MudButton>
-                </MudCardActions>
+                    <MudCardActions Class="d-flex justify-center">
+                        <MudButton Class="mx-2" ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary">Create Account</MudButton>
+                        <MudButton Class="mx-2" ButtonType="ButtonType.Button" Variant="Variant.Filled" Color="Color.Error" @onclick="() => OnCancel()">Cancel</MudButton>
+                    </MudCardActions>
 
-            </MudCard>
+                </MudCard>
 
-        </EditForm>
+            </EditForm>
+        }
 
         @if (_showError)
         {
@@ -68,7 +71,7 @@
 </section>
 
 @code {
-    private RegisterUserModel _registerUser = new();
+    private RegisterUserModel? _registerUser = new();
     private InputType _passwordInput = InputType.Password;
     private string _passwordInputIcon = Icons.Material.Filled.VisibilityOff;
     private bool _showPassword = false;
@@ -91,6 +94,13 @@
         _showError = false;
         _errorText = "";
 
+        if (_registerUser is null)
+        {
+            _errorText = "Registration data is invalid.";
+            _showError = true;
+            return;
+        }
+
         ServiceResponseModel<AuthUserModel> regResult = await AuthService.RegisterAsync(_registerUser);
 
         if (regResult.Success)
@@ -103,8 +113,6 @@
             _errorText = $"Registration failed: {regResult.Message}";
             Snackbar.Add($"Registration failed: {regResult.Message}", Severity.Error);
         }
-
-        _registerUser = new();
     }
 
     private void OnCancel()

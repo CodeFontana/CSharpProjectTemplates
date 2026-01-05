@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace WebApi.SharedLibrary.Identity.Models;
+namespace WebApi.SharedLibrary.Models;
 
-public class LoginUserModel
+public sealed class LoginUserModel
 {
     [Required(ErrorMessage = "Please enter your username or email address")]
     [Display(Name = "Username or Email address")]

@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi;
 using Serilog;
 using Serilog.Events;
 using WebApi.Filters;
@@ -62,7 +62,9 @@ try
                         builder.Configuration.GetValue<string>("Authentication:JwtSecurityKey")
                         ?? throw new InvalidOperationException("Configuration is missing JwtSecurityKey"))),
                 ValidateLifetime = true,
-                ClockSkew = TimeSpan.FromMinutes(10)
+                ClockSkew = TimeSpan.FromMinutes(2),
+                NameClaimType = System.Security.Claims.ClaimTypes.Name,
+                RoleClaimType = System.Security.Claims.ClaimTypes.Role
             };
         });
     builder.Services.AddAuthorizationBuilder()
@@ -109,39 +111,18 @@ try
         //});
         options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
         {
-            In = ParameterLocation.Header,
-            Description = "Specify JWT bearer token",
             Name = "Authorization",
-            Type = SecuritySchemeType.ApiKey
+            Type = SecuritySchemeType.Http,
+            Scheme = "bearer",
+            BearerFormat = "JWT",
+            In = ParameterLocation.Header,
+            Description = "JWT Authorization header using the Bearer scheme. Enter your token (without the 'Bearer ' prefix).",
         });
-        options.AddSecurityRequirement(new OpenApiSecurityRequirement
-                {
-                    {
-                        new OpenApiSecurityScheme
-                        {
-                            Reference = new OpenApiReference
-                            {
-                                Type = ReferenceType.SecurityScheme,
-                                Id = "Bearer"
-                            }
-                        },
-                        Array.Empty<string>()
-                    }
-                });
+        options.AddSecurityRequirement(document => new OpenApiSecurityRequirement
+        {
+            [new OpenApiSecuritySchemeReference("Bearer", document)] = []
+        });
     });
-    builder.Services
-        .AddApiVersioning(options =>
-        {
-            options.AssumeDefaultVersionWhenUnspecified = true;
-            options.DefaultApiVersion = new(1, 0);
-            options.ReportApiVersions = true;
-        })
-        .AddMvc()
-        .AddApiExplorer(options =>
-        {
-            options.GroupNameFormat = "'v'VVV";
-            options.SubstituteApiVersionInUrl = true;
-        });
     builder.Services.AddHealthChecks()
                     .AddDbContextCheck<IdentityContext>("Identity Database Health Check");
     builder.Services.AddRateLimiter(options =>
@@ -158,7 +139,7 @@ try
         {
             context.HttpContext.Response.StatusCode = StatusCodes.Status429TooManyRequests;
             context.HttpContext.Response.ContentType = MediaTypeNames.Text.Plain;
-            context.HttpContext.RequestServices.GetService<ILoggerFactory>()?
+            context.HttpContext.RequestServices.GetRequiredService<ILoggerFactory>()?
                 .CreateLogger("Microsoft.AspNetCore.RateLimitingMiddleware")
                 .LogWarning("OnRejected: {GetUserEndPoint}", GetUserEndPoint(context.HttpContext));
             context.HttpContext.Response.WriteAsync("Rate limit exceeded. Please try again later.", cancellationToken: cancellationToken);

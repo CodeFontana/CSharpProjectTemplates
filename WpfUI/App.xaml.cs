@@ -1,16 +1,16 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using System;
+using System.Windows;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 using Serilog.Events;
-using System;
-using System.Windows;
 using WpfUI.ViewModels;
 
 namespace WpfUI;
 
 public partial class App : Application
 {
-    private IHost _appHost;
+    private readonly IHost? _appHost;
 
     public App()
     {
@@ -53,6 +53,14 @@ public partial class App : Application
 
     protected override async void OnStartup(StartupEventArgs e)
     {
+        if (_appHost == null)
+        {
+            Log.Fatal("Host was not created. Aborting startup.");
+            Application.Current.Shutdown();
+            base.OnStartup(e);
+            return;
+        }
+
         await _appHost.StartAsync();
         using IServiceScope scope = _appHost.Services.CreateScope();
         MainWindow mainWindow = scope.ServiceProvider.GetRequiredService<MainWindow>();
@@ -70,7 +78,7 @@ public partial class App : Application
             {
                 await _appHost.StopAsync();
                 _appHost.Dispose();
-            } 
+            }
         }
         catch (Exception ex)
         {

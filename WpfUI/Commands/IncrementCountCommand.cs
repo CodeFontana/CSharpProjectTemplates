@@ -11,7 +11,7 @@ public class IncrementCountCommand : CommandBase
         _counterViewModel = counterViewModel;
     }
 
-    public override void Execute(object parameter)
+    public override void Execute(object? parameter)
     {
         _counterViewModel.CurrentCount += 1;
     }

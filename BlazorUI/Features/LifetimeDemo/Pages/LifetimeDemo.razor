@@ -46,10 +46,18 @@
 
 @code {
     [SupplyParameterFromForm]
-    public int CurrentCount { get; set; } = 1;
+    public int CurrentCount { get; set; }
 
     [Parameter]
     public bool Reset { get; set; }
+
+    protected override void OnInitialized()
+    {
+        if (CurrentCount == 0)
+        {
+            CurrentCount = 1;
+        }
+    }
 
     private void IncrementComponents()
     {

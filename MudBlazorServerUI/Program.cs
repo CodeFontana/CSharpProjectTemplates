@@ -40,7 +40,7 @@ try
     });
     builder.Services.AddBlazoredLocalStorage();
     WebApplication app = builder.Build();
-    
+
     app.UseExceptionHandler("/Error", createScopeForErrors: true);
 
     if (app.Environment.IsDevelopment() == false)
@@ -49,9 +49,10 @@ try
         app.UseResponseCompression();
     }
 
+    app.UseStatusCodePagesWithReExecute("/not-found", createScopeForStatusCodePages: true);
     app.UseHttpsRedirection();
-    app.UseStaticFiles();
     app.UseAntiforgery();
+    app.MapStaticAssets();
     app.MapRazorComponents<App>()
         .AddInteractiveServerRenderMode()
         .AllowAnonymous();

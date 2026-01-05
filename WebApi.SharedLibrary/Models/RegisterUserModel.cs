@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace WebApi.SharedLibrary.Identity.Models;
+namespace WebApi.SharedLibrary.Models;
 
-public class RegisterUserModel
+public sealed class RegisterUserModel
 {
     [Required(ErrorMessage = "Please enter a username")]
     public string? Username { get; set; }

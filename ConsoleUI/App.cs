@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
+﻿using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 namespace ConsoleUI;
@@ -22,8 +21,10 @@ public class App : IHostedService
         {
             try
             {
-                await Task.Yield(); // https://github.com/dotnet/runtime/issues/36063
-                await Task.Delay(1000, cancellationToken); // Additional delay for Microsoft.Hosting.Lifetime messages
+                // Delay for Microsoft.Hosting.Lifetime messages
+                await Task.Delay(250, cancellationToken);
+
+                // App code goes here
                 Execute();
             }
             catch (Exception ex)

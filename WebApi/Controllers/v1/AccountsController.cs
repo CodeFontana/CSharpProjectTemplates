@@ -8,7 +8,7 @@ using WebApi.SharedLibrary.Models;
 
 namespace WebApi.Controllers.v1;
 
-[Route("api/v{version:apiVersion}/[controller]")]
+[Route("api/v1/[controller]")]
 [ApiController]
 [EnableRateLimiting("fixed")]
 [ServiceFilter(typeof(UserActivity))]
@@ -35,10 +35,10 @@ public class AccountsController : ControllerBase
 
             if (string.IsNullOrWhiteSpace(userName))
             {
-                return BadRequest(new ServiceResponseModel<List<AccountModel>> 
-                { 
-                    Success = false, 
-                    Message = "User is not authenticated" 
+                return BadRequest(new ServiceResponseModel<List<AccountModel>>
+                {
+                    Success = false,
+                    Message = "User is not authenticated"
                 });
             }
 
@@ -77,10 +77,10 @@ public class AccountsController : ControllerBase
 
             if (string.IsNullOrWhiteSpace(userName))
             {
-                return BadRequest(new ServiceResponseModel<AccountModel> 
-                { 
-                    Success = false, 
-                    Message = "User is not authenticated" 
+                return BadRequest(new ServiceResponseModel<AccountModel>
+                {
+                    Success = false,
+                    Message = "User is not authenticated"
                 });
             }
 
@@ -115,18 +115,7 @@ public class AccountsController : ControllerBase
     {
         try
         {
-            string? userName = HttpContext.User.Identity?.Name;
-
-            if (string.IsNullOrWhiteSpace(userName))
-            {
-                return BadRequest(new ServiceResponseModel<AuthUserModel>
-                {
-                    Success = false,
-                    Message = "User is not authenticated"
-                });
-            }
-
-            ServiceResponseModel<AuthUserModel> response = await _accountService.RegisterAsync(userName, registerUser);
+            ServiceResponseModel<AuthUserModel> response = await _accountService.RegisterAsync(registerUser);
 
             if (response.Success)
             {
@@ -192,10 +181,10 @@ public class AccountsController : ControllerBase
 
             if (string.IsNullOrWhiteSpace(userName))
             {
-                return BadRequest(new ServiceResponseModel<bool> 
-                { 
-                    Success = false, 
-                    Message = "User is not authenticated" 
+                return BadRequest(new ServiceResponseModel<bool>
+                {
+                    Success = false,
+                    Message = "User is not authenticated"
                 });
             }
 
@@ -234,10 +223,10 @@ public class AccountsController : ControllerBase
 
             if (string.IsNullOrWhiteSpace(userName))
             {
-                return BadRequest(new ServiceResponseModel<bool> 
-                { 
-                    Success = false, 
-                    Message = "User is not authenticated" 
+                return BadRequest(new ServiceResponseModel<bool>
+                {
+                    Success = false,
+                    Message = "User is not authenticated"
                 });
             }
 

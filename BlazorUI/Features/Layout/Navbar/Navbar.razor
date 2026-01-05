@@ -1,4 +1,6 @@
-﻿<nav class="navbar navbar-dark navbar-expand-md d-flex fixed-top">
+﻿@attribute [DiscoverCollocatedJS]
+
+<nav class="navbar navbar-dark navbar-expand-md d-flex fixed-top">
     <div class="container-fluid">
         <a class="navbar-brand" href="#">
             <img src="img/Blazor.png" width="30" height="30" class="mx-2" />
@@ -30,6 +32,11 @@
                         <li>
                             <NavLink class="nav-link" Match="NavLinkMatch.Prefix" href="counter/interactive">
                                 Interactive Counter
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink class="nav-link" Match="NavLinkMatch.Prefix" href="counter/js">
+                                Javascript Counter
                             </NavLink>
                         </li>
                     </ul>
@@ -77,4 +84,4 @@
     </div>
 </nav>
 
-<PageScript Src="./Features/Layout/Navbar/Navbar.razor.js" />
+<JS For="this" Key="Navbar" />

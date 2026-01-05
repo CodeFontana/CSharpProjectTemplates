@@ -1,4 +1,5 @@
 ﻿@inherits LayoutComponentBase
+@attribute [DiscoverCollocatedJS]
 
 <CascadingValue Name="LayoutName" Value="@LayoutName">
     <div class="d-flex" style="min-width: 350px;">
@@ -32,7 +33,7 @@
     </div>
 </CascadingValue>
 
-<PageScript Src="./Features/Layout/Sidebar/SidebarLayout.razor.js" />
+<JS For="this" Key="SidebarLayout" />
 
 @code {
     private const string LayoutName = "SidebarLayout";

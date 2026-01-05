@@ -31,60 +31,83 @@ function toggleSidebar() {
 
 function addBackdrop() {
     const layout = document.getElementById('combined-layout');
+    if (!layout) return;
+
+    // Avoid duplicates if called repeatedly
+    if (document.getElementById('offcanvas-fade')) return;
+
     const backdrop = document.createElement('div');
     backdrop.id = 'offcanvas-fade';
     backdrop.className = 'offcanvas-backdrop fade show';
     backdrop.style = 'z-index: 1020;';
+
     backdrop.addEventListener('click', () => {
         removeBackdrop();
-        toggleSidebar();
+        hideSidebar(sidebar, true);
     });
-    if (layout && backdrop) {
-        layout.appendChild(backdrop);
-    }
+
+    layout.appendChild(backdrop);
 }
 
 function removeBackdrop() {
     const backdrop = document.getElementById('offcanvas-fade');
-    const mainLayout = document.getElementById('combined-layout');
-    if (backdrop && mainLayout) {
-        mainLayout.removeChild(backdrop);
-        backdrop.removeEventListener('click', backdrop);
-    }
+    backdrop?.remove();
 }
 
-export function onLoad() {
-    // Add click listeners to theme switches
-    const themeSwitches = document.querySelectorAll('.theme-switch');
-    themeSwitches.forEach(switchElement => {
-        switchElement.addEventListener('click', () => {
-            const currentTheme = localStorage.getItem('theme') || 'light';
-            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-            setTheme(newTheme);
-        });
-    });
+function showSidebar(sidebar) {
+    if (!sidebar) return;
 
-    // Add click listener to sidebar button
-    const sidebarButton = document.getElementById('sidebarButton');
-    if (sidebarButton) {
-        sidebarButton.addEventListener('click', () => {
-            toggleSidebar();
-        });
-    }
+    sidebar.classList.add('show');
+    addBackdrop(sidebar);
 }
 
-export function onUpdate() {
-    // Ensure theme is applied
-    const theme = localStorage.getItem('theme') || 'light';
-    setTheme(theme);
+function hideSidebar(sidebar, useTransition) {
+    if (!sidebar) return;
 
-    // Remove the sidebar (is showing), without transition
-    const sidebar = document.getElementById('sidebar');
-    if (sidebar) {
+    if (useTransition) {
+        sidebar.classList.add('hiding');
+        setTimeout(() => {
+            sidebar.classList.remove('show');
+            sidebar.classList.remove('hiding');
+            removeBackdrop();
+        }, 300);
+    } else {
         sidebar.classList.remove('show');
+        removeBackdrop();
     }
 }
 
-export function onDispose() {
+export default class extends BlazorJSComponents.Component {
+    setParameters() {
+        // Apply theme every render
+        const theme = localStorage.getItem('theme') || 'light';
+        setTheme(theme);
 
+        // Ensure sidebar is closed after a render
+        const sidebar = document.getElementById('sidebar');
+        if (sidebar) {
+            hideSidebar(sidebar, false);
+        }
+
+        // Wire event listeners in an idempotent way
+        const sidebarButton = document.getElementById('sidebarButton');
+        if (sidebarButton) {
+            this.setEventListener(sidebarButton, 'click', () => toggleSidebar(sidebar));
+        }
+
+        // Theme toggles can be present in navbar/topbar; re-bind each render safely
+        const themeSwitches = document.querySelectorAll('.theme-switch');
+        themeSwitches.forEach(switchElement => {
+            this.setEventListener(switchElement, 'click', () => {
+                const currentTheme = localStorage.getItem('theme') || 'light';
+                const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+                setTheme(newTheme);
+            });
+        });
+    }
+
+    dispose() {
+        // setEventListener bindings are automatically removed by the base class.
+        removeBackdrop();
+    }
 }

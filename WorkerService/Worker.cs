@@ -11,8 +11,10 @@ public class Worker : BackgroundService
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        await Task.Yield(); // https://github.com/dotnet/runtime/issues/36063
-        await Task.Delay(1000, stoppingToken); // Additional delay for Microsoft.Hosting.Lifetime messages
+        // Additional delay for Microsoft.Hosting.Lifetime messages
+        await Task.Delay(250, stoppingToken);
+
+        // Run the main logic
         await RunAsync(stoppingToken);
     }
 

@@ -22,9 +22,9 @@ public class AccountService : IAccountService
         _tokenService = tokenService;
     }
 
-    public async Task<ServiceResponseModel<AuthUserModel>> RegisterAsync(string requestor, RegisterUserModel registerUser)
+    public async Task<ServiceResponseModel<AuthUserModel>> RegisterAsync(RegisterUserModel registerUser)
     {
-        _logger.LogInformation($"Register new user {registerUser.Email}... [{requestor}]");
+        _logger.LogInformation("Register new user {Email}...", registerUser.Email);
         ServiceResponseModel<AuthUserModel> serviceResponse = new();
 
         try
@@ -38,13 +38,13 @@ public class AccountService : IAccountService
                 Token = await _tokenService.CreateTokenAsync(appUser)
             };
             serviceResponse.Message = $"Successfully registered user [{appUser.UserName}]";
-            _logger.LogInformation(serviceResponse.Message);
+            _logger.LogInformation("Successfully registered user [{username}]", appUser.UserName);
         }
         catch (Exception e)
         {
             serviceResponse.Success = false;
             serviceResponse.Message = e.Message;
-            _logger.LogError(e.Message);
+            _logger.LogError("{errorMessage}", e.Message);
         }
 
         return serviceResponse;
@@ -65,13 +65,13 @@ public class AccountService : IAccountService
                 Token = await _tokenService.CreateTokenAsync(appUser)
             };
             serviceResponse.Message = $"Successfully authenticated user [{appUser.UserName}]";
-            _logger.LogInformation(serviceResponse.Message);
+            _logger.LogInformation("Successfully authenticated user [{username}]", appUser.UserName);
         }
         catch (Exception e)
         {
             serviceResponse.Success = false;
             serviceResponse.Message = e.Message;
-            _logger.LogError(e.Message);
+            _logger.LogError("{errorMessage}", e.Message);
         }
 
         return serviceResponse;
@@ -79,14 +79,14 @@ public class AccountService : IAccountService
 
     public async Task<ServiceResponseModel<AccountModel>> GetAccountAsync(string requestor, string username)
     {
-        _logger.LogInformation($"Get user account {username}... [{requestor}]");
+        _logger.LogInformation("Get user account {username}... [{requestor}]", username, requestor);
         ServiceResponseModel<AccountModel> serviceResponse = new();
 
         try
         {
-            AppUser appUser = await _accountRepository.GetAccountAsync(username);
+            AppUser? appUser = await _accountRepository.GetAccountAsync(username);
 
-            if (appUser != null)
+            if (appUser is not null)
             {
                 AccountModel appAcount = new()
                 {
@@ -100,7 +100,7 @@ public class AccountService : IAccountService
                 serviceResponse.Success = true;
                 serviceResponse.Data = appAcount;
                 serviceResponse.Message = $"Successfully retrieved user [{appAcount.Username}]";
-                _logger.LogInformation(serviceResponse.Message);
+                _logger.LogInformation("Successfully retrieved user [{username}]", appAcount.Username);
             }
             else
             {
@@ -111,7 +111,7 @@ public class AccountService : IAccountService
         {
             serviceResponse.Success = false;
             serviceResponse.Message = e.Message;
-            _logger.LogError(e.Message);
+            _logger.LogError("{errorMessage}", e.Message);
         }
 
         return serviceResponse;
@@ -119,7 +119,7 @@ public class AccountService : IAccountService
 
     public async Task<ServiceResponseModel<List<AccountModel>>> GetAccountsAsync(string requestor)
     {
-        _logger.LogInformation($"Get user accounts... [{requestor}]");
+        _logger.LogInformation("Get user accounts... [{requestor}]", requestor);
         ServiceResponseModel<List<AccountModel>> serviceResponse = new();
 
         try
@@ -128,7 +128,7 @@ public class AccountService : IAccountService
 
             if (appUsers != null)
             {
-                List<AccountModel> appAcount = new();
+                List<AccountModel> appAcount = [];
 
                 foreach (AppUser appUser in appUsers)
                 {
@@ -145,7 +145,7 @@ public class AccountService : IAccountService
                 serviceResponse.Success = true;
                 serviceResponse.Data = appAcount;
                 serviceResponse.Message = $"Successfully retrieved users [Count={appAcount.Count}]";
-                _logger.LogInformation(serviceResponse.Message);
+                _logger.LogInformation("Successfully retrieved users [Count={count}]", appAcount.Count);
             }
             else
             {
@@ -156,7 +156,7 @@ public class AccountService : IAccountService
         {
             serviceResponse.Success = false;
             serviceResponse.Message = e.Message;
-            _logger.LogError(e.Message);
+            _logger.LogError("{errorMessage}", e.Message);
         }
 
         return serviceResponse;
@@ -164,7 +164,10 @@ public class AccountService : IAccountService
 
     public async Task<ServiceResponseModel<bool>> UpdateAccountAsync(string requestor, AccountUpdateModel updateAccount)
     {
-        _logger.LogInformation($"Update user account {updateAccount.Id}/{updateAccount.UserName}... [{requestor}]");
+        _logger.LogInformation(
+            "Update user account {id}/{username}... [{requestor}]",
+            updateAccount.Id, updateAccount.UserName, requestor);
+
         ServiceResponseModel<bool> serviceResponse = new();
 
         try
@@ -174,13 +177,13 @@ public class AccountService : IAccountService
             serviceResponse.Success = true;
             serviceResponse.Data = true;
             serviceResponse.Message = $"Successfully updated user [{updateAccount.UserName}]";
-            _logger.LogInformation(serviceResponse.Message);
+            _logger.LogInformation("Successfully updated user [{username}]", updateAccount.UserName);
         }
         catch (Exception e)
         {
             serviceResponse.Success = false;
             serviceResponse.Message = e.Message;
-            _logger.LogError(e.Message);
+            _logger.LogError("{errorMessage}", e.Message);
         }
 
         return serviceResponse;
@@ -188,7 +191,7 @@ public class AccountService : IAccountService
 
     public async Task<ServiceResponseModel<bool>> DeleteAccountAsync(string requestor, string username)
     {
-        _logger.LogInformation($"Delete user account {username}... [{requestor}]");
+        _logger.LogInformation("Delete user account {username}... [{requestor}]", username, requestor);
         ServiceResponseModel<bool> serviceResponse = new();
 
         try
@@ -200,7 +203,7 @@ public class AccountService : IAccountService
                 serviceResponse.Success = result.Succeeded;
                 serviceResponse.Data = result.Succeeded;
                 serviceResponse.Message = $"Successfully deleted user [{username}] -- {result}";
-                _logger.LogInformation(serviceResponse.Message);
+                _logger.LogInformation("Successfully deleted user [{username}] -- {result}", username, result);
             }
             else
             {
@@ -211,7 +214,7 @@ public class AccountService : IAccountService
         {
             serviceResponse.Success = false;
             serviceResponse.Message = e.Message;
-            _logger.LogError(e.Message);
+            _logger.LogError("{errorMessage}", e.Message);
         }
 
         return serviceResponse;

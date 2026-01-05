@@ -4,6 +4,7 @@
 @inject IWebHostEnvironment WebHostEnv
 
 <MudThemeProvider Theme="_theme" @bind-IsDarkMode="@_isDarkMode" />
+<MudPopoverProvider />
 <MudDialogProvider />
 <MudSnackbarProvider />
 
@@ -62,22 +63,28 @@
 </MudLayout>
 
 @code {
+    [CascadingParameter]
+    HttpContext? HttpContext { get; set; }
+
     private MudTheme _theme = new();
     private bool _isDarkMode;
     private bool _drawerOpen = true;
 
     protected override async Task OnInitializedAsync()
     {
-        string? theme = await LocalStorage.GetItemAsync<string>("Theme");
+        if (HttpContext is null)
+        {
+            string? theme = await LocalStorage.GetItemAsync<string>("Theme");
 
-        if (string.IsNullOrWhiteSpace(theme)
-            || string.Equals(theme, "Light", System.StringComparison.InvariantCultureIgnoreCase))
-        {
-            _isDarkMode = false;
-        }
-        else
-        {
-            _isDarkMode = true;
+            if (string.IsNullOrWhiteSpace(theme)
+                || string.Equals(theme, "Light", System.StringComparison.InvariantCultureIgnoreCase))
+            {
+                _isDarkMode = false;
+            }
+            else
+            {
+                _isDarkMode = true;
+            }
         }
     }
 

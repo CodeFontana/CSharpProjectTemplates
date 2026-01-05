@@ -1,6 +1,6 @@
 ﻿namespace WebApi.SharedLibrary.Identity.Models;
 
-public class AccountModel
+public sealed class AccountModel
 {
     public int Id { get; set; }
 

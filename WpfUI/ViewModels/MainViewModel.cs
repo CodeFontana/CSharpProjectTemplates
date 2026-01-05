@@ -11,8 +11,9 @@ public class MainViewModel : ViewModelBase
         NavigateCommand.Execute("Home");
     }
 
-    private ViewModelBase _currentViewModel;
-    public ViewModelBase CurrentViewModel
+    private ViewModelBase? _currentViewModel;
+
+    public ViewModelBase? CurrentViewModel
     {
         get
         {

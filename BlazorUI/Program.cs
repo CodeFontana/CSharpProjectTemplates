@@ -12,6 +12,7 @@ builder.Services.AddRazorComponents()
     });
 builder.Services.AddResponseCompression();
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddJSComponents();
 builder.Services.AddScoped<ICookieService, CookieService>();
 builder.Services.AddKeyedTransient<IDemoService, DemoService>("Transient");
 builder.Services.AddKeyedScoped<IDemoService, DemoService>("Scoped");
@@ -26,9 +27,10 @@ if (app.Environment.IsDevelopment() == false)
     app.UseResponseCompression();
 }
 
+app.UseStatusCodePagesWithReExecute("/not-found", createScopeForStatusCodePages: true);
 app.UseHttpsRedirection();
-app.UseStaticFiles();
 app.UseAntiforgery();
+app.MapStaticAssets();
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode()
     .AllowAnonymous();
