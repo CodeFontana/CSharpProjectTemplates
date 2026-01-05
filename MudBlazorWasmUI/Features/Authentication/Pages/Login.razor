@@ -7,62 +7,65 @@
 
 <section>
     <MudContainer MaxWidth="MaxWidth.ExtraSmall">
-        <EditForm Model="@_loginUser" OnValidSubmit="OnLoginAsync">
-            <DataAnnotationsValidator />
-            <MudCard Elevation="5">
-                <MudCardHeader>
-                    <CardHeaderContent>
-                        <MudText Typo="Typo.h4" Align="Align.Center">Login</MudText>
-                    </CardHeaderContent>
-                </MudCardHeader>
-                <MudDivider DividerType="DividerType.Middle" />
-                <MudCardContent>
-                    <MudTextField Label="Username"
-                                  Class="mt-3"
-                                  @bind-Value="_loginUser.Username"
-                                  For="@(() => _loginUser.Username)"
-                                  Adornment="Adornment.End"
-                                  AdornmentIcon="@Icons.Material.Filled.Person"
-                                  AdornmentAriaLabel="Username" />
-                    <MudTextField Label="Password"
-                                  Class="mt-3"
-                                  @bind-Value="_loginUser.Password"
-                                  For="@(() => _loginUser.Password)"
-                                  InputType="@_passwordInput"
-                                  Adornment="Adornment.End"
-                                  AdornmentIcon="@_passwordInputIcon"
-                                  OnAdornmentClick="ToggleShowPassword"
-                                  AdornmentAriaLabel="Show Password" />
-                </MudCardContent>
-                <MudCardActions Class="d-flex justify-center mt-5">
-                    <MudButton Class="mx-2"
-                               ButtonType="ButtonType.Submit"
-                               Size="Size.Medium"
-                               Variant="Variant.Filled"
-                               Color="Color.Primary"
-                               StartIcon="@Icons.Material.Filled.Login">
-                        Login
-                    </MudButton>
-                    <MudButton Class="mx-2"
-                               Size="Size.Medium"
-                               Variant="Variant.Filled"
-                               Color="Color.Tertiary"
-                               StartIcon="@Icons.Material.Filled.EditNote"
-                               OnClick="OnRegister">
-                        Register
-                    </MudButton>
-                </MudCardActions>
-                @if (_showError)
-                {
-                    <MudAlert Severity="Severity.Error">@_errorText</MudAlert>
-                }
-            </MudCard>
-        </EditForm>
+        @if (_loginUser is not null)
+        {
+            <EditForm Model="@_loginUser" OnValidSubmit="OnLoginAsync">
+                <DataAnnotationsValidator />
+                <MudCard Elevation="5">
+                    <MudCardHeader>
+                        <CardHeaderContent>
+                            <MudText Typo="Typo.h4" Align="Align.Center">Login</MudText>
+                        </CardHeaderContent>
+                    </MudCardHeader>
+                    <MudDivider DividerType="DividerType.Middle" />
+                    <MudCardContent>
+                        <MudTextField Label="Username"
+                                      Class="mt-3"
+                                      @bind-Value="_loginUser.Username"
+                                      For="@(() => _loginUser.Username)"
+                                      Adornment="Adornment.End"
+                                      AdornmentIcon="@Icons.Material.Filled.Person"
+                                      AdornmentAriaLabel="Username" />
+                        <MudTextField Label="Password"
+                                      Class="mt-3"
+                                      @bind-Value="_loginUser.Password"
+                                      For="@(() => _loginUser.Password)"
+                                      InputType="@_passwordInput"
+                                      Adornment="Adornment.End"
+                                      AdornmentIcon="@_passwordInputIcon"
+                                      OnAdornmentClick="ToggleShowPassword"
+                                      AdornmentAriaLabel="Show Password" />
+                    </MudCardContent>
+                    <MudCardActions Class="d-flex justify-center mt-5">
+                        <MudButton Class="mx-2"
+                                   ButtonType="ButtonType.Submit"
+                                   Size="Size.Medium"
+                                   Variant="Variant.Filled"
+                                   Color="Color.Primary"
+                                   StartIcon="@Icons.Material.Filled.Login">
+                            Login
+                        </MudButton>
+                        <MudButton Class="mx-2"
+                                   Size="Size.Medium"
+                                   Variant="Variant.Filled"
+                                   Color="Color.Tertiary"
+                                   StartIcon="@Icons.Material.Filled.EditNote"
+                                   OnClick="OnRegister">
+                            Register
+                        </MudButton>
+                    </MudCardActions>
+                    @if (_showError)
+                    {
+                        <MudAlert Severity="Severity.Error">@_errorText</MudAlert>
+                    }
+                </MudCard>
+            </EditForm>
+        }
     </MudContainer>
 </section>
 
 @code {
-    private LoginUserModel? _loginUser;
+    private LoginUserModel? _loginUser = new();
     private InputType _passwordInput = InputType.Password;
     private string _passwordInputIcon = Icons.Material.Filled.VisibilityOff;
     private bool _showPassword = false;

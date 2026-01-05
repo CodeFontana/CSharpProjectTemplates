@@ -15,14 +15,14 @@
 </AuthorizeView>
 
 @code {
-    [Parameter] public string ReturnUrl { get; set; }
+    [Parameter] public string? ReturnUrl { get; set; }
 
     protected override async Task OnParametersSetAsync()
     {
         AuthenticationState authState = await AuthState.GetAuthenticationStateAsync();
         ClaimsPrincipal user = authState.User;
 
-        if (user.Identity.IsAuthenticated == false)
+        if (user.Identity?.IsAuthenticated == false)
         {
             Nav.NavigateTo($"login?ReturnUrl={ReturnUrl}");
         }

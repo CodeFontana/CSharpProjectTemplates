@@ -27,7 +27,6 @@ Authorization: Bearer {{token}}
 # Register account
 POST https://localhost:7289/api/v1/accounts
 Content-Type: application/json
-Authorization: Bearer {{token}}
 
 {
     "username": "pepper",

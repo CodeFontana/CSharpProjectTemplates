@@ -22,9 +22,9 @@ public class AccountService : IAccountService
         _tokenService = tokenService;
     }
 
-    public async Task<ServiceResponseModel<AuthUserModel>> RegisterAsync(string requestor, RegisterUserModel registerUser)
+    public async Task<ServiceResponseModel<AuthUserModel>> RegisterAsync(RegisterUserModel registerUser)
     {
-        _logger.LogInformation("Register new user {Email}... [{requestor}]", registerUser.Email, requestor);
+        _logger.LogInformation("Register new user {Email}...", registerUser.Email);
         ServiceResponseModel<AuthUserModel> serviceResponse = new();
 
         try

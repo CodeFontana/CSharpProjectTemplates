@@ -46,6 +46,19 @@ public class AccountRepository : IAccountRepository
 
     public async Task<AppUser> CreateAccountAsync(RegisterUserModel registerUser)
     {
+        if (string.IsNullOrWhiteSpace(registerUser.Username))
+        {
+            throw new ArgumentException("Username cannot be null or empty");
+        }
+        else if (string.IsNullOrWhiteSpace(registerUser.Email))
+        {
+            throw new ArgumentException("Email cannot be null or empty");
+        }
+        else if (string.IsNullOrWhiteSpace(registerUser.Password))
+        {
+            throw new ArgumentException("Password cannot be null or empty");
+        }
+
         if (await UserExistsAsync(registerUser.Email))
         {
             throw new ArgumentException($"User is already registered with [{registerUser.Email}]");
@@ -77,6 +90,15 @@ public class AccountRepository : IAccountRepository
 
     public async Task<AppUser> LoginAsync(LoginUserModel loginUser)
     {
+        if (string.IsNullOrWhiteSpace(loginUser.Username))
+        {
+            throw new ArgumentException("Username cannot be null or empty");
+        }
+        else if (string.IsNullOrWhiteSpace(loginUser.Password))
+        {
+            throw new ArgumentException("Password cannot be null or empty");
+        }
+
         AppUser? appUser = await _userManager.Users
             .SingleOrDefaultAsync(u =>
                 (!string.IsNullOrWhiteSpace(u.NormalizedEmail)

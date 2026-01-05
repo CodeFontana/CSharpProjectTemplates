@@ -115,18 +115,7 @@ public class AccountsController : ControllerBase
     {
         try
         {
-            string? userName = HttpContext.User.Identity?.Name;
-
-            if (string.IsNullOrWhiteSpace(userName))
-            {
-                return BadRequest(new ServiceResponseModel<AuthUserModel>
-                {
-                    Success = false,
-                    Message = "User is not authenticated"
-                });
-            }
-
-            ServiceResponseModel<AuthUserModel> response = await _accountService.RegisterAsync(userName, registerUser);
+            ServiceResponseModel<AuthUserModel> response = await _accountService.RegisterAsync(registerUser);
 
             if (response.Success)
             {
