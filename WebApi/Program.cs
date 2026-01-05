@@ -2,8 +2,10 @@ using System.Net.Mime;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.RateLimiting;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.OpenApi;
 using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -34,20 +36,18 @@ try
     {
         options.UseSqlServer(builder.Configuration.GetConnectionString("Default"));
     });
-    builder.Services
-        .AddIdentityCore<AppUser>(opt =>
-        {
-            opt.User.RequireUniqueEmail = true;
-            opt.Password.RequireNonAlphanumeric = false;
-            opt.Password.RequiredLength = 6;
-        })
+    builder.Services.AddIdentityCore<AppUser>(opt =>
+    {
+        opt.User.RequireUniqueEmail = true;
+        opt.Password.RequireNonAlphanumeric = false;
+        opt.Password.RequiredLength = 6;
+    })
         .AddRoles<AppRole>()
         .AddRoleManager<RoleManager<AppRole>>()
         .AddSignInManager<SignInManager<AppUser>>()
         .AddRoleValidator<RoleValidator<AppRole>>()
         .AddEntityFrameworkStores<IdentityContext>();
-    builder.Services
-        .AddAuthentication("Bearer")
+    builder.Services.AddAuthentication("Bearer")
         .AddJwtBearer(options =>
         {
             options.TokenValidationParameters = new()
@@ -94,34 +94,9 @@ try
                 .AllowAnyHeader()
                 .AllowAnyMethod());
     });
-    builder.Services.AddEndpointsApiExplorer();
-    builder.Services.AddSwaggerGen(options =>
+    builder.Services.AddOpenApi(options =>
     {
-        options.SwaggerDoc("v1", new OpenApiInfo
-        {
-            Title = "WebApi v1",
-            Version = "v1",
-            Description = "This is a template API"
-        });
-        //options.SwaggerDoc("v2", new OpenApiInfo
-        //{
-        //    Title = "WebApi v2",
-        //    Version = "v2",
-        //    Description = "This is a template API"
-        //});
-        options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-        {
-            Name = "Authorization",
-            Type = SecuritySchemeType.Http,
-            Scheme = "bearer",
-            BearerFormat = "JWT",
-            In = ParameterLocation.Header,
-            Description = "JWT Authorization header using the Bearer scheme. Enter your token (without the 'Bearer ' prefix).",
-        });
-        options.AddSecurityRequirement(document => new OpenApiSecurityRequirement
-        {
-            [new OpenApiSecuritySchemeReference("Bearer", document)] = []
-        });
+        options.AddDocumentTransformer<JwtBearerSecuritySchemeTransformer>();
     });
     builder.Services.AddHealthChecks()
                     .AddDbContextCheck<IdentityContext>("Identity Database Health Check");
@@ -151,11 +126,11 @@ try
 
     if (app.Environment.IsDevelopment())
     {
-        app.UseSwagger();
+        app.MapOpenApi().AllowAnonymous();
         app.UseSwaggerUI(options =>
         {
-            // options.SwaggerEndpoint("/swagger/v2/swagger.json", "WebApi v2");
-            options.SwaggerEndpoint("/swagger/v1/swagger.json", "WebApi v1");
+            // options.SwaggerEndpoint("/openapi/v2.json", "WebApi v2");
+            options.SwaggerEndpoint("/openapi/v1.json", "WebApi v1");
             options.EnableTryItOutByDefault();
             options.ConfigObject.AdditionalItems["syntaxHighlight"] = new Dictionary<string, object>
             {
@@ -209,5 +184,42 @@ static async Task ApplyDbMigrations(WebApplication app)
     {
         logger.LogError(ex, "An error occured during database migration");
         Console.ReadKey();
+    }
+}
+
+internal sealed class JwtBearerSecuritySchemeTransformer(IAuthenticationSchemeProvider authenticationSchemeProvider) : IOpenApiDocumentTransformer
+{
+    public async Task TransformAsync(OpenApiDocument document, OpenApiDocumentTransformerContext context, CancellationToken cancellationToken)
+    {
+        IEnumerable<AuthenticationScheme> authenticationSchemes = await authenticationSchemeProvider.GetAllSchemesAsync();
+
+        if (authenticationSchemes.Any(authScheme => authScheme.Name == "Bearer"))
+        {
+            // Add the security scheme at the document level
+            Dictionary<string, IOpenApiSecurityScheme> securitySchemes = new()
+            {
+                ["Bearer"] = new OpenApiSecurityScheme
+                {
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.Http,
+                    Scheme = "bearer",
+                    BearerFormat = "JWT",
+                    In = ParameterLocation.Header,
+                    Description = "JWT Authorization header using the Bearer scheme. Enter your token (without the 'Bearer ' prefix).",
+                }
+            };
+            document.Components ??= new OpenApiComponents();
+            document.Components.SecuritySchemes = securitySchemes;
+
+            // Apply it as a requirement for all operations
+            foreach (KeyValuePair<HttpMethod, OpenApiOperation> operation in document.Paths.Values.SelectMany(path => path.Operations!))
+            {
+                operation.Value.Security ??= [];
+                operation.Value.Security.Add(new OpenApiSecurityRequirement
+                {
+                    [new OpenApiSecuritySchemeReference("Bearer", document)] = []
+                });
+            }
+        }
     }
 }
