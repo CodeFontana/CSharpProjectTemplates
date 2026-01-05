@@ -20,6 +20,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApi.SharedLibrary", "Web
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorUI", "BlazorUI\BlazorUI.csproj", "{1A900417-8FEF-4DC6-8E0E-04ACB0D8DDDB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MinimalApi", "MinimalApi\MinimalApi.csproj", "{021467CB-6116-426B-B6DA-44D7B551AD31}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -62,6 +64,10 @@ Global
 		{1A900417-8FEF-4DC6-8E0E-04ACB0D8DDDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1A900417-8FEF-4DC6-8E0E-04ACB0D8DDDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1A900417-8FEF-4DC6-8E0E-04ACB0D8DDDB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{021467CB-6116-426B-B6DA-44D7B551AD31}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{021467CB-6116-426B-B6DA-44D7B551AD31}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{021467CB-6116-426B-B6DA-44D7B551AD31}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{021467CB-6116-426B-B6DA-44D7B551AD31}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

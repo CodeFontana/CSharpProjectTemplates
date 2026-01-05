@@ -1,0 +1,56 @@
+# Login
+POST https://localhost:7055/api/v1/accounts/login
+Content-Type: application/json
+
+{
+    "username": "brian",
+    "password": "Passw0rd123!!"
+}
+
+###
+
+# Populate token here!
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiYnJpYW4iLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjEiLCJzdWIiOiIxIiwidW5pcXVlX25hbWUiOiJicmlhbiIsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjcyODkiLCJhdWQiOiJXZWJBcGlUZW1wbGF0ZSIsIm5iZiI6IjE3Njc1Njg3MDIiLCJleHAiOiIxNzY3NTcyMzAyIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjpbIkFkbWluaXN0cmF0b3IiLCJVc2VyIl19.LKOJkpnx4ulSU679z6ZoQNBR37u5-wr1YVYcMMxkPZ4
+
+# Get all accounts
+GET https://localhost:7055/api/v1/accounts
+Authorization: Bearer {{token}}
+
+###
+
+# Get specific account
+GET https://localhost:7055/api/v1/accounts/brian
+Authorization: Bearer {{token}}
+
+###
+
+# Register account
+POST https://localhost:7055/api/v1/accounts
+Content-Type: application/json
+
+{
+    "username": "pepper",
+    "email": "pepper@example.com",
+    "password": "Passw0rd123!!",
+    "confirmPassword": "Passw0rd123!!"
+}
+
+###
+
+# Update account
+PUT https://localhost:7055/api/v1/accounts
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "id": 2,
+    "username": "pepper",
+    "email": "pepper@codefoxtrot.com"
+}
+
+###
+
+# Delete account
+DELETE https://localhost:7055/api/v1/Accounts/pepper
+Content-Type: application/json
+Authorization: Bearer {{token}}
