@@ -29,7 +29,6 @@ public class AccountRepository : IAccountRepository
         }
 
         return await _userManager.Users
-            .AsNoTracking()
             .SingleOrDefaultAsync(u =>
                 (!string.IsNullOrWhiteSpace(u.NormalizedEmail)
                     && u.NormalizedEmail.ToUpper() == username.ToUpper())
@@ -167,8 +166,8 @@ public class AccountRepository : IAccountRepository
         return await _userManager.Users.AnyAsync(e => e.NormalizedEmail == username.ToUpper());
     }
 
-    public async Task<bool> SaveAllAsync()
+    public async Task SaveAllAsync()
     {
-        return await _db.SaveChangesAsync() > 0;
+        await _db.SaveChangesAsync();
     }
 }

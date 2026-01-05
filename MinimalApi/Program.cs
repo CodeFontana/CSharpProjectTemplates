@@ -1,9 +1,10 @@
+using System.Diagnostics;
 using System.Net.Mime;
 using System.Text;
-using System.Text.Json.Serialization;
 using System.Threading.RateLimiting;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.OpenApi;
 using Microsoft.AspNetCore.RateLimiting;
@@ -66,11 +67,6 @@ builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddResponseCaching();
 builder.Services.AddMemoryCache();
-//builder.Services.AddScoped<UserActivity>(); //////////////////////////////////////////////////////////////////////////////
-builder.Services.AddControllers().AddJsonOptions(config =>
-{
-    config.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
-});
 builder.Services.AddCors(policy =>
 {
     policy.AddPolicy("OpenCorsPolicy", options =>
@@ -104,6 +100,19 @@ builder.Services.AddRateLimiter(options =>
             .LogWarning("OnRejected: {GetUserEndPoint}", GetUserEndPoint(context.HttpContext));
         context.HttpContext.Response.WriteAsync("Rate limit exceeded. Please try again later.", cancellationToken: cancellationToken);
         return new ValueTask();
+    };
+});
+builder.Services.AddProblemDetails(options =>
+{
+    options.CustomizeProblemDetails = context =>
+    {
+        context.ProblemDetails.Instance =
+            $"{context.HttpContext.Request.Method} {context.HttpContext.Request.Path}";
+
+        context.ProblemDetails.Extensions.TryAdd("requestId", context.HttpContext.TraceIdentifier);
+
+        Activity? activity = context.HttpContext.Features.Get<IHttpActivityFeature>()?.Activity;
+        context.ProblemDetails.Extensions.TryAdd("traceId", activity?.Id);
     };
 });
 WebApplication app = builder.Build();
