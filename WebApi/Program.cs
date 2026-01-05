@@ -16,7 +16,6 @@ using WebApi.Filters;
 using WebApi.IdentityLibrary.Data;
 using WebApi.IdentityLibrary.Entities;
 using WebApi.IdentityLibrary.Identity;
-using WebApi.Interfaces;
 using WebApi.Services;
 
 Log.Logger = new LoggerConfiguration()

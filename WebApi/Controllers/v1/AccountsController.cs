@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
 using WebApi.Filters;
-using WebApi.Interfaces;
+using WebApi.Services;
 using WebApi.SharedLibrary.Identity.Models;
 using WebApi.SharedLibrary.Models;
 

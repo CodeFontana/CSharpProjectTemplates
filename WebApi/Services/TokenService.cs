@@ -4,7 +4,6 @@ using System.Text;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using WebApi.IdentityLibrary.Entities;
-using WebApi.Interfaces;
 
 namespace WebApi.Services;
 

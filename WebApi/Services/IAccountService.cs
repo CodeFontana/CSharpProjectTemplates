@@ -1,7 +1,7 @@
 ﻿using WebApi.SharedLibrary.Identity.Models;
 using WebApi.SharedLibrary.Models;
 
-namespace WebApi.Interfaces;
+namespace WebApi.Services;
 
 public interface IAccountService
 {

@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using WebApi.IdentityLibrary.Entities;
 using WebApi.IdentityLibrary.Identity;
-using WebApi.Interfaces;
 using WebApi.SharedLibrary.Identity.Models;
 using WebApi.SharedLibrary.Models;
 
