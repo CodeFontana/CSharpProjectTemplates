@@ -65,8 +65,8 @@ public class AccountsController : ControllerBase
     {
         try
         {
-            string userName = HttpContext.User.Identity!.Name!;
-            ServiceResponseModel<AccountModel> response = await _accountService.GetAccountAsync(userName, username);
+            string requestor = HttpContext.User.Identity!.Name!;
+            ServiceResponseModel<AccountModel> response = await _accountService.GetAccountAsync(requestor, username);
 
             if (response.Success)
             {
@@ -160,8 +160,8 @@ public class AccountsController : ControllerBase
     {
         try
         {
-            string userName = HttpContext.User.Identity!.Name!;
-            ServiceResponseModel<bool> response = await _accountService.UpdateAccountAsync(userName, updateAccount);
+            string requestor = HttpContext.User.Identity!.Name!;
+            ServiceResponseModel<bool> response = await _accountService.UpdateAccountAsync(requestor, updateAccount);
 
             if (response.Success)
             {
@@ -193,8 +193,8 @@ public class AccountsController : ControllerBase
     {
         try
         {
-            string userName = HttpContext.User.Identity!.Name!;
-            ServiceResponseModel<bool> response = await _accountService.DeleteAccountAsync(userName, username);
+            string requestor = HttpContext.User.Identity!.Name!;
+            ServiceResponseModel<bool> response = await _accountService.DeleteAccountAsync(requestor, username);
 
             if (response.Success)
             {
