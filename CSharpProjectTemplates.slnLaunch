@@ -5,7 +5,7 @@
       {
         "Path": "MudBlazorWasmUI\\MudBlazorWasmUI.csproj",
         "Action": "Start",
-        "DebugTarget": "MudBlazorWasmUI"
+        "DebugTarget": "https"
       },
       {
         "Path": "WebApi\\WebApi.csproj",
