@@ -4,7 +4,7 @@ using WebApi.IdentityLibrary.Identity;
 
 namespace WebApi.Filters;
 
-public class UserActivity : IAsyncActionFilter
+public class UserActivityFilter : IAsyncActionFilter
 {
     public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
     {

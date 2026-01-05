@@ -80,7 +80,8 @@ try
     builder.Services.AddScoped<IAccountService, AccountService>();
     builder.Services.AddResponseCaching();
     builder.Services.AddMemoryCache();
-    builder.Services.AddScoped<UserActivity>();
+    builder.Services.AddScoped<UserActivityFilter>();
+    builder.Services.AddScoped<RequireNameClaimFilter>();
     builder.Services.AddControllers().AddJsonOptions(config =>
     {
         config.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
