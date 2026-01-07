@@ -46,6 +46,22 @@ try
         .AddSignInManager<SignInManager<AppUser>>()
         .AddRoleValidator<RoleValidator<AppRole>>()
         .AddEntityFrameworkStores<IdentityContext>();
+    builder.Services.AddControllers().AddJsonOptions(config =>
+    {
+        config.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+    });
+    builder.Services.AddOpenApi(options =>
+    {
+        options.AddDocumentTransformer<JwtBearerSecuritySchemeTransformer>();
+    });
+    builder.Services.AddCors(policy =>
+    {
+        policy.AddPolicy("OpenCorsPolicy", options =>
+            options
+                .AllowAnyOrigin()
+                .AllowAnyHeader()
+                .AllowAnyMethod());
+    });
     builder.Services.AddAuthentication("Bearer")
         .AddJwtBearer(options =>
         {
@@ -82,22 +98,6 @@ try
     builder.Services.AddMemoryCache();
     builder.Services.AddScoped<UserActivityFilter>();
     builder.Services.AddScoped<RequireNameClaimFilter>();
-    builder.Services.AddControllers().AddJsonOptions(config =>
-    {
-        config.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
-    });
-    builder.Services.AddCors(policy =>
-    {
-        policy.AddPolicy("OpenCorsPolicy", options =>
-            options
-                .AllowAnyOrigin()
-                .AllowAnyHeader()
-                .AllowAnyMethod());
-    });
-    builder.Services.AddOpenApi(options =>
-    {
-        options.AddDocumentTransformer<JwtBearerSecuritySchemeTransformer>();
-    });
     builder.Services.AddHealthChecks()
                     .AddDbContextCheck<IdentityContext>("Identity Database Health Check");
     builder.Services.AddRateLimiter(options =>
