@@ -2,7 +2,7 @@
 @inject NavigationManager NavMan
 
 <CascadingAuthenticationState>
-    <Router AppAssembly="@typeof(App).Assembly" NotFoundPage="typeof(Features.Components.NotFound)">
+    <Router AppAssembly="@typeof(App).Assembly" NotFoundPage="typeof(Features.Home.Pages.NotFound)">
         <Found Context="routeData">
             <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">
                 <NotAuthorized>
