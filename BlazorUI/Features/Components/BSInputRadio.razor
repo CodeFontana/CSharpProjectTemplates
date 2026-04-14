@@ -17,7 +17,7 @@
                 Disabled="@Disabled" />
     <label class="form-check-label" for="@Id">@Label</label>
 </div>
-@if (EditContext != null)
+@if (EditContext != null && ValueExpression != null)
 {
     <ValidationMessage For="@ValueExpression" class="text-danger validation-spacing" />
 }
