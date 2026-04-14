@@ -1,5 +1,5 @@
 ﻿@using System.Linq.Expressions
-@typeparam T where T : IEquatable<T>
+@typeparam T where T : notnull
 @attribute [DiscoverCollocatedJS]
 @inject JSElementReferenceScope Refs
 
@@ -80,6 +80,13 @@ Sample usage:
                     @DisplayText
                 </button>
                 <div class="dropdown-menu w-100">
+                    @if (AllowFilter)
+                    {
+                        <div class="px-3 pt-2 pb-1">
+                            <input type="text" class="form-control form-control-sm" placeholder="Filter..."
+                                   @bind="_filterText" @bind:event="oninput" />
+                        </div>
+                    }
                     @if (AllowSelectAll)
                     {
                         <div class="form-check ms-3">
@@ -116,6 +123,13 @@ Sample usage:
                     @DisplayText
                 </button>
                 <div class="dropdown-menu w-100">
+                    @if (AllowFilter)
+                    {
+                        <div class="px-3 pt-2 pb-1">
+                            <input type="text" class="form-control form-control-sm" placeholder="Filter..."
+                                   @bind="_filterText" @bind:event="oninput" />
+                        </div>
+                    }
                     @if (AllowSelectAll)
                     {
                         <div class="form-check ms-3">
@@ -216,11 +230,15 @@ Sample usage:
     public int MaxVisibleOptions { get; set; } = 10;
 
     [Parameter]
+    public bool AllowFilter { get; set; } = false;
+
+    [Parameter]
     public RenderFragment? ChildContent { get; set; }
 
     private List<T> _selected = new();
     private List<T> _allValues = new();
     private Dictionary<T, string> _optionTexts = new();
+    private string _filterText = "";
 
     private string DisplayText
     {
@@ -266,6 +284,16 @@ Sample usage:
     internal bool IsValueSelected(T value)
     {
         return _selected.Contains(value);
+    }
+
+    internal bool IsOptionVisible(string text)
+    {
+        if (!AllowFilter || string.IsNullOrWhiteSpace(_filterText))
+        {
+            return true;
+        }
+
+        return text.Contains(_filterText, StringComparison.OrdinalIgnoreCase);
     }
 
     internal async Task UpdateSelected(T value, bool selected)

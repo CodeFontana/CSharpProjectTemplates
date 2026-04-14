@@ -1,6 +1,6 @@
-﻿@typeparam T where T : notnull, IEquatable<T>
+﻿@typeparam T where T : notnull
 
-<div class="form-check ms-3">
+<div class="form-check ms-3" style="@(_isVisible ? "" : "display:none")">
     <BSInputCheck Id="@($"multioption-{Value.GetHashCode()}")" 
                   Label="@Text" 
                   Value="@_isSelected" 
@@ -20,6 +20,7 @@
     public required string Text { get; set; }
 
     private bool _isSelected;
+    private bool _isVisible = true;
     
     protected override void OnInitialized()
     {
@@ -34,5 +35,6 @@
     protected override void OnParametersSet()
     {
         _isSelected = Parent!.IsValueSelected(Value);
+        _isVisible = Parent.IsOptionVisible(Text);
     }
 }
