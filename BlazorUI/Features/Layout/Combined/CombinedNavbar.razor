@@ -70,6 +70,23 @@
                 <li class="nav-item">
                     <NavLink class="nav-link" Match="NavLinkMatch.All" href="Weather">Weather</NavLink>
                 </li>
+                <li class="nav-item dropdown">
+                    <NavLink class="@($"nav-link dropdown-toggle")" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Demos
+                    </NavLink>
+                    <ul class="dropdown-menu bg-dark">
+                        <li>
+                            <NavLink class="nav-link" Match="NavLinkMatch.All" href="theme-demo">
+                                Theme Demo
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink class="nav-link" Match="NavLinkMatch.All" href="form-demo">
+                                Form Demo
+                            </NavLink>
+                        </li>
+                    </ul>
+                </li>
             </ul>
             <button id="sidebarButton" type="button" class="d-flex d-md-none hamburger-button ms-auto">
                 <div class="hamburger rounded-lg">

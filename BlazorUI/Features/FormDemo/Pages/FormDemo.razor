@@ -1,0 +1,536 @@
+@page "/form-demo"
+@rendermode InteractiveServer
+
+<PageTitle>Form Components Demo - BlazorUI</PageTitle>
+
+<h1 class="mb-2">Form Components Demo</h1>
+<p class="lead">All <code>BSInput*</code> components with their <code>InputType</code> variants shown side by side.</p>
+
+<hr class="my-4" />
+
+<EditForm Model="_model" OnValidSubmit="HandleSubmitAsync" FormName="formDemo">
+    <DataAnnotationsValidator />
+
+    <!-- ═══════════════ BSInputText ═══════════════ -->
+    <section class="mb-5">
+        <h3 class="border-bottom pb-2 mb-3">
+            <code>BSInputText</code>
+            <small class="text-body-secondary fs-6">— supports Standard, InputGroup, FloatingLabel</small>
+        </h3>
+        <div class="row g-4">
+            <div class="col-lg-4">
+                <h6 class="text-body-secondary mb-2">Standard</h6>
+                <BSInputText Id="txtFirstStd" Class="mb-3" Label="First Name" InputType="InputType.Standard"
+                             @bind-Value="_model.FirstName" Placeholder="Enter first name" />
+            </div>
+            <div class="col-lg-4">
+                <h6 class="text-body-secondary mb-2">InputGroup</h6>
+                <BSInputText Id="txtFirstIG" Class="mb-3" Label="First Name" InputType="InputType.InputGroup"
+                             @bind-Value="_model.FirstName" Placeholder="Enter first name" />
+            </div>
+            <div class="col-lg-4">
+                <h6 class="text-body-secondary mb-2">FloatingLabel</h6>
+                <BSInputText Id="txtFirstFL" Class="mb-3" Label="First Name" InputType="InputType.FloatingLabel"
+                             @bind-Value="_model.FirstName" Placeholder="First Name" />
+            </div>
+        </div>
+
+        <h5 class="mt-3">Password Variant <small class="text-body-secondary fs-6">(<code>Type="password"</code>)</small></h5>
+        <div class="row g-4">
+            <div class="col-lg-4">
+                <BSInputText Id="txtPwdStd" Class="mb-3" Label="Password" InputType="InputType.Standard"
+                             Type="password" @bind-Value="_model.Password" Placeholder="Enter password" />
+            </div>
+            <div class="col-lg-4">
+                <BSInputText Id="txtPwdIG" Class="mb-3" Label="Password" InputType="InputType.InputGroup"
+                             Type="password" @bind-Value="_model.Password" Placeholder="Enter password" />
+            </div>
+            <div class="col-lg-4">
+                <BSInputText Id="txtPwdFL" Class="mb-3" Label="Password" InputType="InputType.FloatingLabel"
+                             Type="password" @bind-Value="_model.Password" Placeholder="Password" />
+            </div>
+        </div>
+
+        <h5 class="mt-3">Email Variant <small class="text-body-secondary fs-6">(<code>Type="email"</code>)</small></h5>
+        <div class="row g-4">
+            <div class="col-lg-4">
+                <BSInputText Id="txtEmailStd" Class="mb-3" Label="Email" InputType="InputType.Standard"
+                             Type="email" @bind-Value="_model.Email" Placeholder="user@example.com" />
+            </div>
+            <div class="col-lg-4">
+                <BSInputText Id="txtEmailIG" Class="mb-3" Label="Email" InputType="InputType.InputGroup"
+                             Type="email" @bind-Value="_model.Email" Placeholder="user@example.com" />
+            </div>
+            <div class="col-lg-4">
+                <BSInputText Id="txtEmailFL" Class="mb-3" Label="Email" InputType="InputType.FloatingLabel"
+                             Type="email" @bind-Value="_model.Email" Placeholder="Email" />
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════ BSInputNumber ═══════════════ -->
+    <section class="mb-5">
+        <h3 class="border-bottom pb-2 mb-3">
+            <code>BSInputNumber&lt;T&gt;</code>
+            <small class="text-body-secondary fs-6">— supports Standard, InputGroup, FloatingLabel</small>
+        </h3>
+        <div class="row g-4">
+            <div class="col-lg-4">
+                <h6 class="text-body-secondary mb-2">Standard</h6>
+                <BSInputNumber T="int?" Id="numAgeStd" Class="mb-3" Label="Age" InputType="InputType.Standard"
+                               @bind-Value="_model.Age" />
+            </div>
+            <div class="col-lg-4">
+                <h6 class="text-body-secondary mb-2">InputGroup</h6>
+                <BSInputNumber T="int?" Id="numAgeIG" Class="mb-3" Label="Age" InputType="InputType.InputGroup"
+                               @bind-Value="_model.Age" />
+            </div>
+            <div class="col-lg-4">
+                <h6 class="text-body-secondary mb-2">FloatingLabel</h6>
+                <BSInputNumber T="int?" Id="numAgeFL" Class="mb-3" Label="Age" InputType="InputType.FloatingLabel"
+                               @bind-Value="_model.Age" />
+            </div>
+        </div>
+
+        <h5 class="mt-3">Decimal Example <small class="text-body-secondary fs-6">(<code>decimal?</code>)</small></h5>
+        <div class="row g-4">
+            <div class="col-lg-4">
+                <BSInputNumber T="decimal?" Id="numSalaryStd" Class="mb-3" Label="Salary" InputType="InputType.Standard"
+                               @bind-Value="_model.Salary" />
+            </div>
+            <div class="col-lg-4">
+                <BSInputNumber T="decimal?" Id="numSalaryIG" Class="mb-3" Label="Salary" InputType="InputType.InputGroup"
+                               @bind-Value="_model.Salary" />
+            </div>
+            <div class="col-lg-4">
+                <BSInputNumber T="decimal?" Id="numSalaryFL" Class="mb-3" Label="Salary" InputType="InputType.FloatingLabel"
+                               @bind-Value="_model.Salary" />
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════ BSInputDate ═══════════════ -->
+    <section class="mb-5">
+        <h3 class="border-bottom pb-2 mb-3">
+            <code>BSInputDate</code>
+            <small class="text-body-secondary fs-6">— supports Standard, InputGroup, FloatingLabel</small>
+        </h3>
+        <div class="row g-4">
+            <div class="col-lg-4">
+                <h6 class="text-body-secondary mb-2">Standard</h6>
+                <BSInputDate Id="dtBirthStd" Class="mb-3" Label="Date of Birth" InputType="InputType.Standard"
+                             @bind-Value="_model.DateOfBirth" />
+            </div>
+            <div class="col-lg-4">
+                <h6 class="text-body-secondary mb-2">InputGroup</h6>
+                <BSInputDate Id="dtBirthIG" Class="mb-3" Label="Date of Birth" InputType="InputType.InputGroup"
+                             @bind-Value="_model.DateOfBirth" />
+            </div>
+            <div class="col-lg-4">
+                <h6 class="text-body-secondary mb-2">FloatingLabel</h6>
+                <BSInputDate Id="dtBirthFL" Class="mb-3" Label="Date of Birth" InputType="InputType.FloatingLabel"
+                             @bind-Value="_model.DateOfBirth" />
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════ BSInputSelect ═══════════════ -->
+    <section class="mb-5">
+        <h3 class="border-bottom pb-2 mb-3">
+            <code>BSInputSelect&lt;T&gt;</code>
+            <small class="text-body-secondary fs-6">— supports Standard, InputGroup, FloatingLabel</small>
+        </h3>
+        <div class="row g-4">
+            <div class="col-lg-4">
+                <h6 class="text-body-secondary mb-2">Standard</h6>
+                <BSInputSelect T="string" Id="selDeptStd" Class="mb-3" Label="Department" InputType="InputType.Standard"
+                               @bind-Value="_model.Department">
+                    <option value="">Select...</option>
+                    <option value="Engineering">Engineering</option>
+                    <option value="Design">Design</option>
+                    <option value="Marketing">Marketing</option>
+                    <option value="Sales">Sales</option>
+                    <option value="HR">Human Resources</option>
+                </BSInputSelect>
+            </div>
+            <div class="col-lg-4">
+                <h6 class="text-body-secondary mb-2">InputGroup</h6>
+                <BSInputSelect T="string" Id="selDeptIG" Class="mb-3" Label="Department" InputType="InputType.InputGroup"
+                               @bind-Value="_model.Department">
+                    <option value="">Select...</option>
+                    <option value="Engineering">Engineering</option>
+                    <option value="Design">Design</option>
+                    <option value="Marketing">Marketing</option>
+                    <option value="Sales">Sales</option>
+                    <option value="HR">Human Resources</option>
+                </BSInputSelect>
+            </div>
+            <div class="col-lg-4">
+                <h6 class="text-body-secondary mb-2">FloatingLabel</h6>
+                <BSInputSelect T="string" Id="selDeptFL" Class="mb-3" Label="Department" InputType="InputType.FloatingLabel"
+                               LabelWidth="250" @bind-Value="_model.Department">
+                    <option value="">Select...</option>
+                    <option value="Engineering">Engineering</option>
+                    <option value="Design">Design</option>
+                    <option value="Marketing">Marketing</option>
+                    <option value="Sales">Sales</option>
+                    <option value="HR">Human Resources</option>
+                </BSInputSelect>
+            </div>
+        </div>
+
+        <h5 class="mt-3">FitContent Variant</h5>
+        <div class="row g-4">
+            <div class="col-lg-4">
+                <BSInputSelect T="string" Id="selPriorityStd" Class="mb-3" Label="Priority" InputType="InputType.Standard"
+                               FitContent="true" @bind-Value="_model.Priority">
+                    <option value="">Select...</option>
+                    <option value="Low">Low</option>
+                    <option value="Medium">Medium</option>
+                    <option value="High">High</option>
+                    <option value="Critical">Critical</option>
+                </BSInputSelect>
+            </div>
+            <div class="col-lg-4">
+                <BSInputSelect T="string" Id="selPriorityIG" Class="mb-3" Label="Priority" InputType="InputType.InputGroup"
+                               FitContent="true" @bind-Value="_model.Priority">
+                    <option value="">Select...</option>
+                    <option value="Low">Low</option>
+                    <option value="Medium">Medium</option>
+                    <option value="High">High</option>
+                    <option value="Critical">Critical</option>
+                </BSInputSelect>
+            </div>
+            <div class="col-lg-4">
+                <BSInputSelect T="string" Id="selPriorityFL" Class="mb-3" Label="Priority" InputType="InputType.FloatingLabel"
+                               FitContent="true" @bind-Value="_model.Priority">
+                    <option value="">Select...</option>
+                    <option value="Low">Low</option>
+                    <option value="Medium">Medium</option>
+                    <option value="High">High</option>
+                    <option value="Critical">Critical</option>
+                </BSInputSelect>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════ BSInputTextArea ═══════════════ -->
+    <section class="mb-5">
+        <h3 class="border-bottom pb-2 mb-3">
+            <code>BSInputTextArea</code>
+            <small class="text-body-secondary fs-6">— supports Standard, InputGroup, FloatingLabel</small>
+        </h3>
+        <div class="row g-4">
+            <div class="col-lg-4">
+                <h6 class="text-body-secondary mb-2">Standard <span class="badge bg-secondary">Default</span></h6>
+                <BSInputTextArea Id="txtBioStd" Class="mb-3" Label="Bio" InputType="InputType.Standard"
+                                 @bind-Value="_model.Bio" Rows="3" Placeholder="Tell us about yourself..." />
+            </div>
+            <div class="col-lg-4">
+                <h6 class="text-body-secondary mb-2">InputGroup</h6>
+                <BSInputTextArea Id="txtBioIG" Class="mb-3" Label="Bio" InputType="InputType.InputGroup"
+                                 @bind-Value="_model.Bio" Rows="3" Placeholder="Tell us about yourself..." />
+            </div>
+            <div class="col-lg-4">
+                <h6 class="text-body-secondary mb-2">FloatingLabel</h6>
+                <BSInputTextArea Id="txtBioFL" Class="mb-3" Label="Bio" InputType="InputType.FloatingLabel"
+                                 @bind-Value="_model.Bio" Rows="3" Placeholder="Bio" />
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════ BSInputMultiSelect ═══════════════ -->
+    <section class="mb-5">
+        <h3 class="border-bottom pb-2 mb-3">
+            <code>BSInputMultiSelect&lt;T&gt;</code>
+            <small class="text-body-secondary fs-6">— supports Standard, InputGroup only</small>
+        </h3>
+        <div class="row g-4">
+            <div class="col-lg-6">
+                <h6 class="text-body-secondary mb-2">Standard <span class="badge bg-secondary">Default</span></h6>
+                <BSInputMultiSelect T="string" Id="msSkillsStd" Class="mb-3" Label="Skills"
+                                    InputType="InputType.Standard" @bind-Value="_model.Skills"
+                                    AllowSelectAll="true" SelectAllText="All Skills"
+                                    AllowFilter="true" Placeholder="Select skills...">
+                    <BSMultiOption T="string" Value="@("CSharp")" Text="C#" />
+                    <BSMultiOption T="string" Value="@("JavaScript")" Text="JavaScript" />
+                    <BSMultiOption T="string" Value="@("TypeScript")" Text="TypeScript" />
+                    <BSMultiOption T="string" Value="@("Python")" Text="Python" />
+                    <BSMultiOption T="string" Value="@("Blazor")" Text="Blazor" />
+                    <BSMultiOption T="string" Value="@("SQL")" Text="SQL" />
+                    <BSMultiOption T="string" Value="@("Azure")" Text="Azure" />
+                    <BSMultiOption T="string" Value="@("Docker")" Text="Docker" />
+                </BSInputMultiSelect>
+                <p class="text-body-secondary small">
+                    Selected: @(string.Join(", ", _model.Skills ?? Enumerable.Empty<string>()))
+                </p>
+            </div>
+            <div class="col-lg-6">
+                <h6 class="text-body-secondary mb-2">InputGroup</h6>
+                <BSInputMultiSelect T="string" Id="msSkillsIG" Class="mb-3" Label="Skills"
+                                    InputType="InputType.InputGroup" @bind-Value="_model.Skills"
+                                    AllowSelectAll="true" SelectAllText="All Skills"
+                                    AllowFilter="true" Placeholder="Select skills...">
+                    <BSMultiOption T="string" Value="@("CSharp")" Text="C#" />
+                    <BSMultiOption T="string" Value="@("JavaScript")" Text="JavaScript" />
+                    <BSMultiOption T="string" Value="@("TypeScript")" Text="TypeScript" />
+                    <BSMultiOption T="string" Value="@("Python")" Text="Python" />
+                    <BSMultiOption T="string" Value="@("Blazor")" Text="Blazor" />
+                    <BSMultiOption T="string" Value="@("SQL")" Text="SQL" />
+                    <BSMultiOption T="string" Value="@("Azure")" Text="Azure" />
+                    <BSMultiOption T="string" Value="@("Docker")" Text="Docker" />
+                </BSInputMultiSelect>
+                <p class="text-body-secondary small">
+                    Selected: @(string.Join(", ", _model.Skills ?? Enumerable.Empty<string>()))
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════ BSInputCheck ═══════════════ -->
+    <section class="mb-5">
+        <h3 class="border-bottom pb-2 mb-3">
+            <code>BSInputCheck</code>
+            <small class="text-body-secondary fs-6">— no InputType variants; uses LabelClass for styling</small>
+        </h3>
+        <div class="row g-4">
+            <div class="col-lg-4">
+                <h6 class="text-body-secondary mb-2">Basic Checkbox</h6>
+                <BSInputCheck Id="chkAgree" Label="I agree to the terms"
+                              LabelClass="form-control mb-3"
+                              @bind-Value="_model.AgreeToTerms" />
+            </div>
+            <div class="col-lg-4">
+                <h6 class="text-body-secondary mb-2">Toggle Switch</h6>
+                <BSInputCheck Id="chkNotify" Label="Enable notifications"
+                              LabelClass="form-control form-switch mb-3"
+                              @bind-Value="_model.EnableNotifications" />
+            </div>
+            <div class="col-lg-4">
+                <h6 class="text-body-secondary mb-2">Auto-width Switch</h6>
+                <BSInputCheck Id="chkDarkMode" Label="Dark mode"
+                              LabelClass="form-control form-switch"
+                              LabelStyle="width: auto;"
+                              @bind-Value="_model.DarkMode" />
+            </div>
+        </div>
+        <div class="row g-4 mt-1">
+            <div class="col-lg-4">
+                <h6 class="text-body-secondary mb-2">Disabled Checkbox</h6>
+                <BSInputCheck Id="chkDisabled" Label="Disabled checkbox"
+                              LabelClass="form-control mb-3"
+                              @bind-Value="_model.DisabledCheck" Disabled="true" />
+            </div>
+            <div class="col-lg-4">
+                <h6 class="text-body-secondary mb-2">No Label</h6>
+                <BSInputCheck Id="chkBare" LabelClass="form-control mb-3"
+                              @bind-Value="_model.BareCheck" />
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════ BSInputRadio ═══════════════ -->
+    <section class="mb-5">
+        <h3 class="border-bottom pb-2 mb-3">
+            <code>BSInputRadio&lt;T&gt;</code>
+            <small class="text-body-secondary fs-6">— no InputType variants; always renders as form-check</small>
+        </h3>
+        <div class="row g-4">
+            <div class="col-lg-4">
+                <h6 class="text-body-secondary mb-2">String Radio Group</h6>
+                <InputRadioGroup @bind-Value="_model.ContactMethod">
+                    <BSInputRadio T="string" Id="radioEmail" Label="Email" Value="@("Email")" Class="mb-1" />
+                    <BSInputRadio T="string" Id="radioPhone" Label="Phone" Value="@("Phone")" Class="mb-1" />
+                    <BSInputRadio T="string" Id="radioMail" Label="Postal Mail" Value="@("Mail")" />
+                </InputRadioGroup>
+                <p class="text-body-secondary small mt-2">Selected: @_model.ContactMethod</p>
+            </div>
+            <div class="col-lg-4">
+                <h6 class="text-body-secondary mb-2">Enum Radio Group</h6>
+                <InputRadioGroup @bind-Value="_model.ExperienceLevel">
+                    <BSInputRadio T="ExperienceLevel" Id="radioJunior" Label="Junior" Value="ExperienceLevel.Junior" Class="mb-1" />
+                    <BSInputRadio T="ExperienceLevel" Id="radioMid" Label="Mid-Level" Value="ExperienceLevel.Mid" Class="mb-1" />
+                    <BSInputRadio T="ExperienceLevel" Id="radioSenior" Label="Senior" Value="ExperienceLevel.Senior" Class="mb-1" />
+                    <BSInputRadio T="ExperienceLevel" Id="radioLead" Label="Lead" Value="ExperienceLevel.Lead" />
+                </InputRadioGroup>
+                <p class="text-body-secondary small mt-2">Selected: @_model.ExperienceLevel</p>
+            </div>
+            <div class="col-lg-4">
+                <h6 class="text-body-secondary mb-2">Inline Radio (via CSS class)</h6>
+                <InputRadioGroup @bind-Value="_model.ShirtSize">
+                    <div class="d-flex gap-3">
+                        <BSInputRadio T="string" Id="radioXS" Label="XS" Value="@("XS")" />
+                        <BSInputRadio T="string" Id="radioS" Label="S" Value="@("S")" />
+                        <BSInputRadio T="string" Id="radioM" Label="M" Value="@("M")" />
+                        <BSInputRadio T="string" Id="radioL" Label="L" Value="@("L")" />
+                        <BSInputRadio T="string" Id="radioXL" Label="XL" Value="@("XL")" />
+                    </div>
+                </InputRadioGroup>
+                <p class="text-body-secondary small mt-2">Selected: @_model.ShirtSize</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════ COMBINED FORM ═══════════════ -->
+    <section class="mb-5">
+        <h3 class="border-bottom pb-2 mb-3">Combined Form Example</h3>
+        <p class="text-body-secondary">A realistic form combining multiple <code>BSInput*</code> components. Submit to see bound values below.</p>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <BSInputText Id="formFirstName" Class="mb-3" Label="First Name"
+                                     @bind-Value="_model.FirstName" Placeholder="Enter first name" />
+                    </div>
+                    <div class="col-md-6">
+                        <BSInputText Id="formLastName" Class="mb-3" Label="Last Name"
+                                     @bind-Value="_model.LastName" Placeholder="Enter last name" />
+                    </div>
+                    <div class="col-md-6">
+                        <BSInputText Id="formEmail" Class="mb-3" Label="Email" Type="email"
+                                     @bind-Value="_model.Email" Placeholder="user@example.com" />
+                    </div>
+                    <div class="col-md-6">
+                        <BSInputDate Id="formDob" Class="mb-3" Label="Date of Birth"
+                                     @bind-Value="_model.DateOfBirth" />
+                    </div>
+                    <div class="col-md-4">
+                        <BSInputNumber T="int?" Id="formAge" Class="mb-3" Label="Age"
+                                       @bind-Value="_model.Age" />
+                    </div>
+                    <div class="col-md-4">
+                        <BSInputSelect T="string" Id="formDept" Class="mb-3" Label="Department"
+                                       @bind-Value="_model.Department">
+                            <option value="">Select...</option>
+                            <option value="Engineering">Engineering</option>
+                            <option value="Design">Design</option>
+                            <option value="Marketing">Marketing</option>
+                            <option value="Sales">Sales</option>
+                            <option value="HR">Human Resources</option>
+                        </BSInputSelect>
+                    </div>
+                    <div class="col-md-4">
+                        <BSInputSelect T="string" Id="formPriority" Class="mb-3" Label="Priority"
+                                       @bind-Value="_model.Priority">
+                            <option value="">Select...</option>
+                            <option value="Low">Low</option>
+                            <option value="Medium">Medium</option>
+                            <option value="High">High</option>
+                            <option value="Critical">Critical</option>
+                        </BSInputSelect>
+                    </div>
+                    <div class="col-12">
+                        <BSInputTextArea Id="formBio" Class="mb-3" Label="Bio" InputType="InputType.InputGroup"
+                                         @bind-Value="_model.Bio" Rows="3" Placeholder="Tell us about yourself..." />
+                    </div>
+                    <div class="col-md-6">
+                        <BSInputCheck Id="formAgree" Label="I agree to the terms"
+                                      LabelClass="form-control mb-3"
+                                      @bind-Value="_model.AgreeToTerms" />
+                    </div>
+                    <div class="col-md-6">
+                        <BSInputCheck Id="formNotify" Label="Enable notifications"
+                                      LabelClass="form-control form-switch mb-3"
+                                      @bind-Value="_model.EnableNotifications" />
+                    </div>
+                </div>
+                <div class="d-flex gap-2 mt-2">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-check-circle me-1"></i> Submit
+                    </button>
+                    <button type="button" class="btn btn-outline-secondary" @onclick="ResetForm">
+                        <i class="bi bi-arrow-counterclockwise me-1"></i> Reset
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    @if (_submitted)
+    {
+        <section class="mb-5">
+            <h3 class="border-bottom pb-2 mb-3">Submitted Values</h3>
+            <div class="alert alert-success">
+                <i class="bi bi-check-circle-fill me-1"></i> Form submitted successfully!
+            </div>
+            <div class="table-responsive">
+                <table class="table table-striped table-sm">
+                    <thead class="table-dark">
+                        <tr>
+                            <th style="width: 200px;">Field</th>
+                            <th>Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>First Name</td><td>@_model.FirstName</td></tr>
+                        <tr><td>Last Name</td><td>@_model.LastName</td></tr>
+                        <tr><td>Email</td><td>@_model.Email</td></tr>
+                        <tr><td>Password</td><td>@(string.IsNullOrWhiteSpace(_model.Password) ? "—" : new string('*', _model.Password.Length))</td></tr>
+                        <tr><td>Age</td><td>@(_model.Age?.ToString() ?? "—")</td></tr>
+                        <tr><td>Salary</td><td>@(_model.Salary?.ToString("C") ?? "—")</td></tr>
+                        <tr><td>Date of Birth</td><td>@(_model.DateOfBirth?.ToString("d") ?? "—")</td></tr>
+                        <tr><td>Department</td><td>@(string.IsNullOrWhiteSpace(_model.Department) ? "—" : _model.Department)</td></tr>
+                        <tr><td>Priority</td><td>@(string.IsNullOrWhiteSpace(_model.Priority) ? "—" : _model.Priority)</td></tr>
+                        <tr><td>Bio</td><td>@(string.IsNullOrWhiteSpace(_model.Bio) ? "—" : _model.Bio)</td></tr>
+                        <tr><td>Skills</td><td>@((_model.Skills?.Count > 0) ? string.Join(", ", _model.Skills) : "—")</td></tr>
+                        <tr><td>Agree to Terms</td><td>@_model.AgreeToTerms</td></tr>
+                        <tr><td>Notifications</td><td>@_model.EnableNotifications</td></tr>
+                        <tr><td>Dark Mode</td><td>@_model.DarkMode</td></tr>
+                        <tr><td>Contact Method</td><td>@(string.IsNullOrWhiteSpace(_model.ContactMethod) ? "—" : _model.ContactMethod)</td></tr>
+                        <tr><td>Experience Level</td><td>@_model.ExperienceLevel</td></tr>
+                        <tr><td>Shirt Size</td><td>@(string.IsNullOrWhiteSpace(_model.ShirtSize) ? "—" : _model.ShirtSize)</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    }
+</EditForm>
+
+@code {
+    private DemoFormModel _model = new();
+    private bool _submitted;
+
+    private Task HandleSubmitAsync()
+    {
+        _submitted = true;
+        return Task.CompletedTask;
+    }
+
+    private void ResetForm()
+    {
+        _model = new();
+        _submitted = false;
+    }
+
+    private enum ExperienceLevel
+    {
+        Junior,
+        Mid,
+        Senior,
+        Lead
+    }
+
+    private sealed class DemoFormModel
+    {
+        public string? FirstName { get; set; }
+        public string? LastName { get; set; }
+        public string? Email { get; set; }
+        public string? Password { get; set; }
+        public int? Age { get; set; }
+        public decimal? Salary { get; set; }
+        public DateOnly? DateOfBirth { get; set; }
+        public string? Department { get; set; }
+        public string? Priority { get; set; }
+        public string? Bio { get; set; }
+        public List<string>? Skills { get; set; } = [];
+        public bool AgreeToTerms { get; set; }
+        public bool EnableNotifications { get; set; }
+        public bool DarkMode { get; set; }
+        public bool DisabledCheck { get; set; }
+        public bool BareCheck { get; set; }
+        public string? ContactMethod { get; set; }
+        public ExperienceLevel ExperienceLevel { get; set; } = ExperienceLevel.Junior;
+        public string? ShirtSize { get; set; }
+    }
+}
