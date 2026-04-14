@@ -66,6 +66,10 @@ Sample usage:
     @if (InputType == InputType.Standard)
     {
         <div class="@($"{Class}")" style="@(FitContent ? $"width: auto; {Style}" : $"{Style}")">
+            @if (!string.IsNullOrWhiteSpace(Label))
+            {
+                <label for="@Id" class="form-label mb-0" style="@($"width: {LabelWidth}px; {LabelStyle}")">@Label</label>
+            }
             <div class=@($"dropdown d-{(FitContent ? "inline-block" : "block")} w-auto")>
                 <button id="@Id"
                         type="button"
