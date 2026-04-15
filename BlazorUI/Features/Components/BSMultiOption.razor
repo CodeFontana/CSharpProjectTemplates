@@ -1,27 +1,30 @@
 ﻿@typeparam T where T : notnull
+@implements IDisposable
 
 <div class="form-check ms-3" style="@(_isVisible ? "" : "display:none")">
-    <BSInputCheck Id="@($"multioption-{Value.GetHashCode()}")" 
-                  Label="@Text" 
-                  Value="@_isSelected" 
-                  ValueChanged="@(async selected => { _isSelected = selected; await Parent!.UpdateSelected(Value, selected); })" 
-                  ValueExpression="() => _isSelected" 
+    <BSInputCheck Id="@($"multioption-{Value.GetHashCode()}")"
+                  Label="@Text"
+                  Value="@_isSelected"
+                  ValueChanged="@(async selected => { _isSelected = selected; await Parent!.UpdateSelected(Value, selected); })"
+                  ValueExpression="() => _isSelected"
                   Disabled="@Parent!.Disabled" />
 </div>
 
 @code {
-    [CascadingParameter] 
+    [CascadingParameter]
     public BSInputMultiSelect<T>? Parent { get; set; }
 
-    [Parameter, EditorRequired] 
+    [Parameter, EditorRequired]
     public required T Value { get; set; }
 
-    [Parameter, EditorRequired] 
+    [Parameter, EditorRequired]
     public required string Text { get; set; }
 
     private bool _isSelected;
     private bool _isVisible = true;
-    
+    private T _registeredValue = default!;
+    private bool _hasRegistered;
+
     protected override void OnInitialized()
     {
         if (Parent is null)
@@ -30,11 +33,28 @@
         }
 
         Parent.RegisterOption(Value, Text);
+        _registeredValue = Value;
+        _hasRegistered = true;
     }
-    
+
     protected override void OnParametersSet()
     {
+        if (_hasRegistered && !EqualityComparer<T>.Default.Equals(_registeredValue, Value))
+        {
+            Parent!.UnregisterOption(_registeredValue);
+            Parent!.RegisterOption(Value, Text);
+            _registeredValue = Value;
+        }
+
         _isSelected = Parent!.IsValueSelected(Value);
         _isVisible = Parent.IsOptionVisible(Text);
+    }
+
+    public void Dispose()
+    {
+        if (_hasRegistered)
+        {
+            Parent?.UnregisterOption(_registeredValue);
+        }
     }
 }

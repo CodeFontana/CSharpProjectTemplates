@@ -3,65 +3,6 @@
 @attribute [DiscoverCollocatedJS]
 @inject JSElementReferenceScope Refs
 
-@*
-Sample usage:
-<h4 class="mt-3">Countries</h4>
-
-<div>
-    <BSInputMultiSelect Id="countryFilter" 
-                        Class="my-3" 
-                        Label="Countries" 
-                        LabelWidth="150" 
-                        InputType="InputType.Standard" 
-                        FitContent="true" 
-                        @bind-Value="SelectedCountries" 
-                        AllowSelectAll="true" 
-                        SelectAllText="All Countries" 
-                        Placeholder="Select countries..." 
-                        MaxVisibleOptions="10"
-                        Disabled="@_isRequesting">
-        <BSMultiOption Value="@("USA")" Text="United States" />
-        <BSMultiOption Value="@("CAN")" Text="Canada" />
-        <BSMultiOption Value="@("MEX")" Text="Mexico" />
-    </BSInputMultiSelect>
-</div>
-
-<div>
-    <BSInputMultiSelect Id="countryFilter" 
-                        Class="my-3" 
-                        Label="Countries" 
-                        LabelWidth="150" 
-                        InputType="InputType.InputGroup" 
-                        FitContent="true" 
-                        @bind-Value="SelectedCountries" 
-                        AllowSelectAll="true" 
-                        SelectAllText="All Countries" 
-                        Placeholder="Select countries..." 
-                        MaxVisibleOptions="10"
-                        Disabled="@_isRequesting">
-        <BSMultiOption Value="@("USA")" Text="United States" />
-        <BSMultiOption Value="@("CAN")" Text="Canada" />
-        <BSMultiOption Value="@("MEX")" Text="Mexico" />
-    </BSInputMultiSelect>
-</div>
-
-<p>Selected countries: @(string.Join(", ", _selectedCountries ?? Enumerable.Empty<string>()))</p>
-
-@code {
-	private bool _isRequesting = false;
-    
-    private List<string> _selectedCountries = new();
-    private List<string> SelectedCountries
-    {
-        get => _selectedCountries;
-        set
-        {
-            _selectedCountries = value.ToList();
-        }
-    }
-}
-*@
-
 <CascadingValue Value="this">
     @if (InputType == InputType.Standard)
     {
@@ -111,7 +52,7 @@ Sample usage:
     }
     else if (InputType == InputType.InputGroup)
     {
-        <div class="@($"input-group d-{(FitContent ? "inline-flex flex-nowrap" : "flex")} align-items-center {Class}")" style="@(FitContent ? $"width: auto; {Style}" : Style)">
+        <div class="@($"input-group d-{(FitContent ? "inline-flex" : "flex")} flex-nowrap align-items-center {Class}")" style="@(FitContent ? $"width: auto; {Style}" : Style)">
             <span class="input-group-text" style="@($"width: {LabelWidth}px; {LabelStyle}")">@Label</span>
             <div class="dropdown flex-grow-1">
                 <button id="@Id"
@@ -171,7 +112,7 @@ Sample usage:
     public required string Label { get; set; }
 
     [Parameter]
-    public ushort LabelWidth { get; set; } = 150;
+    public ushort LabelWidth { get; set; } = 170;
 
     [Parameter]
     public string Style { get; set; } = "";
@@ -240,7 +181,7 @@ Sample usage:
     public RenderFragment? ChildContent { get; set; }
 
     private List<T> _selected = new();
-    private List<T> _allValues = new();
+    private Dictionary<T, int> _optionRefCounts = new();
     private Dictionary<T, string> _optionTexts = new();
     private string _filterText = "";
 
@@ -265,7 +206,9 @@ Sample usage:
     }
 
     private bool HasSelections => _selected.Any();
-    private bool IsAllSelected => _allValues.Count > 0 && _selected.Count == _allValues.Count && _allValues.All(v => _selected.Contains(v));
+    private bool IsAllSelected => _optionRefCounts.Count > 0
+        && _selected.Count == _optionRefCounts.Count
+        && _optionRefCounts.Keys.All(v => _selected.Contains(v));
 
     protected override void OnParametersSet()
     {
@@ -277,12 +220,24 @@ Sample usage:
 
     internal void RegisterOption(T value, string text)
     {
-        if (!_allValues.Contains(value))
-        {
-            _allValues.Add(value);
-        }
-
+        _optionRefCounts[value] = _optionRefCounts.GetValueOrDefault(value) + 1;
         _optionTexts[value] = text;
+    }
+
+    internal void UnregisterOption(T value)
+    {
+        if (_optionRefCounts.TryGetValue(value, out int count))
+        {
+            if (count <= 1)
+            {
+                _optionRefCounts.Remove(value);
+                _optionTexts.Remove(value);
+            }
+            else
+            {
+                _optionRefCounts[value] = count - 1;
+            }
+        }
     }
 
     internal bool IsValueSelected(T value)
@@ -321,7 +276,7 @@ Sample usage:
     {
         if (selected)
         {
-            _selected = new List<T>(_allValues);
+            _selected = _optionRefCounts.Keys.ToList();
         }
         else
         {
