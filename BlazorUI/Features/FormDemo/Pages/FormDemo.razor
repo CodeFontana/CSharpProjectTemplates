@@ -248,10 +248,16 @@
         <div class="row g-4">
             <div class="col-lg-6">
                 <h6 class="text-body-secondary mb-2">Standard <span class="badge bg-secondary">Default</span></h6>
-                <BSInputMultiSelect T="string" Id="msSkillsStd" Class="mb-3" Label="Skills"
-                                    InputType="InputType.Standard" @bind-Value="_model.Skills"
-                                    AllowSelectAll="true" SelectAllText="All Skills"
-                                    AllowFilter="true" Placeholder="Select skills...">
+                <BSInputMultiSelect T="string" 
+                                    Id="msSkillsStd" 
+                                    Class="mb-3" 
+                                    Label="Skills"                
+                                    InputType="InputType.Standard" 
+                                    @bind-Value="_model.Skills"
+                                    AllowSelectAll="true" 
+                                    SelectAllText="All Skills"
+                                    AllowFilter="true" 
+                                    Placeholder="Select skills...">
                     <BSMultiOption T="string" Value="@("CSharp")" Text="C#" />
                     <BSMultiOption T="string" Value="@("JavaScript")" Text="JavaScript" />
                     <BSMultiOption T="string" Value="@("TypeScript")" Text="TypeScript" />
@@ -267,10 +273,16 @@
             </div>
             <div class="col-lg-6">
                 <h6 class="text-body-secondary mb-2">InputGroup</h6>
-                <BSInputMultiSelect T="string" Id="msSkillsIG" Class="mb-3" Label="Skills"
-                                    InputType="InputType.InputGroup" @bind-Value="_model.Skills"
-                                    AllowSelectAll="true" SelectAllText="All Skills"
-                                    AllowFilter="true" Placeholder="Select skills...">
+                <BSInputMultiSelect T="string" 
+                                    Id="msSkillsIG" 
+                                    Class="mb-3" 
+                                    Label="Skills"
+                                    InputType="InputType.InputGroup" 
+                                    @bind-Value="_model.Skills"
+                                    AllowSelectAll="true" 
+                                    SelectAllText="All Skills"
+                                    AllowFilter="true" 
+                                    Placeholder="Select skills...">
                     <BSMultiOption T="string" Value="@("CSharp")" Text="C#" />
                     <BSMultiOption T="string" Value="@("JavaScript")" Text="JavaScript" />
                     <BSMultiOption T="string" Value="@("TypeScript")" Text="TypeScript" />

@@ -3,6 +3,71 @@
 @attribute [DiscoverCollocatedJS]
 @inject JSElementReferenceScope Refs
 
+@*
+Sample usage:
+<h4 class="mt-3">Skills</h4>
+
+<div class="mb-3">
+    <BSInputMultiSelect T="string"
+                        Id="msSkillsStd"
+                        Class="mb-3"
+                        Label="Skills"
+                        InputType="InputType.Standard"
+                        @bind-Value="_model.Skills"
+                        AllowSelectAll="true"
+                        SelectAllText="All Skills"
+                        AllowFilter="true"
+                        Placeholder="Select skills...">
+        <BSMultiOption T="string" Value="@("CSharp")" Text="C#" />
+        <BSMultiOption T="string" Value="@("JavaScript")" Text="JavaScript" />
+        <BSMultiOption T="string" Value="@("TypeScript")" Text="TypeScript" />
+        <BSMultiOption T="string" Value="@("Python")" Text="Python" />
+        <BSMultiOption T="string" Value="@("Blazor")" Text="Blazor" />
+        <BSMultiOption T="string" Value="@("SQL")" Text="SQL" />
+        <BSMultiOption T="string" Value="@("Azure")" Text="Azure" />
+        <BSMultiOption T="string" Value="@("Docker")" Text="Docker" />
+    </BSInputMultiSelect>
+</div>
+
+<div class="mb-3">
+    <BSInputMultiSelect T="string"
+                        Id="msSkillsIG"
+                        Class="mb-3"
+                        Label="Skills"
+                        InputType="InputType.InputGroup"
+                        @bind-Value="_model.Skills"
+                        AllowSelectAll="true"
+                        SelectAllText="All Skills"
+                        AllowFilter="true"
+                        Placeholder="Select skills...">
+        <BSMultiOption T="string" Value="@("CSharp")" Text="C#" />
+        <BSMultiOption T="string" Value="@("JavaScript")" Text="JavaScript" />
+        <BSMultiOption T="string" Value="@("TypeScript")" Text="TypeScript" />
+        <BSMultiOption T="string" Value="@("Python")" Text="Python" />
+        <BSMultiOption T="string" Value="@("Blazor")" Text="Blazor" />
+        <BSMultiOption T="string" Value="@("SQL")" Text="SQL" />
+        <BSMultiOption T="string" Value="@("Azure")" Text="Azure" />
+        <BSMultiOption T="string" Value="@("Docker")" Text="Docker" />
+    </BSInputMultiSelect>
+</div>
+
+<p>Selected: @(string.Join(", ", _selectedSkills ?? Enumerable.Empty<string>()))</p>
+
+@code {
+	private bool _isRequesting = false;
+
+private List<string> _selectedSkills = new();
+    private List<string> SelectedSkills
+    {
+        get => _selectedSkills;
+        set
+        {
+            _selectedSkills = value.ToList();
+        }
+    }
+}
+*@
+
 <CascadingValue Value="this">
     @if (InputType == InputType.Standard)
     {
