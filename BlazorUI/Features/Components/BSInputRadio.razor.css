@@ -1,5 +1,5 @@
 ﻿/* Ensure consistent padding for check inputs */
-.form-check-input {
+::deep .form-check-input {
     padding: 0;
 }
 
