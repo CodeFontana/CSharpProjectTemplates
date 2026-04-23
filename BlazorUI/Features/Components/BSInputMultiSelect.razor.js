@@ -1,9 +1,4 @@
-﻿// Global guards to avoid duplicate listeners if the script is included multiple times
-let __bsMs_onPointerDown;
-let __bsMs_onKeyDown;
-let __bsMs_observer;
-
-function isInsideMultiSelectDropdown(node) {
+﻿function isInsideMultiSelectDropdown(node) {
     const dropdown = node?.closest?.(".dropdown");
     if (!dropdown) return false;
 
@@ -63,34 +58,33 @@ function attachMultiSelectSizing(btn, optionsContainer, maxVisibleOptions) {
     optionsContainer.style.maxHeight = `${totalHeight}px`;
     optionsContainer.style.overflowY = "auto";
 
-    // Fix widths to prevent resizing during selections
+    // Only pin widths when we actually measured a visible toggle. Otherwise a
+    // hidden/collapsed ancestor could leave both the button and menu pinned to
+    // 0px, making the dropdown appear blank on subsequent opens.
     const initialWidth = btn.offsetWidth;
-    btn.style.width = `${initialWidth}px`;
-    menu.style.width = `${initialWidth}px`;
+    if (initialWidth > 0) {
+        btn.style.width = `${initialWidth}px`;
+        menu.style.width = `${initialWidth}px`;
+    }
 }
 
-export default class extends BlazorJSComponents.Component {
-    attach() {
-        // Capture to run before other handlers; pointerdown is more reliable than click
-        this._onPointerDown = (ev) => {
-            const target = ev.target;
-            if (!target) return;
+// Capture phase runs before other handlers; pointerdown is more reliable than click.
+document.addEventListener("pointerdown", (ev) => {
+    const target = ev.target;
+    if (!target) return;
 
-            if (isInsideMultiSelectDropdown(target)) return;
+    if (isInsideMultiSelectDropdown(target)) return;
 
-            setTimeout(closeAllMultiSelectDropdowns, 0);
-        };
+    setTimeout(closeAllMultiSelectDropdowns, 0);
+}, true);
 
-        this._onKeyDown = (ev) => {
-            if (ev.key === "Escape" || ev.key === "Esc") {
-                setTimeout(closeAllMultiSelectDropdowns, 0);
-            }
-        };
-
-        document.addEventListener("pointerdown", this._onPointerDown, true);
-        document.addEventListener("keydown", this._onKeyDown, true);
+document.addEventListener("keydown", (ev) => {
+    if (ev.key === "Escape" || ev.key === "Esc") {
+        setTimeout(closeAllMultiSelectDropdowns, 0);
     }
+}, true);
 
+export default class extends BlazorJSComponents.Component {
     setParameters(maxVisibleOptions, refs) {
         const { toggle, options } = refs ?? {};
         if (!toggle || !options) return;
@@ -103,18 +97,14 @@ export default class extends BlazorJSComponents.Component {
 
         this.setEventListener(toggle, "hidden.bs.dropdown", () => {
             toggle.style.width = "";
+
+            // Clear the menu width too so a later reopen re-measures against
+            // the current toggle width (which may have changed with selection).
+            const dropdown = toggle.closest(".dropdown");
+            const menu = dropdown?.querySelector(".dropdown-menu");
+            if (menu) {
+                menu.style.width = "";
+            }
         });
-    }
-
-    dispose() {
-        if (this._onPointerDown) {
-            document.removeEventListener("pointerdown", this._onPointerDown, true);
-            this._onPointerDown = null;
-        }
-
-        if (this._onKeyDown) {
-            document.removeEventListener("keydown", this._onKeyDown, true);
-            this._onKeyDown = null;
-        }
     }
 }
