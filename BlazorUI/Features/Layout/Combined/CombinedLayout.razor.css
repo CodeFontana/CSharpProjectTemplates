@@ -1,8 +1,4 @@
-﻿/* ============================================================================
-   CombinedLayout — top navbar + slide-out offcanvas sidebar (mobile).
-   ============================================================================ */
-
-/* Sidebar offcanvas surface inherits the theme via .app-sidebar (in the
+﻿/* Sidebar offcanvas surface inherits the theme via .app-sidebar (in the
    sidebar's scoped CSS); we just size it here. */
 .offcanvas {
     width: 18rem;

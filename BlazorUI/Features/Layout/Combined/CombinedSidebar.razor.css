@@ -1,11 +1,4 @@
-﻿/* ============================================================================
-   CombinedSidebar — slide-out offcanvas sidebar (mobile only).
-   ----------------------------------------------------------------------------
-   Theme-aware: light mode shows a soft tertiary surface, dark mode shows the
-   GitHub Dimmed canvas-inset; both pick up Bootstrap's CSS variables.
-   ============================================================================ */
-
-.app-sidebar {
+﻿.app-sidebar {
     background-color: var(--bs-tertiary-bg);
     height: 100vh;
     overflow-y: auto;
@@ -27,12 +20,16 @@
 
 ::deep .nav-link:hover,
 ::deep .nav-link:focus {
-    background-color: color-mix(in srgb, var(--bs-primary) 12%, transparent);
+    background-color: color-mix(in srgb, var(--bs-primary) 14%, transparent);
     color: var(--bs-emphasis-color);
 }
 
 ::deep .nav-link.active {
     color: var(--bs-primary);
-    background-color: color-mix(in srgb, var(--bs-primary) 14%, transparent);
+    background-color: color-mix(in srgb, var(--bs-primary) 22%, transparent);
     font-weight: 500;
+}
+
+[data-bs-theme="dark"] .app-sidebar ::deep .nav-link.active {
+    background-color: color-mix(in srgb, var(--bs-primary) 14%, transparent);
 }
