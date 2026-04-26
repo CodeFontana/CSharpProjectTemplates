@@ -1,0 +1,56 @@
+@attribute [DiscoverCollocatedJS]
+
+@*
+    A 3-state theme picker (Light / Dark / Auto) modeled on the Bootstrap docs
+    color-mode picker. Persists the choice to localStorage and respects the
+    user's OS preference when set to "auto".
+
+    Drop this component into any layout's chrome (navbar/sidebar/topbar) to
+    expose the theme switcher. The companion JS module wires up the dropdown
+    items, applies the resolved theme via [data-bs-theme] on <html>, and
+    keeps every ThemePicker on the page in sync.
+*@
+
+<div class="dropdown app-theme-picker @Class">
+    <button class="btn btn-link p-1 d-flex align-items-center gap-2 app-theme-picker-toggle"
+            type="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+            aria-label="Toggle theme">
+        <i class="bi bi-circle-half fs-5" data-theme-icon></i>
+        @if (ShowLabel)
+        {
+            <span class="d-none d-lg-inline" data-theme-label>Auto</span>
+        }
+    </button>
+    <ul class="dropdown-menu dropdown-menu-end shadow-sm">
+        <li>
+            <button type="button" class="dropdown-item d-flex align-items-center gap-2" data-bs-theme-value="light">
+                <i class="bi bi-sun-fill"></i> Light
+                <i class="bi bi-check-lg ms-auto opacity-0" data-theme-active></i>
+            </button>
+        </li>
+        <li>
+            <button type="button" class="dropdown-item d-flex align-items-center gap-2" data-bs-theme-value="dark">
+                <i class="bi bi-moon-stars-fill"></i> Dark
+                <i class="bi bi-check-lg ms-auto opacity-0" data-theme-active></i>
+            </button>
+        </li>
+        <li>
+            <button type="button" class="dropdown-item d-flex align-items-center gap-2" data-bs-theme-value="auto">
+                <i class="bi bi-circle-half"></i> Auto
+                <i class="bi bi-check-lg ms-auto" data-theme-active></i>
+            </button>
+        </li>
+    </ul>
+</div>
+
+<JS For="this" Key="ThemePicker" />
+
+@code {
+    [Parameter]
+    public string Class { get; set; } = string.Empty;
+
+    [Parameter]
+    public bool ShowLabel { get; set; } = true;
+}

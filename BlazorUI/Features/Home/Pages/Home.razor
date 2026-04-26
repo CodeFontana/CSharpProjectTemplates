@@ -2,6 +2,67 @@
 
 <PageTitle>Home - BlazorUI</PageTitle>
 
-<h1>Hello, world!</h1>
+<div class="home-hero py-5">
+    <div class="d-inline-flex align-items-center gap-2 mb-3 home-eyebrow">
+        <i class="bi bi-stars"></i>
+        <span class="text-uppercase small fw-semibold">Blazor &mdash; .NET 10 Template</span>
+    </div>
+    <h1 class="display-5 fw-bold mb-3">A sharper start for your Blazor UI.</h1>
+    <p class="lead text-secondary mb-4 home-lead">
+        Built on Bootstrap 5.3 with a refreshed Flatly theme, a soft GitHub-style dark mode,
+        Inter and JetBrains Mono typography, and a 3-state theme picker baked in.
+    </p>
+    <div class="d-flex flex-wrap gap-2">
+        <a href="theme-demo" class="btn btn-primary">
+            <i class="bi bi-palette pe-1"></i> Explore the theme
+        </a>
+        <a href="form-demo" class="btn btn-outline-secondary">
+            <i class="bi bi-input-cursor-text pe-1"></i> Form components
+        </a>
+    </div>
+</div>
 
-Welcome to your new app.
+<div class="row g-3 g-md-4 mb-5">
+    <div class="col-md-4">
+        <div class="card h-100 home-feature-card">
+            <div class="card-body">
+                <div class="home-feature-icon mb-3">
+                    <i class="bi bi-palette-fill"></i>
+                </div>
+                <h5 class="card-title">Refined theme</h5>
+                <p class="card-text text-secondary mb-0">
+                    Slate-blue Flatly identity in light mode, GitHub Dimmed surfaces in dark mode.
+                    Every component &mdash; cards, forms, tables &mdash; flows through Bootstrap's CSS variables.
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100 home-feature-card">
+            <div class="card-body">
+                <div class="home-feature-icon mb-3">
+                    <i class="bi bi-layout-sidebar-inset"></i>
+                </div>
+                <h5 class="card-title">Polished layout</h5>
+                <p class="card-text text-secondary mb-0">
+                    Three composable layouts (combined, navbar-only, sidebar) with theme-aware chrome,
+                    a no-flash theme bootstrap script, and a reusable Light/Dark/Auto picker.
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100 home-feature-card">
+            <div class="card-body">
+                <div class="home-feature-icon mb-3">
+                    <i class="bi bi-rocket-takeoff-fill"></i>
+                </div>
+                <h5 class="card-title">Production ready</h5>
+                <p class="card-text text-secondary mb-0">
+                    Server-side render with interactive components, response compression, antiforgery,
+                    and BlazorJSComponents wired in &mdash; ready to grow into a real app.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

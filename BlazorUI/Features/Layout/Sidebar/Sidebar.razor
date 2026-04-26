@@ -1,8 +1,8 @@
 ﻿<div class="@Class">
-    <nav class="d-flex flex-column px-2 py-2">
-        <a class="navbar-brand" href="#">
-            <img src="img/Blazor.png" width="30" height="30" class="mx-2" />
-            Blazor App
+    <nav class="d-flex flex-column px-2 py-3 app-sidebar">
+        <a class="navbar-brand d-flex align-items-center gap-2 px-2 mb-2" href="#">
+            <img src="img/Blazor.png" width="28" height="28" alt="Blazor" />
+            <span class="fw-semibold">Blazor App</span>
         </a>
 
         <NavLink class="nav-link" Match="NavLinkMatch.All" href="">
@@ -57,8 +57,9 @@
             <i class="bi bi-input-cursor-text h5 pe-2"></i>
             Form Demo
         </NavLink>
-        <div class="mt-auto d-flex justify-content-center">
-            <i class="theme-switch mx-2 text-light fs-4 bi bi-sun-fill"></i>
+
+        <div class="mt-auto pt-3 d-flex justify-content-center">
+            <ThemePicker />
         </div>
     </nav>
 </div>

@@ -3,7 +3,7 @@
 <PageTitle>Theme Demo - BlazorUI</PageTitle>
 
 <h1 class="mb-4">Bootstrap Theme Demo</h1>
-<p class="lead">A showcase of the Bootswatch Flatly theme built on Bootstrap 5.3.</p>
+<p class="lead">A showcase of the modernized Flatly theme on Bootstrap 5.3 &mdash; with a GitHub Dimmed soft dark mode and Inter / JetBrains&nbsp;Mono typography.</p>
 
 <hr class="my-4" />
 
@@ -22,7 +22,10 @@
         <div class="col-md-6">
             <h5>Display Headings</h5>
             <p class="display-1">Display 1</p>
+            <p class="display-2">Display 2</p>
+            <p class="display-3">Display 3</p>
             <p class="display-4">Display 4</p>
+            <p class="display-5">Display 5</p>
             <p class="display-6">Display 6</p>
         </div>
     </div>
@@ -50,46 +53,14 @@
 <section class="mb-5">
     <h2 class="border-bottom pb-2 mb-3">Theme Colors</h2>
     <div class="row g-3">
-        <div class="col-6 col-md-3">
-            <div class="p-3 rounded text-white bg-primary">
-                <strong>Primary</strong>
-            </div>
-        </div>
-        <div class="col-6 col-md-3">
-            <div class="p-3 rounded text-white bg-secondary">
-                <strong>Secondary</strong>
-            </div>
-        </div>
-        <div class="col-6 col-md-3">
-            <div class="p-3 rounded text-white bg-success">
-                <strong>Success</strong>
-            </div>
-        </div>
-        <div class="col-6 col-md-3">
-            <div class="p-3 rounded text-white bg-danger">
-                <strong>Danger</strong>
-            </div>
-        </div>
-        <div class="col-6 col-md-3">
-            <div class="p-3 rounded text-dark bg-warning">
-                <strong>Warning</strong>
-            </div>
-        </div>
-        <div class="col-6 col-md-3">
-            <div class="p-3 rounded text-white bg-info">
-                <strong>Info</strong>
-            </div>
-        </div>
-        <div class="col-6 col-md-3">
-            <div class="p-3 rounded text-dark bg-light border">
-                <strong>Light</strong>
-            </div>
-        </div>
-        <div class="col-6 col-md-3">
-            <div class="p-3 rounded text-white bg-dark">
-                <strong>Dark</strong>
-            </div>
-        </div>
+        <div class="col-6 col-md-3"><div class="p-3 rounded text-bg-primary"><strong>Primary</strong></div></div>
+        <div class="col-6 col-md-3"><div class="p-3 rounded text-bg-secondary"><strong>Secondary</strong></div></div>
+        <div class="col-6 col-md-3"><div class="p-3 rounded text-bg-success"><strong>Success</strong></div></div>
+        <div class="col-6 col-md-3"><div class="p-3 rounded text-bg-danger"><strong>Danger</strong></div></div>
+        <div class="col-6 col-md-3"><div class="p-3 rounded text-bg-warning"><strong>Warning</strong></div></div>
+        <div class="col-6 col-md-3"><div class="p-3 rounded text-bg-info"><strong>Info</strong></div></div>
+        <div class="col-6 col-md-3"><div class="p-3 rounded text-bg-light border"><strong>Light</strong></div></div>
+        <div class="col-6 col-md-3"><div class="p-3 rounded text-bg-dark"><strong>Dark</strong></div></div>
     </div>
 
     <h5 class="mt-4">Text Colors</h5>
@@ -150,23 +121,23 @@
 <section class="mb-5">
     <h2 class="border-bottom pb-2 mb-3">Badges</h2>
     <div class="d-flex flex-wrap gap-2 mb-3">
-        <span class="badge bg-primary">Primary</span>
-        <span class="badge bg-secondary">Secondary</span>
-        <span class="badge bg-success">Success</span>
-        <span class="badge bg-danger">Danger</span>
-        <span class="badge bg-warning text-dark">Warning</span>
-        <span class="badge bg-info">Info</span>
-        <span class="badge bg-light text-dark">Light</span>
-        <span class="badge bg-dark">Dark</span>
+        <span class="badge text-bg-primary">Primary</span>
+        <span class="badge text-bg-secondary">Secondary</span>
+        <span class="badge text-bg-success">Success</span>
+        <span class="badge text-bg-danger">Danger</span>
+        <span class="badge text-bg-warning">Warning</span>
+        <span class="badge text-bg-info">Info</span>
+        <span class="badge text-bg-light">Light</span>
+        <span class="badge text-bg-dark">Dark</span>
     </div>
     <h5>Pill Badges</h5>
     <div class="d-flex flex-wrap gap-2">
-        <span class="badge rounded-pill bg-primary">Primary</span>
-        <span class="badge rounded-pill bg-secondary">Secondary</span>
-        <span class="badge rounded-pill bg-success">Success</span>
-        <span class="badge rounded-pill bg-danger">Danger</span>
-        <span class="badge rounded-pill bg-warning text-dark">Warning</span>
-        <span class="badge rounded-pill bg-info">Info</span>
+        <span class="badge rounded-pill text-bg-primary">Primary</span>
+        <span class="badge rounded-pill text-bg-secondary">Secondary</span>
+        <span class="badge rounded-pill text-bg-success">Success</span>
+        <span class="badge rounded-pill text-bg-danger">Danger</span>
+        <span class="badge rounded-pill text-bg-warning">Warning</span>
+        <span class="badge rounded-pill text-bg-info">Info</span>
     </div>
 </section>
 
@@ -209,7 +180,7 @@
             </div>
         </div>
         <div class="col-md-4">
-            <div class="card text-white bg-primary">
+            <div class="card text-bg-primary">
                 <div class="card-header">Primary</div>
                 <div class="card-body">
                     <h5 class="card-title">Primary Card</h5>
@@ -218,7 +189,7 @@
             </div>
         </div>
         <div class="col-md-4">
-            <div class="card text-white bg-success">
+            <div class="card text-bg-success">
                 <div class="card-header">Success</div>
                 <div class="card-body">
                     <h5 class="card-title">Success Card</h5>
@@ -259,15 +230,15 @@
             <ul class="list-group">
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     Inbox
-                    <span class="badge bg-primary rounded-pill">14</span>
+                    <span class="badge text-bg-primary rounded-pill">14</span>
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     Drafts
-                    <span class="badge bg-primary rounded-pill">2</span>
+                    <span class="badge text-bg-primary rounded-pill">2</span>
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     Sent
-                    <span class="badge bg-primary rounded-pill">1</span>
+                    <span class="badge text-bg-primary rounded-pill">1</span>
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center active">
                     Active Item
@@ -307,31 +278,31 @@
                     <td>1</td>
                     <td>Alice Johnson</td>
                     <td>Engineer</td>
-                    <td><span class="badge bg-success">Active</span></td>
+                    <td><span class="badge text-bg-success">Active</span></td>
                 </tr>
                 <tr>
                     <td>2</td>
                     <td>Bob Smith</td>
                     <td>Designer</td>
-                    <td><span class="badge bg-warning text-dark">Away</span></td>
+                    <td><span class="badge text-bg-warning">Away</span></td>
                 </tr>
                 <tr>
                     <td>3</td>
                     <td>Carol Williams</td>
                     <td>Manager</td>
-                    <td><span class="badge bg-success">Active</span></td>
+                    <td><span class="badge text-bg-success">Active</span></td>
                 </tr>
                 <tr class="table-danger">
                     <td>4</td>
                     <td>Dave Brown</td>
                     <td>Analyst</td>
-                    <td><span class="badge bg-danger">Offline</span></td>
+                    <td><span class="badge text-bg-danger">Offline</span></td>
                 </tr>
                 <tr>
                     <td>5</td>
                     <td>Eve Davis</td>
                     <td>Developer</td>
-                    <td><span class="badge bg-info">Busy</span></td>
+                    <td><span class="badge text-bg-info">Busy</span></td>
                 </tr>
             </tbody>
         </table>
@@ -509,10 +480,10 @@
             </div>
             <h5>Rounded Utilities</h5>
             <div class="d-flex gap-3 align-items-center">
-                <span class="border bg-primary p-3 rounded text-white">rounded</span>
-                <span class="border bg-success p-3 rounded-pill text-white">pill</span>
-                <span class="border bg-info p-3 rounded-circle text-white">circ</span>
-                <span class="border bg-warning p-3 rounded-0">sharp</span>
+                <span class="border p-3 rounded text-bg-primary">rounded</span>
+                <span class="border p-3 rounded-pill text-bg-success">pill</span>
+                <span class="border p-3 rounded-circle text-bg-info">circ</span>
+                <span class="border p-3 rounded-0 text-bg-warning">sharp</span>
             </div>
         </div>
     </div>

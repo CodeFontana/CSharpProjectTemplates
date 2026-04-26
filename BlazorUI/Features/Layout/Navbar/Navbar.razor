@@ -1,14 +1,12 @@
-﻿@attribute [DiscoverCollocatedJS]
-
-<nav class="navbar navbar-dark navbar-expand-md d-flex fixed-top">
+﻿<nav class="navbar navbar-expand-md d-flex fixed-top app-chrome shadow-sm">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">
-            <img src="img/Blazor.png" width="30" height="30" class="mx-2" />
-            Blazor
+        <a class="navbar-brand d-flex align-items-center gap-2" href="#">
+            <img src="img/Blazor.png" width="28" height="28" alt="Blazor" />
+            <span class="fw-semibold">Blazor</span>
         </a>
 
-        <div class="d-flex align-items-center">
-            <i class="theme-switch d-md-none mx-2 text-light fs-4 bi bi-sun-fill"></i>
+        <div class="d-flex align-items-center order-md-last">
+            <ThemePicker Class="me-2" />
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -23,19 +21,19 @@
                     <NavLink class="@($"nav-link dropdown-toggle")" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Counters
                     </NavLink>
-                    <ul class="dropdown-menu bg-dark">
+                    <ul class="dropdown-menu shadow-sm">
                         <li>
-                            <NavLink class="nav-link" Match="NavLinkMatch.All" href="counter">
+                            <NavLink class="dropdown-item" Match="NavLinkMatch.All" href="counter">
                                 Static Counter
                             </NavLink>
                         </li>
                         <li>
-                            <NavLink class="nav-link" Match="NavLinkMatch.Prefix" href="counter/interactive">
+                            <NavLink class="dropdown-item" Match="NavLinkMatch.Prefix" href="counter/interactive">
                                 Interactive Counter
                             </NavLink>
                         </li>
                         <li>
-                            <NavLink class="nav-link" Match="NavLinkMatch.Prefix" href="counter/js">
+                            <NavLink class="dropdown-item" Match="NavLinkMatch.Prefix" href="counter/js">
                                 Javascript Counter
                             </NavLink>
                         </li>
@@ -45,25 +43,25 @@
                     <NavLink class="@($"nav-link dropdown-toggle")" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Lifecycle Demos
                     </NavLink>
-                    <ul class="dropdown-menu bg-dark">
+                    <ul class="dropdown-menu shadow-sm">
                         <li>
-                            <NavLink class="nav-link" Match="NavLinkMatch.All" href="LifecycleDemo">
+                            <NavLink class="dropdown-item" Match="NavLinkMatch.All" href="LifecycleDemo">
                                 Static Lifecycle
                             </NavLink>
                         </li>
                         <li>
-                            <NavLink class="nav-link" Match="NavLinkMatch.All" href="LifecycleDemoAsync">
-                                Static Lifecycle v/Async
+                            <NavLink class="dropdown-item" Match="NavLinkMatch.All" href="LifecycleDemoAsync">
+                                Static Lifecycle w/Async
                             </NavLink>
                         </li>
                         <li>
-                            <NavLink class="nav-link" Match="NavLinkMatch.All" href="LifecycleDemo/interactive">
+                            <NavLink class="dropdown-item" Match="NavLinkMatch.All" href="LifecycleDemo/interactive">
                                 Interactive Lifecycle
                             </NavLink>
                         </li>
                         <li>
-                            <NavLink class="nav-link" Match="NavLinkMatch.All" href="LifecycleDemoAsync/interactive">
-                                Interactive Lifecycle v/Async
+                            <NavLink class="dropdown-item" Match="NavLinkMatch.All" href="LifecycleDemoAsync/interactive">
+                                Interactive Lifecycle w/Async
                             </NavLink>
                         </li>
                     </ul>
@@ -81,14 +79,14 @@
                     <NavLink class="@($"nav-link dropdown-toggle")" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Demos
                     </NavLink>
-                    <ul class="dropdown-menu bg-dark">
+                    <ul class="dropdown-menu shadow-sm">
                         <li>
-                            <NavLink class="nav-link" Match="NavLinkMatch.All" href="theme-demo">
+                            <NavLink class="dropdown-item" Match="NavLinkMatch.All" href="theme-demo">
                                 Theme Demo
                             </NavLink>
                         </li>
                         <li>
-                            <NavLink class="nav-link" Match="NavLinkMatch.All" href="form-demo">
+                            <NavLink class="dropdown-item" Match="NavLinkMatch.All" href="form-demo">
                                 Form Demo
                             </NavLink>
                         </li>
@@ -96,9 +94,5 @@
                 </li>
             </ul>
         </div>
-
-        <i class="theme-switch d-none d-md-inline mx-2 text-light fs-4 bi bi-sun-fill"></i>
     </div>
 </nav>
-
-<JS For="this" Key="Navbar" />

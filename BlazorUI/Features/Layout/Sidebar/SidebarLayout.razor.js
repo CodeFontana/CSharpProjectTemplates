@@ -1,16 +1,8 @@
-function setTheme(theme) {
-    document.documentElement.setAttribute("data-bs-theme", theme);
-    localStorage.setItem("theme", theme);
-
-    const themeSwitches = document.querySelectorAll(".theme-switch");
-    themeSwitches.forEach(switchElement => {
-        if (theme === "light") {
-            switchElement.classList.replace("bi-sun-fill", "bi-moon-stars");
-        } else {
-            switchElement.classList.replace("bi-moon-stars", "bi-sun-fill");
-        }
-    });
-}
+// =============================================================================
+//  SidebarLayout — re-initializes Bootstrap offcanvas after each render.
+// =============================================================================
+//  Theme handling lives in ThemePicker.razor.js.
+// =============================================================================
 
 function reinitializeOffcanvas() {
     const offcanvasElementList = Array.from(document.querySelectorAll(".offcanvas"));
@@ -20,29 +12,12 @@ function reinitializeOffcanvas() {
         if (existingInstance) {
             existingInstance.dispose();
         }
-
         new bootstrap.Offcanvas(offcanvasEl);
     });
 }
 
 export default class extends BlazorJSComponents.Component {
     setParameters() {
-        // Ensure theme is applied
-        const theme = localStorage.getItem("theme") || "light";
-        setTheme(theme);
-
-        // Reinitialize offcanvas components
         reinitializeOffcanvas();
-
-        // Add click listeners to theme switches
-        const themeSwitches = document.querySelectorAll(".theme-switch");
-        themeSwitches.forEach(switchElement => {
-            this.setEventListener(switchElement, "click", () => {
-                const currentTheme = localStorage.getItem("theme") || "light";
-                const newTheme = currentTheme === "light" ? "dark" : "light";
-                setTheme(newTheme);
-            });
-        });
     }
 }
-
