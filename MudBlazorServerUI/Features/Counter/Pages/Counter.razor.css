@@ -1,0 +1,19 @@
+::deep .counter-page {
+    max-width: 720px;
+}
+
+::deep .counter-heading {
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+::deep .counter-card {
+    border-radius: 14px;
+}
+
+::deep .counter-value {
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+}

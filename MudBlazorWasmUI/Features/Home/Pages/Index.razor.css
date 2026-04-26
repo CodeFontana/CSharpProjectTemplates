@@ -1,0 +1,33 @@
+::deep .home-hero {
+    background:
+        radial-gradient(circle at 0% 0%,
+            color-mix(in srgb, var(--mud-palette-primary) 18%, transparent),
+            transparent 55%),
+        radial-gradient(circle at 100% 100%,
+            color-mix(in srgb, var(--mud-palette-secondary) 14%, transparent),
+            transparent 50%),
+        var(--mud-palette-surface);
+}
+
+::deep .home-hero-content {
+    max-width: 780px;
+}
+
+::deep .home-hero-headline {
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    line-height: 1.05;
+}
+
+::deep .home-hero-accent {
+    --bg-clip: text;
+    background: linear-gradient(90deg, var(--mud-palette-primary), var(--mud-palette-secondary));
+    -webkit-background-clip: var(--bg-clip);
+    background-clip: var(--bg-clip);
+    color: transparent;
+}
+
+::deep .home-hero-lead {
+    color: var(--mud-palette-text-secondary);
+    max-width: 640px;
+}

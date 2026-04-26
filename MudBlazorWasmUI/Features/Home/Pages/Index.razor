@@ -1,49 +1,111 @@
 ﻿@page "/"
 @inject NavigationManager NavManager
 
-<PageTitle>Blazor Client -- Home</PageTitle>
+<PageTitle>Blazor Client - Home</PageTitle>
 
-<section>
-    <MudContainer MaxWidth="MaxWidth.False">
-        <MudGrid Justify="Justify.Center">
+<MudStack Spacing="6">
 
-            <MudItem xs="12" Class="d-flex flex-column align-center">
-                <MudText Typo="Typo.h3" Style="white-space: nowrap;">Hello, world!</MudText>
-                <MudText Typo="Typo.h6" Style="white-space: nowrap;">Welcome to your new app.</MudText>
-            </MudItem>
+    <MudPaper Elevation="0" Class="app-hero home-hero pa-8">
 
-            <AuthorizeView Context="AuthContext">
+        <MudStack Spacing="3" Class="home-hero-content">
 
+            <MudText Typo="Typo.h2" Class="home-hero-headline">
+                A modern Blazor WASM
+                <span class="home-hero-accent">starting kit.</span>
+            </MudText>
+
+            <MudText Typo="Typo.body1" Class="home-hero-lead">
+                JWT auth, MudBlazor, a refined dark/light theme, and a clean feature-folder
+                structure &mdash; ready for you to drop in your domain and ship.
+            </MudText>
+
+            <AuthorizeView Context="HeroAuth">
                 <NotAuthorized>
-                    <MudItem xs="5">
-                        <MudDivider DividerType="DividerType.Middle" Style="height: 2px;" />
-                    </MudItem>
-
-                    <MudItem xs="12" Class="d-flex justify-center">
-                        <MudButton Class="mx-2"
-                                   Variant="Variant.Filled"
+                    <MudStack Row="true" Spacing="2" Class="mt-2">
+                        <MudButton Variant="Variant.Filled"
                                    Color="Color.Primary"
-                                   @onclick="OnLogin"
-                                   StartIcon="@Icons.Material.Filled.Login"
-                                   Size="Size.Medium">
-                            Login
+                                   Size="Size.Large"
+                                   StartIcon="@Icons.Material.Rounded.Login"
+                                   OnClick="OnLogin">
+                            Sign in
                         </MudButton>
-                        <MudButton Class="mx-2"
-                                   Variant="Variant.Filled"
-                                   Color="Color.Tertiary"
-                                   @onclick="OnRegister"
-                                   StartIcon="@Icons.Material.Filled.EditNote"
-                                   Size="Size.Medium">
-                            Register
+                        <MudButton Variant="Variant.Outlined"
+                                   Color="Color.Default"
+                                   Size="Size.Large"
+                                   StartIcon="@Icons.Material.Rounded.PersonAdd"
+                                   OnClick="OnRegister">
+                            Create account
                         </MudButton>
-                    </MudItem>
+                    </MudStack>
                 </NotAuthorized>
-
+                <Authorized>
+                    <MudStack Row="true" Spacing="2" Class="mt-2">
+                        <MudButton Variant="Variant.Filled"
+                                   Color="Color.Primary"
+                                   Size="Size.Large"
+                                   Href="/counter"
+                                   EndIcon="@Icons.Material.Rounded.ArrowForward">
+                            Try the demo
+                        </MudButton>
+                        <MudButton Variant="Variant.Outlined"
+                                   Color="Color.Default"
+                                   Size="Size.Large"
+                                   Href="https://mudblazor.com/"
+                                   Target="_blank"
+                                   StartIcon="@Icons.Material.Rounded.MenuBook">
+                            Documentation
+                        </MudButton>
+                    </MudStack>
+                </Authorized>
             </AuthorizeView>
+        </MudStack>
+    </MudPaper>
 
-        </MudGrid>
-    </MudContainer>
-</section>
+    <MudGrid Spacing="4">
+        <MudItem xs="12" sm="6" md="4" Class="d-flex">
+            <MudPaper Elevation="0" Class="app-card pa-5">
+                <MudStack Spacing="2" Class="flex-grow-1">
+                    <MudAvatar Color="Color.Primary" Variant="Variant.Outlined" Size="Size.Medium">
+                        <MudIcon Icon="@Icons.Material.Rounded.Lock" Size="Size.Small" />
+                    </MudAvatar>
+                    <MudText Typo="Typo.h6">JWT authentication</MudText>
+                    <MudText Typo="Typo.body2" Style="color: var(--mud-palette-text-secondary);">
+                        Token-based auth with a custom AuthenticationStateProvider, login &amp; registration flows wired up.
+                    </MudText>
+                </MudStack>
+            </MudPaper>
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" Class="d-flex">
+            <MudPaper Elevation="0" Class="app-card pa-5">
+                <MudStack Spacing="2" Class="flex-grow-1">
+                    <MudAvatar Color="Color.Secondary" Variant="Variant.Outlined" Size="Size.Medium">
+                        <MudIcon Icon="@Icons.Material.Rounded.Palette" Size="Size.Small" />
+                    </MudAvatar>
+                    <MudText Typo="Typo.h6">Refined theme</MudText>
+                    <MudText Typo="Typo.body2" Style="color: var(--mud-palette-text-secondary);">
+                        A curated indigo + slate palette with carefully tuned contrast for both light and dark modes.
+                    </MudText>
+                </MudStack>
+            </MudPaper>
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="4" Class="d-flex">
+            <MudPaper Elevation="0" Class="app-card pa-5">
+                <MudStack Spacing="2" Class="flex-grow-1">
+                    <MudAvatar Color="Color.Tertiary" Variant="Variant.Outlined" Size="Size.Medium">
+                        <MudIcon Icon="@Icons.Material.Rounded.SpaceDashboard" Size="Size.Small" />
+                    </MudAvatar>
+                    <MudText Typo="Typo.h6">Polished layout</MudText>
+                    <MudText Typo="Typo.body2" Style="color: var(--mud-palette-text-secondary);">
+                        Flat top bar, sectioned sidebar, and proper typography rhythm built on Inter.
+                    </MudText>
+                </MudStack>
+            </MudPaper>
+        </MudItem>
+    </MudGrid>
+
+</MudStack>
 
 @code {
     private void OnLogin()

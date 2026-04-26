@@ -1,62 +1,118 @@
 ﻿@inherits LayoutComponentBase
+@using MudBlazorServerUI.Features.Theme
 @inject NavigationManager NavMan
 @inject ILocalStorageService LocalStorage
 @inject IWebHostEnvironment WebHostEnv
 
-<MudThemeProvider Theme="_theme" @bind-IsDarkMode="@_isDarkMode" />
+<MudThemeProvider Theme="AppTheme.Default" @bind-IsDarkMode="@_isDarkMode" />
 <MudPopoverProvider />
 <MudDialogProvider />
 <MudSnackbarProvider />
 
 <MudLayout>
-    <MudAppBar Elevation="5" Dense="true">
+    <MudAppBar Elevation="0"
+               Dense="true"
+               Color="Color.Surface"
+               Style="border-bottom: 1px solid var(--mud-palette-divider);">
 
-        @if (_drawerOpen == false)
-        {
-            <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="() => _drawerOpen = !_drawerOpen" />
-            <MudText Typo="Typo.h6" Style="white-space: nowrap">Blazor Server</MudText>
-        }
+        <MudIconButton Icon="@Icons.Material.Rounded.Menu"
+                       Color="Color.Default"
+                       Edge="Edge.Start"
+                       OnClick="@ToggleDrawer" />
+
+        <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="2" Class="ml-1">
+            <MudIcon Icon="@Icons.Material.Rounded.Bolt" Color="Color.Primary" Size="Size.Medium" />
+            <MudText Typo="Typo.subtitle1" Style="font-weight:600; letter-spacing:-0.01em; white-space:nowrap;">
+                Blazor Server
+            </MudText>
+            <MudChip T="string"
+                     Size="Size.Small"
+                     Variant="Variant.Outlined"
+                     Color="Color.Primary"
+                     Class="ml-1 d-none d-sm-flex">
+                Preview
+            </MudChip>
+        </MudStack>
 
         <MudSpacer />
 
-        @if (_isDarkMode == false)
-        {
-            <MudButton OnClick="@((e) => ToggleThemeAsync())" Style="color: white;"><MudIcon Icon="@Icons.Material.Filled.DarkMode"></MudIcon></MudButton>
-        }
-        else
-        {
-            <MudButton OnClick="@((e) => ToggleThemeAsync())" Style="color: white;"><MudIcon Icon="@Icons.Material.Filled.LightMode"></MudIcon></MudButton>
-        }
+        <MudTooltip Text="@_themeTooltip" Arrow="true" Placement="Placement.Bottom">
+            <MudIconButton Icon="@_themeIcon"
+                           Color="Color.Default"
+                           OnClick="ToggleThemeAsync" />
+        </MudTooltip>
 
     </MudAppBar>
 
-    <MudDrawer @bind-Open="_drawerOpen" Elevation="5" Variant="DrawerVariant.Responsive" Color="Color.Dark">
-        <MudDrawerHeader Class="d-flex align-center pt-0">
-            <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="() => _drawerOpen = !_drawerOpen" />
-            <MudText Typo="Typo.h6" Style="white-space: nowrap">Blazor Server</MudText>
+    <MudDrawer @bind-Open="_drawerOpen"
+               Elevation="0"
+               Variant="DrawerVariant.Responsive"
+               ClipMode="DrawerClipMode.Never"
+               Class="app-drawer">
+
+        <MudDrawerHeader Class="d-flex align-center app-drawer-header"
+                         Style="padding: 1.25rem 1.25rem 1rem;">
+            <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="2">
+                <MudAvatar Color="Color.Primary" Size="Size.Small" Variant="Variant.Filled">
+                    <MudIcon Icon="@Icons.Material.Rounded.Bolt" Size="Size.Small" />
+                </MudAvatar>
+                <MudStack Spacing="0">
+                    <MudText Typo="Typo.subtitle2" Style="color: var(--mud-palette-drawer-text); font-weight:600;">
+                        Blazor Server
+                    </MudText>
+                    <MudText Typo="Typo.caption" Style="color: var(--mud-palette-drawer-icon);">
+                        @_environmentLabel
+                    </MudText>
+                </MudStack>
+            </MudStack>
         </MudDrawerHeader>
-        <MudDrawerContainer>
 
-            <MudNavLink Href="/" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home" IconColor="Color.Surface">
-                <MudText Typo="Typo.body1">Home</MudText>
-            </MudNavLink>
+        <MudDivider Class="mx-4 app-drawer-divider" />
 
-            <MudNavLink Href="/counter" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Add" IconColor="Color.Surface">
-                <MudText Typo="Typo.body1">Counter</MudText>
-            </MudNavLink>
+        <div class="app-drawer-nav">
+            <MudText Typo="Typo.overline"
+                     Class="px-6 pt-4 pb-2"
+                     Style="color: var(--mud-palette-drawer-icon); letter-spacing:0.12em;">
+                Navigation
+            </MudText>
+
+            <MudNavMenu Class="px-2">
+                <MudNavLink Href="/"
+                            Match="NavLinkMatch.All"
+                            Icon="@Icons.Material.Rounded.Home"
+                            IconColor="Color.Inherit">
+                    Home
+                </MudNavLink>
+                <MudNavLink Href="/counter"
+                            Match="NavLinkMatch.All"
+                            Icon="@Icons.Material.Rounded.Add"
+                            IconColor="Color.Inherit">
+                    Counter
+                </MudNavLink>
+            </MudNavMenu>
 
             @if (WebHostEnv.IsDevelopment())
             {
-                <MudNavLink Href="/theme" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Palette" IconColor="Color.Surface">
-                    <MudText Typo="Typo.body1">Themes</MudText>
-                </MudNavLink>
+                <MudText Typo="Typo.overline"
+                         Class="px-6 pt-4 pb-2"
+                         Style="color: var(--mud-palette-drawer-icon); letter-spacing:0.12em;">
+                    Developer
+                </MudText>
+                <MudNavMenu Class="px-2">
+                    <MudNavLink Href="/theme"
+                                Match="NavLinkMatch.All"
+                                Icon="@Icons.Material.Rounded.Palette"
+                                IconColor="Color.Inherit">
+                        Theme
+                    </MudNavLink>
+                </MudNavMenu>
             }
+        </div>
 
-        </MudDrawerContainer>
     </MudDrawer>
 
     <MudMainContent>
-        <MudContainer MaxWidth="MaxWidth.False" Class="pt-4 px-0">
+        <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="py-6 px-4 px-sm-6">
             @Body
         </MudContainer>
     </MudMainContent>
@@ -64,11 +120,21 @@
 
 @code {
     [CascadingParameter]
-    HttpContext? HttpContext { get; set; }
+    private HttpContext? HttpContext { get; set; }
 
-    private MudTheme _theme = new();
     private bool _isDarkMode;
     private bool _drawerOpen = true;
+
+    private string _themeIcon => _isDarkMode
+        ? Icons.Material.Rounded.LightMode
+        : Icons.Material.Rounded.DarkMode;
+
+    private string _themeTooltip => _isDarkMode
+        ? "Switch to light mode"
+        : "Switch to dark mode";
+
+    private string _environmentLabel =>
+        WebHostEnv.IsDevelopment() ? "Development" : "Production";
 
     protected override async Task OnInitializedAsync()
     {
@@ -76,29 +142,19 @@
         {
             string? theme = await LocalStorage.GetItemAsync<string>("Theme");
 
-            if (string.IsNullOrWhiteSpace(theme)
-                || string.Equals(theme, "Light", System.StringComparison.InvariantCultureIgnoreCase))
-            {
-                _isDarkMode = false;
-            }
-            else
-            {
-                _isDarkMode = true;
-            }
+            _isDarkMode = !string.IsNullOrWhiteSpace(theme)
+                && string.Equals(theme, "Dark", StringComparison.InvariantCultureIgnoreCase);
         }
+    }
+
+    private void ToggleDrawer()
+    {
+        _drawerOpen = !_drawerOpen;
     }
 
     private async Task ToggleThemeAsync()
     {
-        if (_isDarkMode == false)
-        {
-            _isDarkMode = true;
-            await LocalStorage.SetItemAsync("Theme", "Dark");
-        }
-        else
-        {
-            _isDarkMode = false;
-            await LocalStorage.SetItemAsync("Theme", "Light");
-        }
+        _isDarkMode = !_isDarkMode;
+        await LocalStorage.SetItemAsync("Theme", _isDarkMode ? "Dark" : "Light");
     }
 }
