@@ -109,8 +109,8 @@ public static class AppTheme
         TableStriped = "#F8FAFC",
         TableHover = "#F1F5F9",
 
-        Divider = "#E2E8F0",
-        DividerLight = "#F1F5F9",
+        Divider = "#94A3B8",
+        DividerLight = "#CBD5E1",
 
         GrayDefault = "#64748B",
         GrayLight = "#94A3B8",
