@@ -5,10 +5,11 @@
     color-mode picker. Persists the choice to localStorage and respects the
     user's OS preference when set to "auto".
 
-    Drop this component into any layout's chrome (navbar/sidebar/topbar) to
-    expose the theme switcher. The companion JS module wires up the dropdown
-    items, applies the resolved theme via [data-bs-theme] on <html>, and
-    keeps every ThemePicker on the page in sync.
+    All theme behavior — applying [data-bs-theme] on <html>, persisting the
+    selection, syncing every picker on the page, and reacting to OS color-scheme
+    changes — is owned by the companion JS module (ThemePicker.razor.js). The
+    surrounding layouts only need to render <ThemePicker /> wherever they want
+    the switch to appear.
 *@
 
 <div class="dropdown app-theme-picker @Class">

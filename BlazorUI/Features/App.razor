@@ -7,24 +7,9 @@
     <meta name="color-scheme" content="light dark" />
     <base href="/" />
     <ResourcePreloader />
-
-    @* Apply the saved theme as early as possible to avoid a flash-of-unstyled-content. *@
-    <script>
-        (function () {
-            try {
-                var stored = localStorage.getItem("theme");
-                var resolved = stored && stored !== "auto"
-                    ? stored
-                    : (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
-                document.documentElement.setAttribute("data-bs-theme", resolved);
-            } catch (e) { /* localStorage may be blocked; fall back to default */ }
-        })();
-    </script>
-
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" />
-
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="@Assets["css/flatly.css"]" />
     <link rel="stylesheet" href="@Assets["css/app.css"]" />

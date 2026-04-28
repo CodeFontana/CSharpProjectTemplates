@@ -1,11 +1,4 @@
-﻿// =============================================================================
-//  CombinedLayout — slide-out offcanvas sidebar wiring.
-// =============================================================================
-//  Theme handling lives in ThemePicker.razor.js. This module is now only
-//  responsible for the offcanvas sidebar (open/close/backdrop).
-// =============================================================================
-
-function toggleSidebar() {
+﻿function toggleSidebar() {
     const sidebar = document.getElementById("sidebar");
     if (!sidebar) return;
 

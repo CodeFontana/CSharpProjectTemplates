@@ -1,9 +1,3 @@
-// =============================================================================
-//  SidebarLayout — re-initializes Bootstrap offcanvas after each render.
-// =============================================================================
-//  Theme handling lives in ThemePicker.razor.js.
-// =============================================================================
-
 function reinitializeOffcanvas() {
     const offcanvasElementList = Array.from(document.querySelectorAll(".offcanvas"));
 

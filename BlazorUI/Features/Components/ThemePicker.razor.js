@@ -1,11 +1,3 @@
-// =============================================================================
-//  ThemePicker — applies and persists a 3-state theme (light / dark / auto).
-// =============================================================================
-//  - Resolves "auto" against the OS preference (prefers-color-scheme).
-//  - Writes [data-bs-theme] on <html> so Bootstrap 5.3's CSS variables flip.
-//  - Keeps every ThemePicker on the page in sync (icon, label, active item).
-// =============================================================================
-
 const STORAGE_KEY = "theme";
 
 function storedTheme() {
@@ -26,7 +18,7 @@ function applyTheme(value) {
 
 function syncAllPickers(value) {
     document.querySelectorAll(".app-theme-picker").forEach(picker => {
-        // Mark the active dropdown item, hide check on the others.
+        // Mark the active dropdown item, hide the check on the others.
         picker.querySelectorAll("[data-bs-theme-value]").forEach(btn => {
             const isActive = btn.getAttribute("data-bs-theme-value") === value;
             btn.classList.toggle("active", isActive);
@@ -62,10 +54,10 @@ function setTheme(value) {
 }
 
 // Re-resolve "auto" when the OS preference flips, but only if the user hasn't
-// pinned a specific theme.
+// pinned a specific theme. Module-level subscription so it's attached exactly
+// once regardless of how many pickers mount.
 window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => {
-    const value = storedTheme() || "auto";
-    if (value === "auto") applyTheme("auto");
+    if ((storedTheme() || "auto") === "auto") applyTheme("auto");
 });
 
 export default class extends BlazorJSComponents.Component {
