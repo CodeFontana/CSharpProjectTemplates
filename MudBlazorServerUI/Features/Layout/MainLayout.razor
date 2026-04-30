@@ -1,7 +1,7 @@
 ﻿@inherits LayoutComponentBase
 @using MudBlazorServerUI.Features.Theme
+@inject IJSRuntime JSRuntime
 @inject NavigationManager NavMan
-@inject ILocalStorageService LocalStorage
 @inject IWebHostEnvironment WebHostEnv
 
 <MudThemeProvider Theme="AppTheme.Default" @bind-IsDarkMode="@_isDarkMode" />
@@ -140,7 +140,7 @@
     {
         if (HttpContext is null)
         {
-            string? theme = await LocalStorage.GetItemAsync<string>("Theme");
+            string? theme = await JSRuntime.InvokeAsync<string?>("localStorage.getItem", "Theme");
 
             _isDarkMode = !string.IsNullOrWhiteSpace(theme)
                 && string.Equals(theme, "Dark", StringComparison.InvariantCultureIgnoreCase);
@@ -155,6 +155,6 @@
     private async Task ToggleThemeAsync()
     {
         _isDarkMode = !_isDarkMode;
-        await LocalStorage.SetItemAsync("Theme", _isDarkMode ? "Dark" : "Light");
+        await JSRuntime.InvokeVoidAsync("localStorage.setItem", "Theme", _isDarkMode ? "Dark" : "Light");
     }
 }

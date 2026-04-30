@@ -1,4 +1,3 @@
-using Blazored.LocalStorage;
 using MudBlazor;
 using MudBlazor.Services;
 using MudBlazorServerUI.Features;
@@ -38,7 +37,6 @@ try
         config.SnackbarConfiguration.ShowTransitionDuration = 500;
         config.SnackbarConfiguration.SnackbarVariant = Variant.Filled;
     });
-    builder.Services.AddBlazoredLocalStorage();
     WebApplication app = builder.Build();
 
     app.UseExceptionHandler("/Error", createScopeForErrors: true);
