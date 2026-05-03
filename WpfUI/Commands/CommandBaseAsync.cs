@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace WpfUI.Commands;
 
@@ -8,11 +10,11 @@ public abstract class CommandBaseAsync : CommandBase
 
     private bool IsExecuting
     {
-        get { return _isExecuting; }
+        get => _isExecuting;
         set
         {
             _isExecuting = value;
-            OnCanExecutedChanged();
+            OnCanExecuteChanged();
         }
     }
 
@@ -21,20 +23,26 @@ public abstract class CommandBaseAsync : CommandBase
         return !IsExecuting && base.CanExecute(parameter);
     }
 
+    public override void Execute(object? parameter)
+    {
+        _ = RunAsync(parameter);
+    }
 
-    public override async void Execute(object? parameter)
+    private async Task RunAsync(object? parameter)
     {
         IsExecuting = true;
-
         try
         {
             await ExecuteAsync(parameter);
+        }
+        catch (Exception ex)
+        {
+            Trace.TraceError("[{0}] Async command failed: {1}", GetType().Name, ex);
         }
         finally
         {
             IsExecuting = false;
         }
-
     }
 
     public abstract Task ExecuteAsync(object? parameter);

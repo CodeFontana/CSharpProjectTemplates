@@ -27,7 +27,7 @@ public class ResetCountCommand : CommandBase
     {
         if (e.PropertyName == nameof(CounterViewModel.CurrentCount))
         {
-            OnCanExecutedChanged();
+            OnCanExecuteChanged();
         }
     }
 }

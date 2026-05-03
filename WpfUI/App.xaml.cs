@@ -11,6 +11,7 @@ namespace WpfUI;
 public partial class App : Application
 {
     private readonly IHost? _appHost;
+    private IServiceScope? _appScope;
 
     public App()
     {
@@ -27,10 +28,10 @@ public partial class App : Application
                 {
                     loggerConfiguration.ReadFrom.Configuration(context.Configuration);
                 })
-                .ConfigureServices((hostContext, services) =>
+                .ConfigureServices((_, services) =>
                 {
-                    services.AddTransient<MainViewModel>();
-                    services.AddSingleton(sp => new MainWindow(sp.GetRequiredService<MainViewModel>()));
+                    services.AddScoped<MainViewModel>();
+                    services.AddScoped(sp => new MainWindow(sp.GetRequiredService<MainViewModel>()));
                 })
                 .Build();
         }
@@ -62,8 +63,8 @@ public partial class App : Application
         }
 
         await _appHost.StartAsync();
-        using IServiceScope scope = _appHost.Services.CreateScope();
-        MainWindow mainWindow = scope.ServiceProvider.GetRequiredService<MainWindow>();
+        _appScope = _appHost.Services.CreateScope();
+        MainWindow mainWindow = _appScope.ServiceProvider.GetRequiredService<MainWindow>();
         mainWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
         mainWindow.Show();
         mainWindow.ToggleMenu.IsChecked = true;
@@ -74,11 +75,16 @@ public partial class App : Application
     {
         try
         {
+            _appScope?.Dispose();
+            _appScope = null;
+
             if (_appHost != null)
             {
                 await _appHost.StopAsync();
                 _appHost.Dispose();
             }
+
+            Log.CloseAndFlush();
         }
         catch (Exception ex)
         {
