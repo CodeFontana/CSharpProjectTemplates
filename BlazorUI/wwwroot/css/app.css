@@ -33,3 +33,15 @@ h1:focus {
 .darker-border-checkbox.form-check-input {
     border-color: var(--bs-border-color);
 }
+
+[data-bs-theme="dark"] body {
+    background-color: var(--bs-body-bg);
+}
+
+[data-bs-theme="dark"] .main-layout {
+    background-color: var(--bs-body-bg);
+    background-image: radial-gradient(circle at top right, rgba(var(--bs-secondary-rgb), 0.18), transparent 30rem);
+    background-position: top right;
+    background-repeat: no-repeat;
+    background-size: 60rem 60rem;
+}
