@@ -299,6 +299,38 @@
         </div>
     </section>
 
+    <!-- ═══════════════ BSInputAutocomplete ═══════════════ -->
+    <section class="mb-5">
+        <h3 class="border-bottom pb-2 mb-3">
+            <code>BSInputAutocomplete</code>
+            <small class="text-body-secondary fs-6">— supports Standard, InputGroup only</small>
+        </h3>
+        <div class="row g-4">
+            <div class="col-lg-6">
+                <h6 class="text-body-secondary mb-2">Standard</h6>
+                <BSInputAutocomplete Id="acCityStd"
+                                     Class="mb-3"
+                                     Label="City"
+                                     InputType="InputType.Standard"
+                                     Options="@_cityOptions"
+                                     @bind-Value="_model.CityCode"
+                                     Placeholder="e.g. nyc" />
+                <p class="text-body-secondary small">Selected: @(string.IsNullOrWhiteSpace(_model.CityCode) ? "—" : _model.CityCode)</p>
+            </div>
+            <div class="col-lg-6">
+                <h6 class="text-body-secondary mb-2">InputGroup <span class="badge bg-secondary">Default</span></h6>
+                <BSInputAutocomplete Id="acCityIG"
+                                     Class="mb-3"
+                                     Label="City"
+                                     InputType="InputType.InputGroup"
+                                     Options="@_cityOptions"
+                                     @bind-Value="_model.CityCode"
+                                     Placeholder="e.g. nyc" />
+                <p class="text-body-secondary small">Selected: @(string.IsNullOrWhiteSpace(_model.CityCode) ? "—" : _model.CityCode)</p>
+            </div>
+        </div>
+    </section>
+
     <!-- ═══════════════ BSInputCheck ═══════════════ -->
     <section class="mb-5">
         <h3 class="border-bottom pb-2 mb-3">
@@ -437,6 +469,14 @@
                                          @bind-Value="_model.Bio" Rows="3" Placeholder="Tell us about yourself..." />
                     </div>
                     <div class="col-md-6">
+                        <BSInputAutocomplete Id="formCityCode"
+                                             Class="mb-3"
+                                             Label="City"
+                                             Options="@_cityOptions"
+                                             @bind-Value="_model.CityCode"
+                                             Placeholder="e.g. nyc" />
+                    </div>
+                    <div class="col-md-6">
                         <BSInputCheck Id="formAgree" Label="I agree to the terms"
                                       LabelClass="form-control mb-3"
                                       @bind-Value="_model.AgreeToTerms" />
@@ -486,6 +526,7 @@
                         <tr><td>Priority</td><td>@(string.IsNullOrWhiteSpace(_model.Priority) ? "—" : _model.Priority)</td></tr>
                         <tr><td>Bio</td><td>@(string.IsNullOrWhiteSpace(_model.Bio) ? "—" : _model.Bio)</td></tr>
                         <tr><td>Skills</td><td>@((_model.Skills?.Count > 0) ? string.Join(", ", _model.Skills) : "—")</td></tr>
+                        <tr><td>City</td><td>@(string.IsNullOrWhiteSpace(_model.CityCode) ? "—" : _model.CityCode)</td></tr>
                         <tr><td>Agree to Terms</td><td>@_model.AgreeToTerms</td></tr>
                         <tr><td>Notifications</td><td>@_model.EnableNotifications</td></tr>
                         <tr><td>Dark Mode</td><td>@_model.DarkMode</td></tr>
@@ -502,6 +543,22 @@
 @code {
     private DemoFormModel _model = new();
     private bool _submitted;
+
+    private readonly List<AutocompleteOption> _cityOptions =
+    [
+        new("nyc", "New York / nyc"),
+        new("lax", "Los Angeles / lax"),
+        new("chi", "Chicago / chi"),
+        new("hou", "Houston / hou"),
+        new("phx", "Phoenix / phx"),
+        new("phl", "Philadelphia / phl"),
+        new("sat", "San Antonio / sat"),
+        new("san", "San Diego / san"),
+        new("dfw", "Dallas / dfw"),
+        new("sjc", "San Jose / sjc"),
+        new("aus", "Austin / aus"),
+        new("sea", "Seattle / sea"),
+    ];
 
     private Task HandleSubmitAsync()
     {
@@ -536,6 +593,7 @@
         public string? Priority { get; set; }
         public string? Bio { get; set; }
         public List<string>? Skills { get; set; } = [];
+        public string? CityCode { get; set; }
         public bool AgreeToTerms { get; set; }
         public bool EnableNotifications { get; set; }
         public bool DarkMode { get; set; }

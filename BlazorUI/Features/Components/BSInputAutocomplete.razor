@@ -1,0 +1,255 @@
+@using System.Linq.Expressions
+@attribute [DiscoverCollocatedJS]
+@inject JSElementReferenceScope Refs
+
+@*
+Sample usage:
+<h4 class="mt-3">City</h4>
+
+<div class="mb-3">
+    <BSInputAutocomplete Id="acCityStd"
+                         Class="mb-3"
+                         Label="City"
+                         InputType="InputType.Standard"
+                         Options="@_cityOptions"
+                         @bind-Value="_cityCode"
+                         Placeholder="e.g. nyc" />
+</div>
+
+<div class="mb-3">
+    <BSInputAutocomplete Id="acCityIG"
+                         Class="mb-3"
+                         Label="City"
+                         InputType="InputType.InputGroup"
+                         Options="@_cityOptions"
+                         @bind-Value="_cityCode"
+                         Placeholder="e.g. nyc" />
+</div>
+
+<p>Selected: @_cityCode</p>
+
+@code {
+    private string _cityCode = "";
+
+    private readonly List<AutocompleteOption> _cityOptions =
+    [
+        new("nyc", "New York / nyc"),
+        new("lax", "Los Angeles / lax"),
+        new("chi", "Chicago / chi"),
+        new("hou", "Houston / hou"),
+        new("phx", "Phoenix / phx"),
+        new("phl", "Philadelphia / phl"),
+        new("sat", "San Antonio / sat"),
+        new("san", "San Diego / san"),
+        new("dfw", "Dallas / dfw"),
+        new("sjc", "San Jose / sjc"),
+        new("aus", "Austin / aus"),
+        new("sea", "Seattle / sea"),
+    ];
+}
+*@
+
+<div class="@Class" style="@Style">
+    @if (InputType == InputType.Standard && !string.IsNullOrWhiteSpace(Label))
+    {
+        <label for="@Id" class="form-label mb-0" style="@($"width: {LabelWidth}px; {LabelStyle}")">@Label</label>
+    }
+    @*
+Sample usage:
+<h4 class="mt-3">City</h4>
+
+<div class="mb-3">
+    <BSInputAutocomplete Id="acCityStd"
+                         Class="mb-3"
+                         Label="City"
+                         InputType="InputType.Standard"
+                         Options="@_cityOptions"
+                         @bind-Value="_cityCode"
+                         Placeholder="e.g. nyc" />
+</div>
+
+<div class="mb-3">
+    <BSInputAutocomplete Id="acCityIG"
+                         Class="mb-3"
+                         Label="City"
+                         InputType="InputType.InputGroup"
+                         Options="@_cityOptions"
+                         @bind-Value="_cityCode"
+                         Placeholder="e.g. nyc" />
+</div>
+
+<p>Selected: @_cityCode</p>
+
+@code {
+    private string _cityCode = "";
+
+    private readonly List<AutocompleteOption> _cityOptions =
+    [
+        new("nyc", "New York / nyc"),
+        new("lax", "Los Angeles / lax"),
+        new("chi", "Chicago / chi"),
+        new("hou", "Houston / hou"),
+        new("phx", "Phoenix / phx"),
+        new("phl", "Philadelphia / phl"),
+        new("sat", "San Antonio / sat"),
+        new("san", "San Diego / san"),
+        new("dfw", "Dallas / dfw"),
+        new("sjc", "San Jose / sjc"),
+        new("aus", "Austin / aus"),
+        new("sea", "Seattle / sea"),
+    ];
+}
+*@
+    <div class="input-group" data-ref="@Refs["root"]">
+        @if (InputType == InputType.InputGroup)
+        {
+            <span class="input-group-text" style="@($"width: {LabelWidth}px; {LabelStyle}")">@Label</span>
+        }
+        <InputText id="@Id"
+                   class="form-control"
+                   style="@InputStyle"
+                   placeholder="@Placeholder"
+                   autocomplete="off"
+                   role="combobox"
+                   aria-autocomplete="list"
+                   aria-expanded="false"
+                   aria-controls="@MenuId"
+                   Value="@Value"
+                   ValueChanged="ValueChanged"
+                   ValueExpression="ValueExpression"
+                   Disabled="@Disabled"
+                   data-ref="@Refs["input"]" />
+        <button type="button"
+                class="btn btn-outline-secondary"
+                tabindex="-1"
+                title="@($"Show known {Label} values")"
+                aria-label="@($"Show known {Label} values")"
+                disabled="@(Disabled || Options.Count == 0)"
+                data-ref="@Refs["toggle"]">
+            <i class="bi bi-chevron-down"></i>
+        </button>
+        @*
+Sample usage:
+<h4 class="mt-3">City</h4>
+
+<div class="mb-3">
+    <BSInputAutocomplete Id="acCityStd"
+                         Class="mb-3"
+                         Label="City"
+                         InputType="InputType.Standard"
+                         Options="@_cityOptions"
+                         @bind-Value="_cityCode"
+                         Placeholder="e.g. nyc" />
+</div>
+
+<div class="mb-3">
+    <BSInputAutocomplete Id="acCityIG"
+                         Class="mb-3"
+                         Label="City"
+                         InputType="InputType.InputGroup"
+                         Options="@_cityOptions"
+                         @bind-Value="_cityCode"
+                         Placeholder="e.g. nyc" />
+</div>
+
+<p>Selected: @_cityCode</p>
+
+@code {
+    private string _cityCode = "";
+
+    private readonly List<AutocompleteOption> _cityOptions =
+    [
+        new("nyc", "New York / nyc"),
+        new("lax", "Los Angeles / lax"),
+        new("chi", "Chicago / chi"),
+        new("hou", "Houston / hou"),
+        new("phx", "Phoenix / phx"),
+        new("phl", "Philadelphia / phl"),
+        new("sat", "San Antonio / sat"),
+        new("san", "San Diego / san"),
+        new("dfw", "Dallas / dfw"),
+        new("sjc", "San Jose / sjc"),
+        new("aus", "Austin / aus"),
+        new("sea", "Seattle / sea"),
+    ];
+}
+*@
+        <div id="@MenuId"
+             class="dropdown-menu"
+             role="listbox"
+             style="top: 100%; left: 0; right: 0; max-height: 15rem; overflow-y: auto;"
+             data-ref="@Refs["menu"]">
+            @for (int i = 0; i < Options.Count; i++)
+            {
+                AutocompleteOption option = Options[i];
+                <button type="button"
+                        class="dropdown-item"
+                        role="option"
+                        aria-selected="@(string.Equals(option.Value, Value, StringComparison.OrdinalIgnoreCase) ? "true" : "false")"
+                        id="@($"{Id}-option-{i}")"
+                        data-value="@option.Value">
+                    @option.Label
+                </button>
+            }
+        </div>
+    </div>
+</div>
+
+@if (EditContext != null)
+{
+    <ValidationMessage For="@ValueExpression" class="text-danger validation-spacing" />
+}
+
+<JS For="this" Args="[Refs]" />
+
+@code {
+    [CascadingParameter]
+    private EditContext? EditContext { get; set; }
+
+    [Parameter]
+    public InputType InputType { get; set; } = InputType.InputGroup;
+
+    [Parameter]
+    public string? Class { get; set; }
+
+    [Parameter, EditorRequired]
+    public required string Label { get; set; }
+
+    [Parameter]
+    public ushort LabelWidth { get; set; } = 170;
+
+    [Parameter]
+    public string Style { get; set; } = "";
+
+    [Parameter]
+    public string LabelStyle { get; set; } = "";
+
+    [Parameter]
+    public string InputStyle { get; set; } = "";
+
+    [Parameter, EditorRequired]
+    public required string Id { get; set; }
+
+    [Parameter]
+    public string? Placeholder { get; set; }
+
+    /// <summary>
+    /// Values offered in the menu. Nothing here constrains what may be typed.
+    /// </summary>
+    [Parameter]
+    public IReadOnlyList<AutocompleteOption> Options { get; set; } = [];
+
+    [Parameter]
+    public string? Value { get; set; }
+
+    [Parameter]
+    public EventCallback<string> ValueChanged { get; set; }
+
+    [Parameter]
+    public Expression<Func<string>>? ValueExpression { get; set; }
+
+    [Parameter]
+    public bool Disabled { get; set; } = false;
+
+    private string MenuId => $"{Id}-options";
+}
