@@ -1,29 +1,23 @@
-﻿@if (ShowSuccess)
+﻿@if (ToneCssClass is string tone)
 {
-    <div class="alert alert-success alert-dismissible fade show @Class" role="alert" style="@Style">
+    <div class="alert @tone alert-dismissible fade show @Class" role="alert" style="@Style">
         @_message
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-}
-else if (ShowInfo)
-{
-    <div class="alert alert-info alert-dismissible fade show @Class" role="alert" style="@Style">
-        @_message
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-}
-else if (ShowWarning)
-{
-    <div class="alert alert-warning alert-dismissible fade show @Class" role="alert" style="@Style">
-        @_message
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-}
-else if (ShowError)
-{
-    <div class="alert alert-danger alert-dismissible fade show @Class" role="alert" style="@Style">
-        @_message
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+
+        @if (RendererInfo.IsInteractive)
+        {
+            @* Blazor owns this node, so dismissal has to come back through it. Bootstrap's
+               data-bs-dismiss deletes the element from the DOM itself, leaving Blazor holding a node
+               whose parent is gone; the next render that touches this region then throws
+               "Cannot read properties of null (reading 'removeChild')" and takes the circuit with it. *@
+            <button type="button" class="btn-close" @onclick="ResetAlert" aria-label="Close"></button>
+        }
+        else
+        {
+            @* Statically there is no circuit to call back into, so Bootstrap's own dismissal is the
+               only thing that can work -- and it is safe here, because no renderer is holding a view
+               of this DOM to be invalidated by the removal. *@
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        }
     </div>
 }
 
@@ -100,6 +94,17 @@ else if (ShowError)
     }
 
     private string? _message { get; set; }
+
+    /// <summary>
+    /// The tone in effect, or <see langword="null"/> when nothing is showing. The setters above keep
+    /// the four flags mutually exclusive; the order here preserves the precedence the markup had when
+    /// every tone carried its own block.
+    /// </summary>
+    private string? ToneCssClass => ShowSuccess ? "alert-success"
+        : ShowInfo ? "alert-info"
+        : ShowWarning ? "alert-warning"
+        : ShowError ? "alert-danger"
+        : null;
 
     public void AlertSuccess(string message)
     {
