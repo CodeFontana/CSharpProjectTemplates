@@ -1,0 +1,46 @@
+@*
+	Renders a single <JS> handler and never re-renders it.
+
+	BlazorJSComponents 1.0.0's InteractiveJSHandler.OnAfterRenderAsync is not re-entrancy safe: it
+	checks its initialization TaskCompletionSource, awaits the JS round trip that creates the JS
+	component, and only then completes and nulls the source. On Blazor Server that round trip is a
+	real network call, so a render batch that lands while it is in flight starts a second, parallel
+	initialization and whichever call finishes last dereferences the already-nulled source, throwing
+	NullReferenceException out of the renderer.
+
+	Components whose JS arguments never change can render the handler exactly once, which keeps the
+	initialization off the re-render path entirely and removes a JS round trip per render.
+*@
+<JS For="@For" Src="@Src" Key="@Key" Args="@Args" />
+
+@code {
+	/// <summary>
+	/// The component whose collocated JS module should be instantiated. Mutually exclusive with <see cref="Src"/>.
+	/// </summary>
+	[Parameter]
+	public Microsoft.AspNetCore.Components.IComponent? For { get; set; }
+
+	/// <summary>
+	/// Explicit path to the JS module. Mutually exclusive with <see cref="For"/>.
+	/// </summary>
+	[Parameter]
+	public string? Src { get; set; }
+
+	/// <summary>
+	/// Optional key used to share a single JS component instance across renders.
+	/// </summary>
+	[Parameter]
+	public string? Key { get; set; }
+
+	/// <summary>
+	/// Arguments passed to the JS component's setParameters. Only pass values that never change.
+	/// </summary>
+	[Parameter]
+	public object?[]? Args { get; set; }
+
+	// The first render bypasses ShouldRender, so the handler is still rendered once.
+	protected override bool ShouldRender()
+	{
+		return false;
+	}
+}

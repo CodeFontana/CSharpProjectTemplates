@@ -161,7 +161,7 @@ private List<string> _selectedSkills = new();
     }
 </CascadingValue>
 
-<JS For="this" Args="[MaxVisibleOptions, Refs]" />
+<StableJS For="this" Args="[MaxVisibleOptions, Refs]" />
 
 @code {
     [CascadingParameter]
