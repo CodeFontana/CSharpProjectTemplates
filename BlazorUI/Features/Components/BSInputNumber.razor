@@ -17,7 +17,8 @@
                      @onchange="OnChange"
                      @onmouseover="OnMouseOver"
                      @onmouseout="OnMouseOut"
-                     Disabled="@Disabled" />
+                     Disabled="@Disabled"
+                     @attributes="AdditionalAttributes" />
     </div>
 }
 else if (InputType == InputType.InputGroup)
@@ -36,7 +37,8 @@ else if (InputType == InputType.InputGroup)
                      @onchange="OnChange"
                      @onmouseover="OnMouseOver"
                      @onmouseout="OnMouseOut"
-                     Disabled="@Disabled" />
+                     Disabled="@Disabled"
+                     @attributes="AdditionalAttributes" />
     </div>
 }
 else if (InputType == InputType.FloatingLabel)
@@ -54,7 +56,8 @@ else if (InputType == InputType.FloatingLabel)
                      @onchange="OnChange"
                      @onmouseover="OnMouseOver"
                      @onmouseout="OnMouseOut"
-                     Disabled="@Disabled" />
+                     Disabled="@Disabled"
+                     @attributes="AdditionalAttributes" />
         <label for="@Id">@Label</label>
     </div>
 }
@@ -115,4 +118,7 @@ else if (InputType == InputType.FloatingLabel)
 
     [Parameter]
     public bool Disabled { get; set; } = false;
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public Dictionary<string, object?>? AdditionalAttributes { get; set; }
 }

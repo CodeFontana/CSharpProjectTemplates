@@ -1,4 +1,5 @@
-﻿@using System.Linq.Expressions
+@using System.Globalization
+@using System.Linq.Expressions
 @typeparam T where T : notnull
 @attribute [DiscoverCollocatedJS]
 @inject JSElementReferenceScope Refs
@@ -108,8 +109,17 @@ private List<string> _selectedSkills = new();
                         </div>
                         <hr class="dropdown-divider" />
                     }
-                    <div class="multi-select-options" style="overflow-y: auto;" data-ref="@Refs["options"]">
-                        @ChildContent
+                    <div class="multi-select-options" style="@OptionsContainerStyle" data-ref="@Refs["options"]">
+                        @if (Options is null)
+                        {
+                            @ChildContent
+                        }
+                        else
+                        {
+                            <Virtualize TItem="T" Items="@FilteredOptions" ItemSize="@ItemSize" Context="option">
+                                <BSMultiOption T="T" Value="@option" Text="@TextFor(option)" />
+                            </Virtualize>
+                        }
                     </div>
                 </div>
             </div>
@@ -152,8 +162,17 @@ private List<string> _selectedSkills = new();
                         </div>
                         <hr class="dropdown-divider" />
                     }
-                    <div class="multi-select-options" style="overflow-y: auto;" data-ref="@Refs["options"]">
-                        @ChildContent
+                    <div class="multi-select-options" style="@OptionsContainerStyle" data-ref="@Refs["options"]">
+                        @if (Options is null)
+                        {
+                            @ChildContent
+                        }
+                        else
+                        {
+                            <Virtualize TItem="T" Items="@FilteredOptions" ItemSize="@ItemSize" Context="option">
+                                <BSMultiOption T="T" Value="@option" Text="@TextFor(option)" />
+                            </Virtualize>
+                        }
                     </div>
                 </div>
             </div>
@@ -177,7 +196,7 @@ private List<string> _selectedSkills = new();
     public required string Label { get; set; }
 
     [Parameter]
-    public ushort LabelWidth { get; set; } = 170;
+    public ushort LabelWidth { get; set; } = 150;
 
     [Parameter]
     public string Style { get; set; } = "";
@@ -245,10 +264,101 @@ private List<string> _selectedSkills = new();
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
 
+    /// <summary>
+    /// Supplying the options here renders them through <see cref="Virtualize{TItem}"/> instead of
+    /// <see cref="ChildContent"/>. Required for any list long enough that one component per option
+    /// would outgrow a single render batch. Assign a new list when the contents change; the filtered
+    /// view is cached against this instance.
+    /// </summary>
+    [Parameter]
+    public IReadOnlyList<T>? Options { get; set; }
+
+    [Parameter]
+    public Func<T, string>? OptionText { get; set; }
+
+    /// <summary>
+    /// Row height in pixels. Virtualization needs every row to be exactly this tall, so
+    /// <see cref="BSMultiOption{T}"/> pins it when options come from <see cref="Options"/>.
+    /// </summary>
+    [Parameter]
+    public float ItemSize { get; set; } = 24f;
+
     private List<T> _selected = new();
+    private HashSet<T> _selectedLookup = new();
     private Dictionary<T, int> _optionRefCounts = new();
     private Dictionary<T, string> _optionTexts = new();
     private string _filterText = "";
+
+    private List<T> _filteredOptions = new();
+    private IReadOnlyList<T>? _filteredFrom;
+    private string _filteredFor = "";
+    private bool _hasFiltered;
+
+    internal bool OwnsOptions => Options is not null;
+
+    internal string ItemSizeCss => ItemSize.ToString(CultureInfo.InvariantCulture);
+
+    // Virtualize needs a definite viewport height, so it cannot be left to the content. Sizing it
+    // to the rows actually on offer keeps a short list from opening a mostly empty panel.
+    private string OptionsContainerStyle
+    {
+        get
+        {
+            if (Options is null)
+            {
+                return "overflow-y: auto;";
+            }
+
+            float height = Math.Clamp(FilteredOptions.Count, 1, MaxVisibleOptions) * ItemSize;
+
+            return $"overflow-y: auto; height: {height.ToString(CultureInfo.InvariantCulture)}px;";
+        }
+    }
+
+    // Virtualize re-renders on every scroll, so this cannot filter per render.
+    private List<T> FilteredOptions
+    {
+        get
+        {
+            if (_hasFiltered && ReferenceEquals(_filteredFrom, Options) && _filteredFor == _filterText)
+            {
+                return _filteredOptions;
+            }
+
+            _filteredFrom = Options;
+            _filteredFor = _filterText;
+            _hasFiltered = true;
+            _filteredOptions = BuildFilteredOptions();
+
+            return _filteredOptions;
+        }
+    }
+
+    private List<T> BuildFilteredOptions()
+    {
+        if (Options is null)
+        {
+            return new List<T>();
+        }
+
+        if (!AllowFilter || string.IsNullOrWhiteSpace(_filterText))
+        {
+            return Options as List<T> ?? Options.ToList();
+        }
+
+        List<T> matches = new();
+        foreach (T option in Options)
+        {
+            if (TextFor(option).Contains(_filterText, StringComparison.OrdinalIgnoreCase))
+            {
+                matches.Add(option);
+            }
+        }
+
+        return matches;
+    }
+
+    internal string TextFor(T option) => OptionText?.Invoke(option) ?? option.ToString() ?? string.Empty;
 
     private string DisplayText
     {
@@ -263,6 +373,12 @@ private List<string> _selectedSkills = new();
             if (count == 1)
             {
                 T single = _selected[0];
+
+                if (Options is not null)
+                {
+                    return TextFor(single);
+                }
+
                 return _optionTexts.GetValueOrDefault(single) ?? single?.ToString() ?? "";
             }
 
@@ -270,16 +386,21 @@ private List<string> _selectedSkills = new();
         }
     }
 
-    private bool HasSelections => _selected.Any();
-    private bool IsAllSelected => _optionRefCounts.Count > 0
-        && _selected.Count == _optionRefCounts.Count
-        && _optionRefCounts.Keys.All(v => _selected.Contains(v));
+    private bool HasSelections => _selected.Count > 0;
+
+    // _optionRefCounts only ever holds the visible window under virtualization.
+    private bool IsAllSelected => Options is not null
+        ? Options.Count > 0 && _selectedLookup.Count == Options.Count
+        : _optionRefCounts.Count > 0
+            && _selected.Count == _optionRefCounts.Count
+            && _optionRefCounts.Keys.All(v => _selectedLookup.Contains(v));
 
     protected override void OnParametersSet()
     {
-        if (Value is not null && !_selected.SequenceEqual(Value))
+        if (Value is not null && (Value.Count != _selected.Count || !_selected.SequenceEqual(Value)))
         {
             _selected = Value.ToList();
+            _selectedLookup = new HashSet<T>(_selected);
         }
     }
 
@@ -307,12 +428,13 @@ private List<string> _selectedSkills = new();
 
     internal bool IsValueSelected(T value)
     {
-        return _selected.Contains(value);
+        return _selectedLookup.Contains(value);
     }
 
     internal bool IsOptionVisible(string text)
     {
-        if (!AllowFilter || string.IsNullOrWhiteSpace(_filterText))
+        // The option-supplied path filters the item source itself, so nothing rendered is hidden.
+        if (Options is not null || !AllowFilter || string.IsNullOrWhiteSpace(_filterText))
         {
             return true;
         }
@@ -324,12 +446,12 @@ private List<string> _selectedSkills = new();
     {
         if (selected)
         {
-            if (!_selected.Contains(value))
+            if (_selectedLookup.Add(value))
             {
                 _selected.Add(value);
             }
         }
-        else
+        else if (_selectedLookup.Remove(value))
         {
             _selected.Remove(value);
         }
@@ -341,12 +463,14 @@ private List<string> _selectedSkills = new();
     {
         if (selected)
         {
-            _selected = _optionRefCounts.Keys.ToList();
+            _selected = Options is not null ? Options.ToList() : _optionRefCounts.Keys.ToList();
         }
         else
         {
-            _selected.Clear();
+            _selected = new List<T>();
         }
+
+        _selectedLookup = new HashSet<T>(_selected);
 
         await ValueChanged.InvokeAsync(_selected);
     }

@@ -1,4 +1,4 @@
-﻿function isInsideMultiSelectDropdown(node) {
+function isInsideMultiSelectDropdown(node) {
     const dropdown = node?.closest?.(".dropdown");
     if (!dropdown) return false;
 
@@ -40,23 +40,29 @@ function attachMultiSelectSizing(btn, optionsContainer, maxVisibleOptions) {
     const menu = dropdown?.querySelector(".dropdown-menu");
     if (!menu) return;
 
-    const options = [...optionsContainer.querySelectorAll(".form-check")];
-    if (options.length === 0) return;
+    // The virtualized path fixes the viewport height in markup and only renders the visible
+    // window, so measuring the rendered rows here would shrink the container and break the
+    // scroll-offset-to-item mapping.
+    if (!optionsContainer.style.height) {
+        const options = [...optionsContainer.querySelectorAll(".form-check")];
 
-    const numToMeasure = Math.min(maxVisibleOptions, options.length);
+        if (options.length > 0) {
+            const numToMeasure = Math.min(maxVisibleOptions, options.length);
 
-    let totalHeight = 0;
-    for (let i = 0; i < numToMeasure; i++) {
-        totalHeight += options[i].offsetHeight;
+            let totalHeight = 0;
+            for (let i = 0; i < numToMeasure; i++) {
+                totalHeight += options[i].offsetHeight;
 
-        if (i < numToMeasure - 1) {
-            const style = window.getComputedStyle(options[i]);
-            totalHeight += parseFloat(style.marginBottom) || 0;
+                if (i < numToMeasure - 1) {
+                    const style = window.getComputedStyle(options[i]);
+                    totalHeight += parseFloat(style.marginBottom) || 0;
+                }
+            }
+
+            optionsContainer.style.maxHeight = `${totalHeight}px`;
+            optionsContainer.style.overflowY = "auto";
         }
     }
-
-    optionsContainer.style.maxHeight = `${totalHeight}px`;
-    optionsContainer.style.overflowY = "auto";
 
     // Only pin widths when we actually measured a visible toggle. Otherwise a
     // hidden/collapsed ancestor could leave both the button and menu pinned to

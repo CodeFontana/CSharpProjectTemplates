@@ -297,6 +297,25 @@
                 </p>
             </div>
         </div>
+        <div class="row g-4 mt-1">
+            <div class="col-lg-6">
+                <h6 class="text-body-secondary mb-2">Options / Virtualize</h6>
+                <BSInputMultiSelect T="string"
+                                    Id="msCities"
+                                    Class="mb-3"
+                                    Label="Cities"
+                                    InputType="InputType.InputGroup"
+                                    Options="@_cities"
+                                    AllowSelectAll="true"
+                                    SelectAllText="All Cities"
+                                    AllowFilter="true"
+                                    @bind-Value="_model.Cities"
+                                    Placeholder="Select cities..." />
+                <p class="text-body-secondary small">
+                    Selected: @(string.Join(", ", _model.Cities ?? Enumerable.Empty<string>()))
+                </p>
+            </div>
+        </div>
     </section>
 
     <!-- ═══════════════ BSInputAutocomplete ═══════════════ -->
@@ -526,6 +545,7 @@
                         <tr><td>Priority</td><td>@(string.IsNullOrWhiteSpace(_model.Priority) ? "—" : _model.Priority)</td></tr>
                         <tr><td>Bio</td><td>@(string.IsNullOrWhiteSpace(_model.Bio) ? "—" : _model.Bio)</td></tr>
                         <tr><td>Skills</td><td>@((_model.Skills?.Count > 0) ? string.Join(", ", _model.Skills) : "—")</td></tr>
+                        <tr><td>Cities</td><td>@((_model.Cities?.Count > 0) ? string.Join(", ", _model.Cities) : "—")</td></tr>
                         <tr><td>City</td><td>@(string.IsNullOrWhiteSpace(_model.CityCode) ? "—" : _model.CityCode)</td></tr>
                         <tr><td>Agree to Terms</td><td>@_model.AgreeToTerms</td></tr>
                         <tr><td>Notifications</td><td>@_model.EnableNotifications</td></tr>
@@ -543,6 +563,22 @@
 @code {
     private DemoFormModel _model = new();
     private bool _submitted;
+
+    private readonly List<string> _cities =
+    [
+        "New York",
+        "Los Angeles",
+        "Chicago",
+        "Houston",
+        "Phoenix",
+        "Philadelphia",
+        "San Antonio",
+        "San Diego",
+        "Dallas",
+        "San Jose",
+        "Austin",
+        "Seattle",
+    ];
 
     private readonly List<AutocompleteOption> _cityOptions =
     [
@@ -593,6 +629,7 @@
         public string? Priority { get; set; }
         public string? Bio { get; set; }
         public List<string>? Skills { get; set; } = [];
+        public List<string>? Cities { get; set; } = [];
         public string? CityCode { get; set; }
         public bool AgreeToTerms { get; set; }
         public bool EnableNotifications { get; set; }
