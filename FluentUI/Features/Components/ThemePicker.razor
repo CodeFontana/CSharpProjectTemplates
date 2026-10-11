@@ -33,18 +33,27 @@
 
             <div class="settings-field">
                 <span id="theme-color-label">Color</span>
-                <div class="settings-color-list" role="listbox" aria-labelledby="theme-color-label" data-ref="@Refs["colors"]">
-                    @foreach (ThemeColor color in ThemeColor.All)
-                    {
-                        <button type="button"
-                                role="option"
-                                class="settings-color-option"
-                                data-theme-color="@color.Name"
-                                data-theme-hex="@(color.Hex ?? string.Empty)">
-                            <span class="color-swatch" style="background:@color.Swatch"></span>@color.Name
-                        </button>
-                    }
-                </div>
+                <details class="settings-color-dropdown" data-ref="@Refs["colors"]">
+                    <summary aria-haspopup="listbox" aria-labelledby="theme-color-label">
+                        <span class="color-swatch" data-theme-swatch style="background:#0F6CBD"></span>
+                        <span data-theme-color-label>Default</span>
+                        <span class="expand-icon" aria-hidden="true">
+                            <FluentIcon Value="@(new Icons.Regular.Size16.ChevronDown())" Color="Color.Custom" CustomColor="currentColor" />
+                        </span>
+                    </summary>
+                    <div class="settings-color-list" role="listbox" aria-labelledby="theme-color-label">
+                        @foreach (ThemeColor color in ThemeColor.All)
+                        {
+                            <button type="button"
+                                    role="option"
+                                    class="settings-color-option"
+                                    data-theme-color="@color.Name"
+                                    data-theme-hex="@(color.Hex ?? string.Empty)">
+                                <span class="color-swatch" style="background:@color.Swatch"></span>@color.Name
+                            </button>
+                        }
+                    </div>
+                </details>
             </div>
         </div>
     </dialog>

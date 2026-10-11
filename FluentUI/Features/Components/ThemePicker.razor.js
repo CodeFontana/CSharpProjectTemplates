@@ -75,21 +75,39 @@ function colorName(colors, stored) {
     return match ? match.getAttribute("data-theme-color") : "Default";
 }
 
+function showSelected(colors, name) {
+    if (!colors) {
+        return;
+    }
+
+    let selectedButton = null;
+    colors.querySelectorAll("[data-theme-color]").forEach((button) => {
+        const isSelected = button.getAttribute("data-theme-color") === name;
+        button.setAttribute("aria-selected", isSelected ? "true" : "false");
+        if (isSelected) {
+            selectedButton = button;
+        }
+    });
+
+    const label = colors.querySelector("[data-theme-color-label]");
+    if (label) {
+        label.textContent = name;
+    }
+
+    const swatch = colors.querySelector("[data-theme-swatch]");
+    const selectedSwatch = selectedButton?.querySelector(".color-swatch");
+    if (swatch && selectedSwatch) {
+        swatch.style.background = selectedSwatch.style.background;
+    }
+}
+
 function syncPicker(mode, colors) {
     const stored = readStored();
     if (mode) {
         mode.value = currentMode(stored);
     }
 
-    if (!colors) {
-        return;
-    }
-
-    const selected = colorName(colors, stored);
-    colors.querySelectorAll("[data-theme-color]").forEach((button) => {
-        const isSelected = button.getAttribute("data-theme-color") === selected;
-        button.setAttribute("aria-selected", isSelected ? "true" : "false");
-    });
+    showSelected(colors, colorName(colors, stored));
 }
 
 function reapplyStoredTheme() {
@@ -134,7 +152,10 @@ function applyColor(button) {
     const name = button.getAttribute("data-theme-color") || "Default";
     const hex = button.getAttribute("data-theme-hex") || "";
     const mode = currentMode(readStored());
+    const dropdown = button.closest("details");
     localStorage.setItem(COLOR_NAME_KEY, name);
+    showSelected(dropdown, name);
+    dropdown?.removeAttribute("open");
 
     whenThemeReady((api) => {
         if (hex.length === 0) {
@@ -198,6 +219,11 @@ export default class extends BlazorJSComponents.Component {
         this.setEventListener(dialog, "click", (event) => {
             if (event.target === dialog) {
                 dialog.close();
+                return;
+            }
+
+            if (!colors.contains(event.target)) {
+                colors.removeAttribute("open");
             }
         });
 
@@ -213,6 +239,14 @@ export default class extends BlazorJSComponents.Component {
             this.setEventListener(button, "click", () => {
                 applyColor(button);
             });
+        });
+
+        this.setEventListener(colors, "toggle", () => {
+            if (!colors.open) {
+                return;
+            }
+
+            colors.querySelector("[aria-selected='true']")?.scrollIntoView({ block: "nearest" });
         });
     }
 }
