@@ -209,15 +209,32 @@ dialog.settings-drawer::backdrop {
     font-size: var(--fontSizeBase300);
 }
 
+.settings-select {
+    position: relative;
+    display: flex;
+}
+
 .settings-field select {
     width: 100%;
     min-height: 32px;
-    padding: 6px 8px;
+    padding: 6px 32px 6px 8px;
     font: inherit;
     color: inherit;
     background: var(--colorNeutralBackground1);
     border: 1px solid var(--colorNeutralStroke1);
     border-radius: var(--borderRadiusMedium);
+    appearance: none;
+    cursor: pointer;
+}
+
+.settings-select .expand-icon {
+    position: absolute;
+    inset-inline-end: 8px;
+    top: 0;
+    bottom: 0;
+    display: inline-flex;
+    align-items: center;
+    pointer-events: none;
 }
 
 .settings-color-dropdown {

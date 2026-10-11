@@ -24,11 +24,16 @@
 
             <label class="settings-field">
                 Appearance
-                <select data-ref="@Refs["mode"]">
-                    <option value="light">Light</option>
-                    <option value="dark">Dark</option>
-                    <option value="system" selected>System</option>
-                </select>
+                <span class="settings-select">
+                    <select data-ref="@Refs["mode"]">
+                        <option value="light">Light</option>
+                        <option value="dark">Dark</option>
+                        <option value="system" selected>System</option>
+                    </select>
+                    <span class="expand-icon" aria-hidden="true">
+                        <FluentIcon Value="@(new Icons.Regular.Size16.ChevronDown())" Color="Color.Custom" CustomColor="currentColor" />
+                    </span>
+                </span>
             </label>
 
             <div class="settings-field">
