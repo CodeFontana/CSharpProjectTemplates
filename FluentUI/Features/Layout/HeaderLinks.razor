@@ -1,3 +1,5 @@
+@attribute [DiscoverCollocatedJS]
+
 @* FluentMenu wires its trigger in OnAfterRender, which static SSR does not run. *@
 <nav class="fluent-header-nav" aria-label="Primary">
     <NavLink class="fluent-header-hover" href="/" Match="NavLinkMatch.All">Home</NavLink>
@@ -31,3 +33,5 @@
         </div>
     </details>
 </nav>
+
+<JS For="this" Key="HeaderLinks" />

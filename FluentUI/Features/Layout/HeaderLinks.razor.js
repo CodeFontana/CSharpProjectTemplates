@@ -1,6 +1,6 @@
 // details menus stay open until the summary is clicked again.
 // Close them on an outside click, Escape, or a menu link, and keep only one open.
-document.addEventListener("click", (event) => {
+function closeMenus(event) {
     if (!(event.target instanceof Element)) {
         return;
     }
@@ -16,9 +16,9 @@ document.addEventListener("click", (event) => {
             openMenu.removeAttribute("open");
         }
     });
-}, true);
+}
 
-document.addEventListener("keydown", (event) => {
+function closeOnEscape(event) {
     if (event.key !== "Escape") {
         return;
     }
@@ -26,4 +26,13 @@ document.addEventListener("keydown", (event) => {
     document.querySelectorAll(".fluent-header-menu[open]").forEach((menu) => {
         menu.removeAttribute("open");
     });
-});
+}
+
+export default class extends BlazorJSComponents.Component {
+    setParameters() {
+        // Document listeners survive the header being replaced on enhanced navigation.
+        // setEventListener replaces the previous registration for this instance.
+        this.setEventListener(document, "click", closeMenus, true);
+        this.setEventListener(document, "keydown", closeOnEscape);
+    }
+}
