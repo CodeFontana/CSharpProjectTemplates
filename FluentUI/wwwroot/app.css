@@ -214,8 +214,19 @@ button.settings-close {
     max-width: 100%;
 }
 
+.sidebar-layout,
 .combined-layout {
     height: 100%;
+}
+
+.sidebar-layout .fluent-layout-item[area="nav"] {
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-layout .fluent-layout-item[area="nav"] fluent-nav {
+    flex: 1 1 auto;
+    min-height: 100%;
 }
 
 .form-demo {
