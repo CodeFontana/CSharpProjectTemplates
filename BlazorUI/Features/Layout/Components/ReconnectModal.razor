@@ -1,4 +1,4 @@
-﻿<script type="module" src="@Assets["Features/Layout/ReconnectModal.razor.js"]"></script>
+﻿<script type="module" src="@Assets["Features/Layout/Components/ReconnectModal.razor.js"]"></script>
 
 <dialog id="components-reconnect-modal" data-nosnippet>
     <div class="components-reconnect-container">
@@ -21,11 +21,11 @@
         <p class="components-pause-visible">
             The session has been paused by the server.
         </p>
-        <p class="components-resume-failed-visible">
-            Failed to resume the session.<br />Please retry or reload the page.
-        </p>
-        <button id="components-resume-button" class="components-pause-visible components-resume-failed-visible">
+        <button id="components-resume-button" class="components-pause-visible">
             Resume
         </button>
+        <p class="components-resume-failed-visible">
+            Failed to resume the session.<br />Please reload the page.
+        </p>
     </div>
 </dialog>
