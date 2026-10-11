@@ -229,7 +229,7 @@ dialog.settings-drawer::backdrop {
 
 .settings-select .expand-icon {
     position: absolute;
-    inset-inline-end: 8px;
+    inset-inline-end: 9px;
     top: 0;
     bottom: 0;
     display: inline-flex;
