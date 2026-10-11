@@ -305,6 +305,10 @@ dialog.settings-drawer::backdrop {
     padding-inline-start: 46px;
 }
 
+.fluent-nav details.fluent-nav-category:not([open]) > a.fluent-navitem {
+    display: none;
+}
+
 .theme-demo {
     box-sizing: border-box;
     width: min(100%, 72rem);

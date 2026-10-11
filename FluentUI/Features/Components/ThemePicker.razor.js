@@ -92,6 +92,38 @@ function syncPicker(mode, colors) {
     });
 }
 
+function reapplyStoredTheme() {
+    const stored = readStored();
+    const hasMode = stored.mode === "dark" || stored.mode === "light";
+    const hasBase = stored.base === "web" || stored.base === "brand" || stored.base === "teams";
+    if (!hasMode && !hasBase) {
+        return;
+    }
+
+    whenThemeReady((api) => {
+        const mode = currentMode(stored);
+        if (stored.base === "brand" && typeof stored.color === "string") {
+            api.setBrandThemeFromSettings({
+                color: stored.color,
+                hueTorsion: typeof stored.hue === "number" ? stored.hue : 0,
+                vibrancy: typeof stored.vibrancy === "number" ? stored.vibrancy : 0,
+                mode: mode === "system" ? null : mode,
+                isExact: stored.exact === true
+            });
+            return;
+        }
+
+        if (stored.base === "teams") {
+            api.setTeamsTheme();
+        }
+        else {
+            api.setWebTheme();
+        }
+
+        api.setThemeMode(mode);
+    });
+}
+
 function applyMode(mode) {
     whenThemeReady((api) => {
         api.setThemeMode(mode);
@@ -144,6 +176,8 @@ export default class extends BlazorJSComponents.Component {
 
         activeMode = mode;
         activeColors = colors;
+        // Enhanced navigation can drop the body data-theme attribute. Apply the stored settings again.
+        reapplyStoredTheme();
         syncPicker(mode, colors);
         ensureThemeListener();
 
