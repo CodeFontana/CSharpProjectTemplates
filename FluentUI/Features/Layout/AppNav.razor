@@ -1,19 +1,40 @@
 <FluentNav Width="100%">
     <FluentNavItem Href="/" Match="NavLinkMatch.All" IconRest="@(new Icons.Regular.Size20.Home())" IconActive="@(new Icons.Filled.Size20.Home())">Home</FluentNavItem>
-    <FluentNavCategory Title="Counters" Expanded="true" IconRest="@(new Icons.Regular.Size20.Add())">
-        <FluentNavItem Href="/counter" Match="NavLinkMatch.All">Static Counter</FluentNavItem>
-        <FluentNavItem Href="/counter/interactive" Match="NavLinkMatch.All">Interactive Counter</FluentNavItem>
-    </FluentNavCategory>
-    <FluentNavCategory Title="Lifecycle Demos" Expanded="true" IconRest="@(new Icons.Regular.Size20.Square())">
-        <FluentNavItem Href="/LifecycleDemo" Match="NavLinkMatch.All">Static Lifecycle</FluentNavItem>
-        <FluentNavItem Href="/LifecycleDemoAsync" Match="NavLinkMatch.All">Static Lifecycle w/Async</FluentNavItem>
-        <FluentNavItem Href="/LifecycleDemo/interactive" Match="NavLinkMatch.All">Interactive Lifecycle</FluentNavItem>
-        <FluentNavItem Href="/LifecycleDemoAsync/interactive" Match="NavLinkMatch.All">Interactive Lifecycle w/Async</FluentNavItem>
-    </FluentNavCategory>
+    <details class="fluent-nav-category" open>
+        <summary>
+            <FluentIcon Value="@(new Icons.Regular.Size20.Add())" />
+            <span>Counters</span>
+            <span class="expand-icon" aria-hidden="true">
+                <FluentIcon Value="@(new Icons.Regular.Size20.ChevronDown())" />
+            </span>
+        </summary>
+        <FluentNavItem Class="fluent-navsubitem" Href="/counter" Match="NavLinkMatch.All">Static Counter</FluentNavItem>
+        <FluentNavItem Class="fluent-navsubitem" Href="/counter/interactive" Match="NavLinkMatch.All">Interactive Counter</FluentNavItem>
+    </details>
+    <details class="fluent-nav-category" open>
+        <summary>
+            <FluentIcon Value="@(new Icons.Regular.Size20.Square())" />
+            <span>Lifecycle Demos</span>
+            <span class="expand-icon" aria-hidden="true">
+                <FluentIcon Value="@(new Icons.Regular.Size20.ChevronDown())" />
+            </span>
+        </summary>
+        <FluentNavItem Class="fluent-navsubitem" Href="/LifecycleDemo" Match="NavLinkMatch.All">Static Lifecycle</FluentNavItem>
+        <FluentNavItem Class="fluent-navsubitem" Href="/LifecycleDemoAsync" Match="NavLinkMatch.All">Static Lifecycle w/Async</FluentNavItem>
+        <FluentNavItem Class="fluent-navsubitem" Href="/LifecycleDemo/interactive" Match="NavLinkMatch.All">Interactive Lifecycle</FluentNavItem>
+        <FluentNavItem Class="fluent-navsubitem" Href="/LifecycleDemoAsync/interactive" Match="NavLinkMatch.All">Interactive Lifecycle w/Async</FluentNavItem>
+    </details>
     <FluentNavItem Href="/LifetimeDemo" Match="NavLinkMatch.All" IconRest="@(new Icons.Regular.Size20.HeartPulse())">Lifetime Demo</FluentNavItem>
     <FluentNavItem Href="/weather" Match="NavLinkMatch.All" IconRest="@(new Icons.Regular.Size20.WeatherRainShowersDay())" IconActive="@(new Icons.Filled.Size20.WeatherRainShowersDay())">Weather</FluentNavItem>
-    <FluentNavCategory Title="Demos" Expanded="true" IconRest="@(new Icons.Regular.Size20.Apps())">
-        <FluentNavItem Href="/theme-demo" Match="NavLinkMatch.All">Theme Demo</FluentNavItem>
-        <FluentNavItem Href="/form-demo" Match="NavLinkMatch.All">Form Demo</FluentNavItem>
-    </FluentNavCategory>
+    <details class="fluent-nav-category" open>
+        <summary>
+            <FluentIcon Value="@(new Icons.Regular.Size20.Apps())" />
+            <span>Demos</span>
+            <span class="expand-icon" aria-hidden="true">
+                <FluentIcon Value="@(new Icons.Regular.Size20.ChevronDown())" />
+            </span>
+        </summary>
+        <FluentNavItem Class="fluent-navsubitem" Href="/theme-demo" Match="NavLinkMatch.All">Theme Demo</FluentNavItem>
+        <FluentNavItem Class="fluent-navsubitem" Href="/form-demo" Match="NavLinkMatch.All">Form Demo</FluentNavItem>
+    </details>
 </FluentNav>

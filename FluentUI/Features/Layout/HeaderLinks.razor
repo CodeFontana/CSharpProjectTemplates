@@ -1,49 +1,33 @@
-@* FluentMenu connects its trigger in OnAfterRender, which static SSR does not run. *@
-@rendermode InteractiveServer
-@inject NavigationManager Navigation
-
+@* FluentMenu wires its trigger in OnAfterRender, which static SSR does not run. *@
 <nav class="fluent-header-nav" aria-label="Primary">
     <NavLink class="fluent-header-hover" href="/" Match="NavLinkMatch.All">Home</NavLink>
 
-    <span class="fluent-header-menu">
-        <button id="counters-menu" class="fluent-header-hover" type="button" aria-haspopup="menu">Counters</button>
-        <FluentMenu Trigger="counters-menu">
-            <FluentMenuList>
-                <FluentMenuItem OnClick="@(() => Go("/counter"))">Static Counter</FluentMenuItem>
-                <FluentMenuItem OnClick="@(() => Go("/counter/interactive"))">Interactive Counter</FluentMenuItem>
-            </FluentMenuList>
-        </FluentMenu>
-    </span>
+    <details class="fluent-header-menu" name="header-menu">
+        <summary class="fluent-header-hover">Counters</summary>
+        <div class="fluent-header-menu-panel">
+            <NavLink href="/counter" Match="NavLinkMatch.All">Static Counter</NavLink>
+            <NavLink href="/counter/interactive" Match="NavLinkMatch.All">Interactive Counter</NavLink>
+        </div>
+    </details>
 
-    <span class="fluent-header-menu">
-        <button id="lifecycle-menu" class="fluent-header-hover" type="button" aria-haspopup="menu">Lifecycle</button>
-        <FluentMenu Trigger="lifecycle-menu">
-            <FluentMenuList>
-                <FluentMenuItem OnClick="@(() => Go("/LifecycleDemo"))">Static Lifecycle</FluentMenuItem>
-                <FluentMenuItem OnClick="@(() => Go("/LifecycleDemoAsync"))">Static Lifecycle with async</FluentMenuItem>
-                <FluentMenuItem OnClick="@(() => Go("/LifecycleDemo/interactive"))">Interactive Lifecycle</FluentMenuItem>
-                <FluentMenuItem OnClick="@(() => Go("/LifecycleDemoAsync/interactive"))">Interactive Lifecycle with async</FluentMenuItem>
-            </FluentMenuList>
-        </FluentMenu>
-    </span>
+    <details class="fluent-header-menu" name="header-menu">
+        <summary class="fluent-header-hover">Lifecycle</summary>
+        <div class="fluent-header-menu-panel">
+            <NavLink href="/LifecycleDemo" Match="NavLinkMatch.All">Static Lifecycle</NavLink>
+            <NavLink href="/LifecycleDemoAsync" Match="NavLinkMatch.All">Static Lifecycle with async</NavLink>
+            <NavLink href="/LifecycleDemo/interactive" Match="NavLinkMatch.All">Interactive Lifecycle</NavLink>
+            <NavLink href="/LifecycleDemoAsync/interactive" Match="NavLinkMatch.All">Interactive Lifecycle with async</NavLink>
+        </div>
+    </details>
 
     <NavLink class="fluent-header-hover" href="/weather">Weather</NavLink>
 
-    <span class="fluent-header-menu">
-        <button id="demos-menu" class="fluent-header-hover" type="button" aria-haspopup="menu">Demos</button>
-        <FluentMenu Trigger="demos-menu">
-            <FluentMenuList>
-                <FluentMenuItem OnClick="@(() => Go("/LifetimeDemo"))">Lifetime</FluentMenuItem>
-                <FluentMenuItem OnClick="@(() => Go("/theme-demo"))">Theme</FluentMenuItem>
-                <FluentMenuItem OnClick="@(() => Go("/form-demo"))">Form</FluentMenuItem>
-            </FluentMenuList>
-        </FluentMenu>
-    </span>
+    <details class="fluent-header-menu" name="header-menu">
+        <summary class="fluent-header-hover">Demos</summary>
+        <div class="fluent-header-menu-panel">
+            <NavLink href="/LifetimeDemo" Match="NavLinkMatch.All">Lifetime</NavLink>
+            <NavLink href="/theme-demo" Match="NavLinkMatch.All">Theme</NavLink>
+            <NavLink href="/form-demo" Match="NavLinkMatch.All">Form</NavLink>
+        </div>
+    </details>
 </nav>
-
-@code {
-    private void Go(string href)
-    {
-        Navigation.NavigateTo(href);
-    }
-}

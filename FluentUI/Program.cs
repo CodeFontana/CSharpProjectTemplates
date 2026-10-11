@@ -15,6 +15,7 @@ builder.Services.AddResponseCompression();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddHttpClient();
 builder.Services.AddFluentUIComponents();
+builder.Services.AddJSComponents();
 builder.Services.AddKeyedTransient<IDemoService, DemoService>("Transient");
 builder.Services.AddKeyedScoped<IDemoService, DemoService>("Scoped");
 builder.Services.AddKeyedSingleton<IDemoService, DemoService>("Singleton");
