@@ -1,0 +1,8 @@
+@rendermode InteractiveServer
+
+<FluentDatePicker Label="Appointment" @bind-Value="Appointment" />
+<FluentText>Selected: @(Appointment?.ToString("yyyy-MM-dd") ?? "none")</FluentText>
+
+@code {
+    private DateTime? Appointment { get; set; }
+}

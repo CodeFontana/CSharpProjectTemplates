@@ -1,0 +1,78 @@
+@page "/LifecycleDemoAsync/interactive"
+@page "/LifecycleDemoAsync/interactive/{Parameter}"
+@rendermode InteractiveServer
+
+<PageTitle>Interactive Async Lifecycle Demo - FluentUI</PageTitle>
+
+<FluentText As="TextTag.H1" Size="TextSize.Size500">Lifecycle Demo Async - Interactive</FluentText>
+<p>@DateTime.Now</p>
+
+@foreach (string e in _events)
+{
+    <div>@e</div>
+}
+
+<FluentStack Orientation="Orientation.Horizontal" HorizontalGap="8">
+    <FluentLink Href="@($"/LifecycleDemoAsync/interactive/{Guid.NewGuid()}")">Refresh</FluentLink>
+    <FluentButton Appearance="ButtonAppearance.Transparent" OnClick="StateHasChanged">Trigger Re-render</FluentButton>
+</FluentStack>
+
+@code {
+    private List<string> _events = [];
+
+    [Parameter]
+    public string? Parameter { get; set; }
+
+    public override Task SetParametersAsync(ParameterView parameters)
+    {
+        _events.Add("SetParametersAsync Start");
+        _events.Add("SetParametersAsync End");
+        return base.SetParametersAsync(parameters);
+    }
+
+    protected override void OnInitialized()
+    {
+        _events.Add("OnInitialized Start");
+        _events.Add("OnInitialized End");
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        _events.Add("OnInitializedAsync Start");
+        await Task.Delay(1000);
+        _events.Add("OnInitializedAsync End");
+    }
+
+    protected override void OnParametersSet()
+    {
+        _events.Add("OnParametersSet Start");
+        _events.Add("OnParametersSet End");
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        _events.Add("OnParametersSetAsync Start");
+        await Task.Delay(1000);
+        _events.Add("OnParametersSetAsync End");
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        _events.Add($"OnAfterRender firstRender:{firstRender} Start");
+        _events.Add($"OnAfterRender firstRender:{firstRender} End");
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        _events.Add($"OnAfterRenderAsync firstRender:{firstRender} Start");
+        await Task.Delay(1000);
+        _events.Add($"OnAfterRenderAsync firstRender:{firstRender} End");
+    }
+
+    protected override bool ShouldRender()
+    {
+        _events.Add("ShouldRender Start");
+        _events.Add("ShouldRender End");
+        return true;
+    }
+}

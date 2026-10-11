@@ -1,0 +1,113 @@
+@page "/form-demo"
+
+<PageTitle>Form Demo - FluentUI</PageTitle>
+
+<FluentStack Class="form-demo" Orientation="Orientation.Vertical" VerticalGap="24">
+    <FluentStack Orientation="Orientation.Vertical" VerticalGap="8">
+        <FluentText As="TextTag.H1" Size="TextSize.Size600">Form Demo</FluentText>
+        <FluentText>
+            Account, preferences, and choices post with this static form. Each field Name is the model path.
+            The date picker and city search sit below because they need an interactive render mode.
+        </FluentText>
+    </FluentStack>
+
+    <FluentCard Class="form-card">
+    <FluentStack Orientation="Orientation.Vertical" VerticalGap="24">
+    @if (_submitted)
+    {
+        <FluentMessageBar Intent="MessageBarIntent.Success" AllowDismiss="false" Title="Form posted">
+            <p>@Model.FirstName, @Model.Email, age @Model.Age, @Model.ContactMethod, @Model.Color</p>
+        </FluentMessageBar>
+    }
+
+    <EditForm Model="Model" FormName="formDemo" method="post" OnValidSubmit="HandleSubmit" Enhance="true">
+        <DataAnnotationsValidator />
+        <FluentStack Orientation="Orientation.Vertical" VerticalGap="24">
+            <section>
+                <FluentText As="TextTag.H2" Size="TextSize.Size400">Account</FluentText>
+                <FluentGrid Class="form-grid" Spacing="3">
+                    <FluentGridItem xs="12" md="6">
+                        <FluentTextInput Name="Model.FirstName" Label="First name" Width="100%" @bind-Value="Model.FirstName" />
+                        <ValidationMessage For="() => Model.FirstName" />
+                    </FluentGridItem>
+                    <FluentGridItem xs="12" md="6">
+                        <FluentTextInput Name="Model.Password" Label="Password" TextInputType="TextInputType.Password" Width="100%" @bind-Value="Model.Password" />
+                        <ValidationMessage For="() => Model.Password" />
+                    </FluentGridItem>
+                    <FluentGridItem xs="12" md="6">
+                        <FluentTextInput Name="Model.Email" Label="Email" TextInputType="TextInputType.Email" Width="100%" @bind-Value="Model.Email" />
+                        <ValidationMessage For="() => Model.Email" />
+                    </FluentGridItem>
+                    <FluentGridItem xs="12" md="6">
+                        <FluentNumberInput TValue="int?" Name="Model.Age" Label="Age" Width="100%" @bind-Value="Model.Age" />
+                        <ValidationMessage For="() => Model.Age" />
+                    </FluentGridItem>
+                </FluentGrid>
+            </section>
+
+            <section>
+                <FluentText As="TextTag.H2" Size="TextSize.Size400">Preferences</FluentText>
+                <FluentGrid Class="form-grid" Spacing="3">
+                    <FluentGridItem xs="12">
+                        <FluentTextArea Name="Model.Notes" Label="Notes" Width="100%" @bind-Value="Model.Notes" />
+                    </FluentGridItem>
+                    <FluentGridItem xs="12" md="6">
+                        <FluentCheckbox Name="Model.Subscribe" Label="Subscribe" @bind-Value="Model.Subscribe" />
+                    </FluentGridItem>
+                    <FluentGridItem xs="12" md="6">
+                        <FluentSwitch Name="Model.Notifications" Label="Notifications" @bind-Value="Model.Notifications" />
+                    </FluentGridItem>
+                </FluentGrid>
+            </section>
+
+            <section>
+                <FluentText As="TextTag.H2" Size="TextSize.Size400">Choices</FluentText>
+                <FluentGrid Class="form-grid" Spacing="3">
+                    <FluentGridItem xs="12" md="6">
+                        <FluentRadioGroup Name="Model.ContactMethod" Label="Contact method" Orientation="Orientation.Horizontal" @bind-Value="Model.ContactMethod">
+                            <FluentRadio Value="@("Email")" Label="Email" />
+                            <FluentRadio Value="@("Phone")" Label="Phone" />
+                        </FluentRadioGroup>
+                    </FluentGridItem>
+                    <FluentGridItem xs="12" md="6">
+                        <ColorSelect Name="Model.Color" Value="@Model.Color" />
+                    </FluentGridItem>
+                </FluentGrid>
+            </section>
+
+            <FluentButton Type="ButtonType.Submit" Appearance="ButtonAppearance.Primary">Submit</FluentButton>
+        </FluentStack>
+    </EditForm>
+
+    <section>
+        <FluentText As="TextTag.H2" Size="TextSize.Size400">Interactive fields</FluentText>
+        <FluentGrid Class="form-grid" Spacing="3">
+            <FluentGridItem xs="12" md="6">
+                <AppointmentPicker />
+            </FluentGridItem>
+            <FluentGridItem xs="12" md="6">
+                <CityAutocomplete />
+            </FluentGridItem>
+        </FluentGrid>
+    </section>
+    </FluentStack>
+    </FluentCard>
+</FluentStack>
+
+@code {
+    private bool _submitted;
+
+    private FormDemoModel _model = new();
+
+    [SupplyParameterFromForm]
+    private FormDemoModel Model
+    {
+        get => _model;
+        set => _model = value ?? new FormDemoModel();
+    }
+
+    private void HandleSubmit()
+    {
+        _submitted = true;
+    }
+}

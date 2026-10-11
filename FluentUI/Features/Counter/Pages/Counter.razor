@@ -1,0 +1,41 @@
+@page "/counter/{reset:bool?}"
+@inject NavigationManager NavMan
+
+<PageTitle>Counter - FluentUI</PageTitle>
+
+<FluentText As="TextTag.H1" Size="TextSize.Size600">Counter - Static</FluentText>
+
+<p>Current count: @CurrentCount</p>
+
+<form data-enhance method="post" @formname="counterForm" @onsubmit="IncrementCount">
+    <AntiforgeryToken />
+    <input type="hidden" name="CurrentCount" value="@CurrentCount" />
+    <FluentStack Orientation="Orientation.Horizontal" HorizontalGap="8">
+        <FluentButton Type="ButtonType.Submit" Appearance="ButtonAppearance.Primary">Click me</FluentButton>
+        <FluentButton Type="ButtonType.Submit"
+                      Appearance="ButtonAppearance.Outline"
+                      FormAction="/counter/true"
+                      FormMethod="get">Reset</FluentButton>
+    </FluentStack>
+</form>
+
+@code {
+    [Parameter]
+    public bool Reset { get; set; }
+
+    [SupplyParameterFromForm]
+    public int CurrentCount { get; set; }
+
+    protected override void OnInitialized()
+    {
+        if (Reset)
+        {
+            NavMan.NavigateTo("/counter");
+        }
+    }
+
+    private void IncrementCount()
+    {
+        CurrentCount += 1;
+    }
+}

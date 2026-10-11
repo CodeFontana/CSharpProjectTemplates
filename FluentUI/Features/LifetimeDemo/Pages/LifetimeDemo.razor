@@ -1,0 +1,72 @@
+@page "/LifetimeDemo/{Reset:bool?}"
+@using FluentUI.Features.LifetimeDemo.Components
+@inject NavigationManager NavMan
+
+<PageTitle>Lifetime Demo - FluentUI</PageTitle>
+
+<FluentText As="TextTag.H1" Size="TextSize.Size500">Lifetime Demo</FluentText>
+
+<FluentStack Orientation="Orientation.Horizontal" HorizontalGap="12">
+    <FluentCard>
+        <FluentText Weight="TextWeight.Semibold">Enhanced Navigation Form</FluentText>
+        <form data-enhance method="post" @formname="enhancedForm" @onsubmit="IncrementCount">
+            <AntiforgeryToken />
+            <input type="hidden" name="CurrentCount" value="@CurrentCount" />
+            <FluentStack Orientation="Orientation.Horizontal" HorizontalGap="8">
+                <FluentButton Type="ButtonType.Submit" Appearance="ButtonAppearance.Primary">Click me</FluentButton>
+                <FluentLink Appearance="LinkAppearance.Subtle" Href="/LifetimeDemo/true">Reset</FluentLink>
+            </FluentStack>
+        </form>
+    </FluentCard>
+
+    <FluentCard>
+        <FluentText Weight="TextWeight.Semibold">Classic Form</FluentText>
+        <form method="post" @formname="classicForm" @onsubmit="IncrementCount">
+            <AntiforgeryToken />
+            <input type="hidden" name="CurrentCount" value="@CurrentCount" />
+            <FluentStack Orientation="Orientation.Horizontal" HorizontalGap="8">
+                <FluentButton Type="ButtonType.Submit" Appearance="ButtonAppearance.Primary">Click me</FluentButton>
+                <FluentLink Appearance="LinkAppearance.Subtle" Href="/LifetimeDemo/true">Reset</FluentLink>
+            </FluentStack>
+        </form>
+    </FluentCard>
+</FluentStack>
+
+<FluentText As="TextTag.H2" Size="TextSize.Size400">Static Component</FluentText>
+@for (int i = 0; i < CurrentCount; i++)
+{
+    <LifetimeComponent />
+}
+
+<FluentText As="TextTag.H2" Size="TextSize.Size400">Interactive Component</FluentText>
+@for (int i = 0; i < CurrentCount; i++)
+{
+    <LifetimeComponent @rendermode="InteractiveServer" />
+}
+
+@code {
+    [SupplyParameterFromForm]
+    public int CurrentCount { get; set; }
+
+    [Parameter]
+    public bool Reset { get; set; }
+
+    protected override void OnInitialized()
+    {
+        if (Reset)
+        {
+            NavMan.NavigateTo("/LifetimeDemo");
+            return;
+        }
+
+        if (CurrentCount == 0)
+        {
+            CurrentCount = 1;
+        }
+    }
+
+    private void IncrementCount()
+    {
+        CurrentCount += 1;
+    }
+}

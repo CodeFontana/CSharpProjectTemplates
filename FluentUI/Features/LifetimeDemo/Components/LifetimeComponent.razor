@@ -1,0 +1,12 @@
+<FluentCard>
+    <p>Singleton: @SingletonDemo.Guid</p>
+    <p>Scoped: @ScopedDemo.Guid</p>
+</FluentCard>
+
+@code {
+    [Inject(Key = "Singleton")]
+    private IDemoService SingletonDemo { get; set; } = default!;
+
+    [Inject(Key = "Scoped")]
+    private IDemoService ScopedDemo { get; set; } = default!;
+}

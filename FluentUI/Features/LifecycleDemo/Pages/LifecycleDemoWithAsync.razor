@@ -1,0 +1,74 @@
+@page "/LifecycleDemoAsync"
+@page "/LifecycleDemoAsync/{Parameter}"
+
+<PageTitle>Static Async Lifecycle Demo - FluentUI</PageTitle>
+
+<FluentText As="TextTag.H1" Size="TextSize.Size500">Lifecycle Demo Async - Static</FluentText>
+<p>@DateTime.Now</p>
+
+@foreach (string e in Events)
+{
+    <div>@e</div>
+}
+
+<FluentLink Href="@($"/LifecycleDemoAsync/{Guid.NewGuid()}")">Refresh</FluentLink>
+
+@code {
+    private List<string> Events { get; } = [];
+
+    [Parameter]
+    public string? Parameter { get; set; }
+
+    public override async Task SetParametersAsync(ParameterView parameters)
+    {
+        Events.Add("SetParametersAsync Start");
+        Events.Add("SetParametersAsync End");
+        await base.SetParametersAsync(parameters);
+    }
+
+    protected override void OnInitialized()
+    {
+        Events.Add("OnInitialized Start");
+        Events.Add("OnInitialized End");
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Events.Add("OnInitializedAsync Start");
+        await Task.Delay(1000);
+        Events.Add("OnInitializedAsync End");
+    }
+
+    protected override void OnParametersSet()
+    {
+        Events.Add("OnParametersSet Start");
+        Events.Add("OnParametersSet End");
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        Events.Add("OnParametersSetAsync Start");
+        await Task.Delay(1000);
+        Events.Add("OnParametersSetAsync End");
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        Events.Add($"OnAfterRender firstRender:{firstRender} Start");
+        Events.Add($"OnAfterRender firstRender:{firstRender} End");
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        Events.Add($"OnAfterRenderAsync firstRender:{firstRender} Start");
+        await Task.Delay(1000);
+        Events.Add($"OnAfterRenderAsync firstRender:{firstRender} End");
+    }
+
+    protected override bool ShouldRender()
+    {
+        Events.Add("ShouldRender Start");
+        Events.Add("ShouldRender End");
+        return true;
+    }
+}

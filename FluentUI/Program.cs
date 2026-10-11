@@ -1,0 +1,39 @@
+using FluentUI.Features;
+using Microsoft.FluentUI.AspNetCore.Components;
+using FluentUI.Services;
+
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddRazorComponents()
+    .AddInteractiveServerComponents()
+    .AddHubOptions(options =>
+    {
+        options.ClientTimeoutInterval = TimeSpan.FromSeconds(60);
+        options.HandshakeTimeout = TimeSpan.FromSeconds(30);
+    });
+builder.Services.AddResponseCompression();
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddHttpClient();
+builder.Services.AddFluentUIComponents();
+builder.Services.AddKeyedTransient<IDemoService, DemoService>("Transient");
+builder.Services.AddKeyedScoped<IDemoService, DemoService>("Scoped");
+builder.Services.AddKeyedSingleton<IDemoService, DemoService>("Singleton");
+
+WebApplication app = builder.Build();
+
+app.UseExceptionHandler("/Error", createScopeForErrors: true);
+
+if (app.Environment.IsDevelopment() == false)
+{
+    app.UseHsts();
+    app.UseResponseCompression();
+}
+
+app.UseStatusCodePagesWithReExecute("/not-found", createScopeForStatusCodePages: true);
+app.UseHttpsRedirection();
+app.UseAntiforgery();
+app.MapStaticAssets();
+app.MapRazorComponents<App>()
+    .AddInteractiveServerRenderMode()
+    .AllowAnonymous();
+app.Run();

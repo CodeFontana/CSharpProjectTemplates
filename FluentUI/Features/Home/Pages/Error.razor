@@ -1,0 +1,35 @@
+@page "/Error"
+@using Microsoft.AspNetCore.Diagnostics
+@inject IHostEnvironment HostEnvironment
+
+<PageTitle>Error</PageTitle>
+
+@if (string.IsNullOrWhiteSpace(_exceptionMessage) == false)
+{
+    <FluentMessageBar Intent="MessageBarIntent.Error" AllowDismiss="false" Title="An unhandled error has occurred.">
+        <p>@_exceptionMessage</p>
+        @if (HostEnvironment.IsDevelopment() && string.IsNullOrWhiteSpace(_stackTrace) == false)
+        {
+            <pre>@_stackTrace</pre>
+        }
+    </FluentMessageBar>
+}
+
+@code {
+    [CascadingParameter]
+    private HttpContext? HttpContext { get; set; }
+
+    private string? _exceptionMessage;
+    private string? _stackTrace;
+
+    protected override void OnInitialized()
+    {
+        IExceptionHandlerPathFeature? exceptionHandlerPathFeature = HttpContext?.Features.Get<IExceptionHandlerPathFeature>();
+
+        if (exceptionHandlerPathFeature?.Error is not null)
+        {
+            _exceptionMessage = exceptionHandlerPathFeature.Error.Message;
+            _stackTrace = exceptionHandlerPathFeature.Error.StackTrace;
+        }
+    }
+}

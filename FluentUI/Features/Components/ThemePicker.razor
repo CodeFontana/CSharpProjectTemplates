@@ -1,0 +1,136 @@
+@rendermode InteractiveServer
+@inject IThemeService ThemeService
+
+<button class="settings-trigger" type="button" title="Site settings" @onclick="OpenSettingsAsync">
+    <FluentIcon Value="@(new Icons.Regular.Size20.Settings())" Color="Color.Custom" CustomColor="currentColor" />
+</button>
+
+<FluentDialog @ref="_settings"
+              Class="settings-drawer"
+              Alignment="DialogAlignment.End"
+              Modal="true">
+    <div class="settings-panel">
+        <div class="settings-panel-header">
+            <FluentText Weight="TextWeight.Semibold" Size="TextSize.Size500">Settings</FluentText>
+            <button class="settings-close" type="button" title="Close" @onclick="CloseSettingsAsync">
+                <FluentIcon Value="@(new Icons.Regular.Size20.Dismiss())" Color="Color.Custom" CustomColor="currentColor" />
+            </button>
+        </div>
+
+        <FluentSelect TOption="string"
+                      TValue="string"
+                      Label="Appearance"
+                      Width="100%"
+                      Items="Modes"
+                      Value="@_mode"
+                      ValueChanged="OnModeChangedAsync" />
+
+        <FluentSelect TOption="ThemeColor"
+                      TValue="string"
+                      Label="Color"
+                      Width="100%"
+                      Height="240px"
+                      Items="ThemeColor.All"
+                      OptionText="@(color => color.Name)"
+                      OptionValue="@(color => color.Name)"
+                      Value="@_colorName"
+                      ValueChanged="OnColorChangedAsync">
+            <OptionTemplate Context="color">
+                <span class="color-swatch" style="background:@color.Swatch"></span>@color.Name
+            </OptionTemplate>
+        </FluentSelect>
+    </div>
+</FluentDialog>
+
+@code {
+    private static readonly string[] Modes = ["Light", "Dark", "System"];
+
+    private FluentDialog? _settings;
+    private bool _loaded;
+    private string _mode = "Light";
+    private string _colorName = "Default";
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await LoadCurrentAsync();
+        }
+    }
+
+    private async Task OpenSettingsAsync()
+    {
+        await LoadCurrentAsync();
+
+        if (_settings is not null)
+        {
+            await _settings.ShowAsync();
+        }
+    }
+
+    private async Task CloseSettingsAsync()
+    {
+        if (_settings is not null)
+        {
+            await _settings.HideAsync();
+        }
+    }
+
+    private async Task OnModeChangedAsync(string? mode)
+    {
+        _mode = mode ?? "Light";
+        ThemeMode themeMode = _mode switch
+        {
+            "Dark" => ThemeMode.Dark,
+            "System" => ThemeMode.System,
+            _ => ThemeMode.Light
+        };
+
+        await ThemeService.SetThemeAsync(themeMode);
+    }
+
+    private async Task OnColorChangedAsync(string? name)
+    {
+        ThemeColor? color = ThemeColor.All.FirstOrDefault(item => item.Name == name);
+        if (color is null)
+        {
+            return;
+        }
+
+        _colorName = color.Name;
+        await color.ApplyAsync(ThemeService);
+    }
+
+    private async Task LoadCurrentAsync()
+    {
+        if (_loaded)
+        {
+            return;
+        }
+
+        _loaded = true;
+
+        if (await ThemeService.IsDarkModeAsync())
+        {
+            _mode = "Dark";
+        }
+
+        string brand = Normalize(await ThemeService.GetBrandColorAsync());
+        ThemeColor? match = ThemeColor.All.FirstOrDefault(color =>
+            string.Equals(color.Swatch, brand, StringComparison.OrdinalIgnoreCase));
+        if (match is not null)
+        {
+            _colorName = match.Name;
+        }
+    }
+
+    private static string Normalize(string? color)
+    {
+        if (string.IsNullOrWhiteSpace(color))
+        {
+            return "#0F6CBD";
+        }
+
+        return color.StartsWith('#') ? color : "#" + color;
+    }
+}

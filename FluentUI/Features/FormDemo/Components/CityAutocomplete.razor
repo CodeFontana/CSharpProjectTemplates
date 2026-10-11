@@ -1,0 +1,20 @@
+@rendermode InteractiveServer
+
+<FluentAutocomplete TOption="string" TValue="string"
+                    Label="City"
+                    Placeholder="Type a city"
+                    OnOptionsSearch="SearchCities"
+                    @bind-SelectedItems="SelectedCities" />
+<FluentText>Selected: @string.Join(", ", SelectedCities)</FluentText>
+
+@code {
+    private static readonly string[] Cities = ["Austin", "Boston", "Chicago", "Denver", "Seattle"];
+
+    private IEnumerable<string> SelectedCities { get; set; } = [];
+
+    private Task SearchCities(OptionsSearchEventArgs<string> args)
+    {
+        args.Items = Cities.Where(city => city.StartsWith(args.Text, StringComparison.OrdinalIgnoreCase));
+        return Task.CompletedTask;
+    }
+}

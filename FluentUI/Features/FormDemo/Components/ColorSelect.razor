@@ -1,0 +1,32 @@
+@* FluentSelect wires its popup in OnAfterRender, which static SSR does not run. *@
+@rendermode InteractiveServer
+
+<input type="hidden" name="@Name" value="@_color" />
+<FluentSelect TOption="string"
+              TValue="string"
+              Label="Color"
+              Width="100%"
+              Items="Colors"
+              @bind-Value="_color" />
+
+@code {
+    private static readonly string[] Colors = ["Red", "Green", "Blue"];
+
+    private string? _color;
+    private string? _incomingValue;
+
+    [Parameter]
+    public string? Name { get; set; }
+
+    [Parameter]
+    public string? Value { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        if (!string.Equals(_incomingValue, Value, StringComparison.Ordinal))
+        {
+            _incomingValue = Value;
+            _color = Value;
+        }
+    }
+}

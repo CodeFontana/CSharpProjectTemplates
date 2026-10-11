@@ -1,0 +1,49 @@
+@* FluentMenu connects its trigger in OnAfterRender, which static SSR does not run. *@
+@rendermode InteractiveServer
+@inject NavigationManager Navigation
+
+<nav class="fluent-header-nav" aria-label="Primary">
+    <NavLink class="fluent-header-hover" href="/" Match="NavLinkMatch.All">Home</NavLink>
+
+    <span class="fluent-header-menu">
+        <button id="counters-menu" class="fluent-header-hover" type="button" aria-haspopup="menu">Counters</button>
+        <FluentMenu Trigger="counters-menu">
+            <FluentMenuList>
+                <FluentMenuItem OnClick="@(() => Go("/counter"))">Static Counter</FluentMenuItem>
+                <FluentMenuItem OnClick="@(() => Go("/counter/interactive"))">Interactive Counter</FluentMenuItem>
+            </FluentMenuList>
+        </FluentMenu>
+    </span>
+
+    <span class="fluent-header-menu">
+        <button id="lifecycle-menu" class="fluent-header-hover" type="button" aria-haspopup="menu">Lifecycle</button>
+        <FluentMenu Trigger="lifecycle-menu">
+            <FluentMenuList>
+                <FluentMenuItem OnClick="@(() => Go("/LifecycleDemo"))">Static Lifecycle</FluentMenuItem>
+                <FluentMenuItem OnClick="@(() => Go("/LifecycleDemoAsync"))">Static Lifecycle with async</FluentMenuItem>
+                <FluentMenuItem OnClick="@(() => Go("/LifecycleDemo/interactive"))">Interactive Lifecycle</FluentMenuItem>
+                <FluentMenuItem OnClick="@(() => Go("/LifecycleDemoAsync/interactive"))">Interactive Lifecycle with async</FluentMenuItem>
+            </FluentMenuList>
+        </FluentMenu>
+    </span>
+
+    <NavLink class="fluent-header-hover" href="/weather">Weather</NavLink>
+
+    <span class="fluent-header-menu">
+        <button id="demos-menu" class="fluent-header-hover" type="button" aria-haspopup="menu">Demos</button>
+        <FluentMenu Trigger="demos-menu">
+            <FluentMenuList>
+                <FluentMenuItem OnClick="@(() => Go("/LifetimeDemo"))">Lifetime</FluentMenuItem>
+                <FluentMenuItem OnClick="@(() => Go("/theme-demo"))">Theme</FluentMenuItem>
+                <FluentMenuItem OnClick="@(() => Go("/form-demo"))">Form</FluentMenuItem>
+            </FluentMenuList>
+        </FluentMenu>
+    </span>
+</nav>
+
+@code {
+    private void Go(string href)
+    {
+        Navigation.NavigateTo(href);
+    }
+}

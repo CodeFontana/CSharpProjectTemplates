@@ -1,0 +1,34 @@
+@rendermode InteractiveServer
+@inject IThemeService ThemeService
+
+<FluentCard Class="theme-choice-card">
+    <FluentStack Orientation="Orientation.Vertical" VerticalGap="16">
+        <section>
+            <FluentText Weight="TextWeight.Semibold">Appearance</FluentText>
+            <div class="theme-choices">
+                <FluentButton Appearance="ButtonAppearance.Outline" OnClick="@(() => ApplyModeAsync(ThemeMode.Light))">Light</FluentButton>
+                <FluentButton Appearance="ButtonAppearance.Outline" OnClick="@(() => ApplyModeAsync(ThemeMode.Dark))">Dark</FluentButton>
+                <FluentButton Appearance="ButtonAppearance.Outline" OnClick="@(() => ApplyModeAsync(ThemeMode.System))">System</FluentButton>
+            </div>
+        </section>
+
+        <section>
+            <FluentText Weight="TextWeight.Semibold">Brand color</FluentText>
+            <div class="theme-choices">
+                @foreach (ThemeColor color in ThemeColor.All)
+                {
+                    <FluentButton Appearance="ButtonAppearance.Outline" OnClick="@(() => color.ApplyAsync(ThemeService))">
+                        <span class="color-swatch" style="background:@color.Swatch"></span>@color.Name
+                    </FluentButton>
+                }
+            </div>
+        </section>
+    </FluentStack>
+</FluentCard>
+
+@code {
+    private async Task ApplyModeAsync(ThemeMode mode)
+    {
+        await ThemeService.SetThemeAsync(mode);
+    }
+}

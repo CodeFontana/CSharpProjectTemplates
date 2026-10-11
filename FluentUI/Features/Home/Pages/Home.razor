@@ -1,0 +1,43 @@
+@page "/"
+
+<PageTitle>Home - FluentUI</PageTitle>
+
+<FluentStack Orientation="Orientation.Vertical" VerticalGap="16">
+    <FluentText Size="TextSize.Size200" Weight="TextWeight.Semibold">Fluent UI — .NET template</FluentText>
+    <FluentText As="TextTag.H1" Size="TextSize.Size700" Weight="TextWeight.Bold">A static-first start for Fluent UI Blazor.</FluentText>
+    <FluentText Size="TextSize.Size400">
+        Pages render with static SSR. Interactive Server is used only where a component needs a Blazor event:
+        the settings panel, the interactive counter and lifecycle pages, and the date picker, color list, and autocomplete.
+    </FluentText>
+    <FluentStack Orientation="Orientation.Horizontal" HorizontalGap="8">
+        <FluentLink Href="theme-demo">Explore themes</FluentLink>
+        <FluentLink Appearance="LinkAppearance.Subtle" Href="form-demo">Form components</FluentLink>
+    </FluentStack>
+</FluentStack>
+
+<FluentGrid Style="margin-top: 2rem;" Spacing="3">
+    <FluentGridItem xs="12" md="4">
+        <FluentCard>
+            <FluentText Weight="TextWeight.Semibold">Light, dark, and color</FluentText>
+            <FluentText>
+                The header settings gear opens a side panel. Appearance switches light, dark, or system, and color sets the brand without changing that mode.
+            </FluentText>
+        </FluentCard>
+    </FluentGridItem>
+    <FluentGridItem xs="12" md="4">
+        <FluentCard>
+            <FluentText Weight="TextWeight.Semibold">Three layouts</FluentText>
+            <FluentText>
+                Navbar, sidebar, and combined shells use FluentLayout. Routes starts on the combined layout; the other two are commented beside it.
+            </FluentText>
+        </FluentCard>
+    </FluentGridItem>
+    <FluentGridItem xs="12" md="4">
+        <FluentCard>
+            <FluentText Weight="TextWeight.Semibold">Static by default</FluentText>
+            <FluentText>
+                Forms post with enhanced navigation. Counters, weather, and lifecycle samples keep the same static and interactive split as the Bootstrap template.
+            </FluentText>
+        </FluentCard>
+    </FluentGridItem>
+</FluentGrid>

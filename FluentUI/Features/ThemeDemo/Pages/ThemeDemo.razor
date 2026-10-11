@@ -1,0 +1,134 @@
+@page "/theme-demo"
+
+<PageTitle>Theme Demo - FluentUI</PageTitle>
+
+<FluentStack Class="theme-demo" Orientation="Orientation.Vertical" VerticalGap="16">
+    <FluentText As="TextTag.H1" Size="TextSize.Size600">Theme Demo</FluentText>
+    <FluentText>
+        Appearance and brand color can be set here or from the header settings panel. The samples below follow whichever theme is active.
+    </FluentText>
+    <ThemeChoices />
+
+    <div class="theme-samples">
+        <FluentCard>
+            <FluentText As="TextTag.H2" Size="TextSize.Size400">Typography</FluentText>
+            <FluentText Size="TextSize.Size800" Weight="TextWeight.Bold">Size 800</FluentText>
+            <FluentText Size="TextSize.Size600" Weight="TextWeight.Semibold">Size 600</FluentText>
+            <FluentText Size="TextSize.Size400">Size 400 body text uses the Fluent type ramp.</FluentText>
+            <FluentText Size="TextSize.Size200">Size 200 caption</FluentText>
+        </FluentCard>
+
+        <FluentCard>
+            <FluentText As="TextTag.H2" Size="TextSize.Size400">Buttons</FluentText>
+            <div class="theme-choices">
+                <FluentButton Appearance="ButtonAppearance.Primary" IconStart="@(new Icons.Regular.Size20.Checkmark())">Primary</FluentButton>
+                <FluentButton Appearance="ButtonAppearance.Default">Default</FluentButton>
+                <FluentButton Appearance="ButtonAppearance.Outline">Outline</FluentButton>
+                <FluentButton Appearance="ButtonAppearance.Subtle">Subtle</FluentButton>
+                <FluentButton Appearance="ButtonAppearance.Transparent">Transparent</FluentButton>
+            </div>
+        </FluentCard>
+
+        <FluentCard>
+            <FluentText As="TextTag.H2" Size="TextSize.Size400">Links</FluentText>
+            <div class="theme-choices">
+                <FluentLink Href="theme-demo">Default link</FluentLink>
+                <FluentLink Appearance="LinkAppearance.Subtle" Href="form-demo">Subtle link</FluentLink>
+            </div>
+        </FluentCard>
+
+        <FluentCard>
+            <FluentText As="TextTag.H2" Size="TextSize.Size400">Badges</FluentText>
+            <div class="theme-choices">
+                <FluentBadge Appearance="BadgeAppearance.Filled" Content="Filled" />
+                <FluentBadge Appearance="BadgeAppearance.Outline" Content="Outline" />
+                <FluentBadge Appearance="BadgeAppearance.Tint" Content="Tint" />
+                <FluentCounterBadge Count="4" />
+                <FluentPresenceBadge Status="PresenceStatus.Available" />
+                <FluentPresenceBadge Status="PresenceStatus.Away" />
+                <FluentPresenceBadge Status="PresenceStatus.Busy" />
+                <FluentPresenceBadge Status="PresenceStatus.Offline" />
+                <FluentPresenceBadge Status="PresenceStatus.DoNotDisturb" />
+            </div>
+        </FluentCard>
+
+        <FluentCard>
+            <FluentText As="TextTag.H2" Size="TextSize.Size400">Icons</FluentText>
+            <div class="theme-choices">
+                <FluentIcon Value="@(new Icons.Regular.Size24.CheckmarkCircle())" Color="Color.Success" Title="Success" />
+                <FluentIcon Value="@(new Icons.Regular.Size24.Warning())" Color="Color.Warning" Title="Warning" />
+                <FluentIcon Value="@(new Icons.Regular.Size24.ErrorCircle())" Color="Color.Error" Title="Error" />
+                <FluentIcon Value="@(new Icons.Regular.Size24.Info())" Color="Color.Info" Title="Info" />
+                <FluentIcon Value="@(new Icons.Regular.Size24.Color())" Color="Color.Primary" Title="Brand" />
+            </div>
+        </FluentCard>
+
+        <FluentCard>
+            <FluentText As="TextTag.H2" Size="TextSize.Size400">Progress</FluentText>
+            <FluentStack Orientation="Orientation.Vertical" VerticalGap="8">
+                <FluentProgressBar Min="0" Max="100" Value="65" />
+                <FluentProgressBar />
+            </FluentStack>
+        </FluentCard>
+
+        <FluentCard Class="theme-sample-wide">
+            <FluentText As="TextTag.H2" Size="TextSize.Size400">Messages</FluentText>
+            <FluentStack Orientation="Orientation.Vertical" VerticalGap="8">
+                <FluentMessageBar Intent="MessageBarIntent.Info" AllowDismiss="false" Title="Information">
+                    Info uses the neutral message colors.
+                </FluentMessageBar>
+                <FluentMessageBar Intent="MessageBarIntent.Success" AllowDismiss="false" Title="Success">
+                    Success confirms a completed action.
+                </FluentMessageBar>
+                <FluentMessageBar Intent="MessageBarIntent.Warning" AllowDismiss="false" Title="Warning">
+                    Warning calls attention without blocking.
+                </FluentMessageBar>
+                <FluentMessageBar Intent="MessageBarIntent.Error" AllowDismiss="false" Title="Error">
+                    Error marks something that needs a fix.
+                </FluentMessageBar>
+            </FluentStack>
+        </FluentCard>
+
+        <FluentCard Class="theme-sample-wide">
+            <FluentText As="TextTag.H2" Size="TextSize.Size400">Inputs</FluentText>
+            <FluentGrid Class="theme-grid" Spacing="3">
+                <FluentGridItem xs="12" md="6">
+                    <FluentTextInput Label="Company" Width="100%" Value="@("Northwind")" />
+                </FluentGridItem>
+                <FluentGridItem xs="12" md="6">
+                    <FluentNumberInput TValue="int?" Label="Quantity" Width="100%" Value="3" />
+                </FluentGridItem>
+                <FluentGridItem xs="12">
+                    <FluentTextArea Label="Notes" Width="100%" Value="@("Ships on Friday.")" />
+                </FluentGridItem>
+                <FluentGridItem xs="12" md="6">
+                    <FluentSlider Label="Volume" Width="100%" Value="40" />
+                </FluentGridItem>
+                <FluentGridItem xs="12" md="6">
+                    <FluentRadioGroup TValue="string" Label="Contact" Orientation="Orientation.Horizontal">
+                        <FluentRadio Value="@("Email")" Label="Email" />
+                        <FluentRadio Value="@("Phone")" Label="Phone" />
+                    </FluentRadioGroup>
+                </FluentGridItem>
+                <FluentGridItem xs="12" md="6">
+                    <FluentCheckbox Label="Subscribe" />
+                </FluentGridItem>
+                <FluentGridItem xs="12" md="6">
+                    <FluentSwitch Label="Notifications" Value="true" />
+                </FluentGridItem>
+            </FluentGrid>
+        </FluentCard>
+
+        <FluentCard Class="theme-sample-wide">
+            <FluentText As="TextTag.H2" Size="TextSize.Size400">Accordion</FluentText>
+            <FluentAccordion>
+                <FluentAccordionItem Id="colors" Header="Brand color" Expanded="true">
+                    Product colors tint the header and accent controls. Appearance stays as it is.
+                </FluentAccordionItem>
+                <FluentAccordionItem Id="mode" Header="Appearance">
+                    Light, dark, and system change the neutral surfaces around those accents.
+                </FluentAccordionItem>
+            </FluentAccordion>
+        </FluentCard>
+    </div>
+</FluentStack>

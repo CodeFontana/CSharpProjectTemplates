@@ -10,6 +10,9 @@ Figuring out how to log messages is probably not the main focus of your new idea
 ## Blazor with Bootstrap 5.3
 Web development is certainly made easier with Bootstrap, aligning perfectly with the goal of this repo to get you off the ground faster!  Enjoy a project template that takes advantage of .NET 8's Static server-side rendering for Blazor and Bootstrap 5.3's built-in ability to toggle themes.  The template comes configured with two layouts, a traditional MainLayout with a Navbar at the top of the page, as well as a SidebarLayout, with a collapsible menu on the left side of the screen.
 
+## Blazor with Fluent UI
+A static-first Blazor web app on Microsoft Fluent UI Blazor 5. Pages stay on static SSR, and Interactive Server is limited to the theme picker, header menus, and the components that need a Blazor event. The template includes navbar, sidebar, and combined layouts built with FluentLayout. The theme picker offers the built-in Web and Teams families in Light, Dark, and System.
+
 ## Blazor with MudBlazor
 MudBlazor is just awesome with a comprehensive library of components, features and utilities.  You'll spend a lot less time writing custom CSS, especially media queries for breakpoints.  Rest assured MudBlazor brings custom theme support and you always have the option of bringing your own CSS/styling to the table if need be.
 

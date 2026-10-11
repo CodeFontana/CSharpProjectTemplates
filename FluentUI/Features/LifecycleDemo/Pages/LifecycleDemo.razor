@@ -1,0 +1,74 @@
+@page "/LifecycleDemo"
+@page "/LifecycleDemo/{Parameter}"
+
+<PageTitle>Static Lifecycle Demo - FluentUI</PageTitle>
+
+<FluentText As="TextTag.H1" Size="TextSize.Size500">Lifecycle Demo - Static</FluentText>
+<p>@DateTime.Now</p>
+
+@foreach (string e in Events)
+{
+    <div>@e</div>
+}
+
+<FluentLink Href="@($"/LifecycleDemo/{Guid.NewGuid()}")">Refresh</FluentLink>
+
+@code {
+    private List<string> Events { get; } = [];
+
+    [Parameter]
+    public string? Parameter { get; set; }
+
+    public override Task SetParametersAsync(ParameterView parameters)
+    {
+        Events.Add("SetParametersAsync Start");
+        Events.Add("SetParametersAsync End");
+        return base.SetParametersAsync(parameters);
+    }
+
+    protected override void OnInitialized()
+    {
+        Events.Add("OnInitialized Start");
+        Events.Add("OnInitialized End");
+    }
+
+    protected override Task OnInitializedAsync()
+    {
+        Events.Add("OnInitializedAsync Start");
+        Events.Add("OnInitializedAsync End");
+        return Task.CompletedTask;
+    }
+
+    protected override void OnParametersSet()
+    {
+        Events.Add("OnParametersSet Start");
+        Events.Add("OnParametersSet End");
+    }
+
+    protected override Task OnParametersSetAsync()
+    {
+        Events.Add("OnParametersSetAsync Start");
+        Events.Add("OnParametersSetAsync End");
+        return Task.CompletedTask;
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        Events.Add($"OnAfterRender firstRender:{firstRender} Start");
+        Events.Add($"OnAfterRender firstRender:{firstRender} End");
+    }
+
+    protected override Task OnAfterRenderAsync(bool firstRender)
+    {
+        Events.Add($"OnAfterRenderAsync firstRender:{firstRender} Start");
+        Events.Add($"OnAfterRenderAsync firstRender:{firstRender} End");
+        return Task.CompletedTask;
+    }
+
+    protected override bool ShouldRender()
+    {
+        Events.Add("ShouldRender Start");
+        Events.Add("ShouldRender End");
+        return true;
+    }
+}

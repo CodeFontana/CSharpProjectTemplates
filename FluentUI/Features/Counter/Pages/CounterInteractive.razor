@@ -1,0 +1,27 @@
+@page "/counter/interactive"
+@rendermode InteractiveServer
+
+<PageTitle>Interactive Counter - FluentUI</PageTitle>
+
+<FluentText As="TextTag.H1" Size="TextSize.Size600">Counter - Interactive</FluentText>
+
+<p>Current count: @_currentCount</p>
+
+<FluentStack Orientation="Orientation.Horizontal" HorizontalGap="8">
+    <FluentButton Appearance="ButtonAppearance.Primary" OnClick="IncrementCount">Click me</FluentButton>
+    <FluentButton Appearance="ButtonAppearance.Outline" OnClick="ResetCount">Reset</FluentButton>
+</FluentStack>
+
+@code {
+    private int _currentCount = 0;
+
+    private void IncrementCount()
+    {
+        _currentCount += 1;
+    }
+
+    private void ResetCount()
+    {
+        _currentCount = 0;
+    }
+}

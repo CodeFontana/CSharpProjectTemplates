@@ -1,0 +1,28 @@
+<div class="fluent-header-bar">
+    @if (MenuContent is not null)
+    {
+        <FluentLayoutHamburger PanelHeader="Fluent UI" Visible="true">
+            @MenuContent
+        </FluentLayoutHamburger>
+    }
+    else
+    {
+        <FluentLayoutHamburger PanelHeader="Fluent UI" />
+    }
+
+    <FluentText Class="fluent-header-title" Weight="TextWeight.Semibold" Size="TextSize.Size400">Fluent UI</FluentText>
+    @if (ShowLinks)
+    {
+        <HeaderLinks />
+    }
+    <div class="fluent-header-spacer"></div>
+    <ThemePicker />
+</div>
+
+@code {
+    [Parameter]
+    public bool ShowLinks { get; set; }
+
+    [Parameter]
+    public RenderFragment? MenuContent { get; set; }
+}
