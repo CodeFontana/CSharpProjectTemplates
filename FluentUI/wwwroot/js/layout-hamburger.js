@@ -27,6 +27,9 @@ document.addEventListener("click", (event) => {
         return;
     }
 
+    // Fluent UI also wires this button for static SSR. Stop the click here so that handler does not toggle the drawer a second time.
+    event.stopPropagation();
+
     const drawer = document.getElementById(`${hamburger.id}-drawer`);
     if (!drawer || typeof drawer.show !== "function" || typeof drawer.hide !== "function") {
         return;
