@@ -1,8 +1,34 @@
 // FluentLayoutHamburger attaches its click handler in OnAfterRender.
 // Static SSR does not run that method, so this opens the drawer the component already rendered.
+// In the combined layout the hamburger shows the sidebar as an overlay instead of the empty drawer.
 // Capture phase is required because the button stops the click before it bubbles.
+function setNavOpen(layout, open) {
+    layout.dataset.navOpen = open ? "true" : "false";
+    layout.querySelectorAll(".fluent-layout-hamburger").forEach((button) => {
+        button.setAttribute("aria-expanded", open ? "true" : "false");
+    });
+}
+
+function closeOpenNavs() {
+    document.querySelectorAll(".combined-layout[data-nav-open='true']").forEach((layout) => {
+        setNavOpen(layout, false);
+    });
+}
+
+document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+        closeOpenNavs();
+    }
+});
+
 document.addEventListener("click", (event) => {
     if (!(event.target instanceof Element)) {
+        return;
+    }
+
+    const overlayLayout = event.target.closest(".combined-layout[data-nav-open='true']");
+    if (overlayLayout && (event.target.closest("[data-nav-backdrop]") || event.target.closest(".fluent-layout-item[area='nav'] a"))) {
+        setNavOpen(overlayLayout, false);
         return;
     }
 
@@ -29,6 +55,12 @@ document.addEventListener("click", (event) => {
 
     // Fluent UI also wires this button for static SSR. Stop the click here so that handler does not toggle the drawer a second time.
     event.stopPropagation();
+
+    const combinedLayout = hamburger.closest(".combined-layout");
+    if (combinedLayout) {
+        setNavOpen(combinedLayout, combinedLayout.dataset.navOpen !== "true");
+        return;
+    }
 
     const drawer = document.getElementById(`${hamburger.id}-drawer`);
     if (!drawer || typeof drawer.show !== "function" || typeof drawer.hide !== "function") {
